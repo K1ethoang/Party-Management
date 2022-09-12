@@ -1,9 +1,0 @@
-{
-    "C_Cpp.errorSquiggles": "Disabled",
-    "powermode.enabled": true,
-    "powermode.shake.enabled": false,
-    "files.associations": {
-        "iostream": "cpp",
-        "iosfwd": "cpp"
-    }
-}
