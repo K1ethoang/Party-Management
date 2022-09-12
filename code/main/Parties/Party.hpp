@@ -106,16 +106,16 @@ void inputDate(Date &date)
 
 
 void Party::Input(){
-    cout << " Nhap ID cua buoi tiec: "; cin >> id;                         // ID cua buoi tiec 
-    cout << " Nhap so ban cua buoi tiec: "; cin >> tableNumber;            // So ban cua buoi tiec
-    cout << " Nhap thoi gian to chuc tiec " << endl; 
+    cout << "Nhap ID cua buoi tiec: "; cin >> id;                         // ID cua buoi tiec 
+    cout << "Nhap so ban cua buoi tiec: "; cin >> tableNumber;            // So ban cua buoi tiec
+    cout << "Nhap thoi gian to chuc tiec " << endl; 
     inputDate(date);                                                       // Thoi gian to chuc buoi tiec
 }
 
 void Party::Output(){
-    cout << " ID cua buoi tiec: " << id << endl;
-    cout << " So ban: " << tableNumber << endl;
-    cout << " Thoi gian dat tiec: " << date.dd << "/" << date.mm << "/" << date.yyyy;
+    cout << "ID cua buoi tiec: " << id << endl;
+    cout << "So ban: " << tableNumber << endl;
+    cout << "Thoi gian dat tiec: " << date.dd << "/" << date.mm << "/" << date.yyyy;
 }
 
 
