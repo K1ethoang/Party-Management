@@ -8,34 +8,35 @@ struct Date
     int dd, mm, yyyy;
 };
 
-class Party
-{
-private:
-    long id;         // ID cua buoi tiec
-    int tableNumber; // So ban cua buoi tiec
-    Date date;       // Thoi gian to chuc buoi tiec
-public:
-    Party();
-    ~Party();
-    long getID();
-    void setID(const long &_id);
-    int getDate();
-    void setDate();
-    void settableNumber();
-    int gettableNumber();
-    friend istream &operator>>(istream &, Party &);
-    friend ostream &operator>>(ostream &, Party &);
-    void Input();
-    void Output();
+class Party {
+    private:
+        long id;                                                         // ID cua buoi tiec 
+        int tableNumber;                                                 // So ban cua buoi tiec
+        Date date;                                            // Thoi gian to chuc buoi tiec
+    public:
+        Party();
+        ~Party();
+
+        void setID(const long &_id);
+        long getID();
+        
+        void setDate(const Date &_date);
+        Date getDate();
+        void settableNumber(const int &_tableNumber);
+        int gettableNumber(); 
+        friend istream& operator >> (istream &, Party &);
+        friend ostream& operator >> (ostream &, Party &);
+        void Input();
+        void Output();
 };
 
 Party::Party(){
 
-};
+}
 
 Party::~Party(){
 
-};
+}
 
 // Khởi tạo các hàm thuộc tính
 void Party::setID(const long &_id)
@@ -48,23 +49,25 @@ long Party::getID()
     return id;
 }
 
-// void Party::settableNumber(const int &_tableNumber){
-//     tableNumber = _TableNumber;
-// };
+void Party::settableNumber(const int &_tableNumber){
+    tableNumber = _tableNumber;
+}
 
-// int Party::gettableNumber(){
-//     return  tableNumber;
-// };
 
-// int Party::getDate(){
-//     return date;
-// }
+int Party::gettableNumber(){
+    return  tableNumber;
+};
 
-// void Party::setDate(const Date &d){
-//     date.dd = d.dd;
-//     date.mm = d.mm;
-//     date.yyyy = d.yyyy;
-// }
+
+void Party::setDate(const Date &_date){
+    date.dd = _date.dd;
+    date.mm = _date.mm;
+    date.yyyy = _date.yyyy;
+}
+
+Date Party::getDate(){
+    return date;
+}
 
 bool isValidDate(int day, int month, int year) // kiểm tra ngày nhập
 {
@@ -105,8 +108,7 @@ void inputDate(Date &date)
         cin >> date.yyyy;
         if (!isValidDate(date.dd, date.mm, date.yyyy))
             printf("\n\t%40c(!) Ngay sinh khong hop le - Nhap lai (!)\n\a", ' ');
-        // cin >> "\n\t%40c(!) Ngay sinh khong hop le - Nhap lai (!)"
-    } while (!isValidDate(date.dd, date.mm, date.yyyy));
+    }while (!isValidDate(date.dd, date.mm, date.yyyy));
 }
 
 void Party::Input()

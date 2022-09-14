@@ -37,4 +37,3 @@ ostream &operator<<(ostream &os, Customer c)
     cout << "\nHo va ten: " << c.fullName;
     cout << "\nSo dien thoai: " << c.phoneNumber;
     return os;
-}
