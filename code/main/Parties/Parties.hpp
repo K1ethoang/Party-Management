@@ -14,14 +14,15 @@ public:
     Node *right;
     // Methods
     Node();
-    Node(const Party &_data);
+    Node(Party _data);
 };
 
 Node::Node()
 {
+    left = right = NULL;
 }
 
-Node::Node(const Party &_data)
+Node::Node(Party _data)
 {
     data = _data;
     left = right = NULL;
@@ -33,24 +34,125 @@ private:
     Node *root;
     long size;
 
+    // methods private
+private:
+    void addPrivate(Node *&root, const Party &val); // thêm node
+    void preOrderPrivate(Node *root);               // duyệt đầu
+    void inOrderPrivate(Node *root);                // duyệt giữa
+    void postOrderPrivate(Node *root);              // duyệt sau
+    void freeMemory(Node *root);                    // giải phóng bộ nhớ
+    Node *returnNodePrivate(Node *root, const Party &val);
+
+    // methods public
 public:
-    BST();                       // hàm tạo
-    void freeMemory(Node *root); // hàm huỷ
-    long getId();
+    BST();  // hàm tạo
+    ~BST(); // hàm huỷ
+    Node *getRoot();
+    long getSize();
+    void add(const Party &val); // thêm tiệc
+    Node *returnNode(const Party &val);
+    // bool isExistParty(const string &id); // kiểm tra đã có tiệc này chưa
+    void display(); // xuất các tiệc
 };
 
+// Methods private
+void BST::addPrivate(Node *&root, const Party &val)
+{
+    if (root == NULL)
+        root = new Node(val);
+    else
+    {
+        if (val.getID() < root->data.getID())
+            addPrivate(root->left, val);
+        else if (val.getId() > root->data.getID())
+            addPrivate(root->right, val);
+    }
+}
+
+void BST::freeMemory(Node *root)
+{
+    if (root != NULL)
+    {
+        freeMemory(root->left);
+        freeMemory(root->right);
+        delete root;
+        size--;
+    }
+}
+
+void BST::inOrderPrivate(Node *root)
+{
+    if (root != NULL)
+    {
+        inOrderPrivate(root->left);
+        cout << root->data.Output() << " ";
+        inOrderPrivate(root->right);
+    }
+}
+
+void BST::postOrderPrivate(Node *root)
+{
+    if (root != NULL)
+    {
+        postOrderPrivate(root->left);
+        postOrderPrivate(root->right);
+        cout << root->data << " ";
+    }
+}
+
+Node *BST::returnNodePrivate(Node *root, const Party &val)
+{
+    // Nếu node rỗng trả về NULL
+    if (root == NULL)
+        return NULL;
+    else
+    {
+        // Nếu phần tử cần tìm nhỏ hơn node hiện tại
+        if (val.getID() < root->data.getID())
+    }
+}
+
+// Methods public
 BST::BST()
 {
     root = NULL;
     size = 0;
 }
 
-void BST::freeMemory(Node *root)
+BST::~BST()
 {
-    if (root)
+    if (size == 0)
+        return;
+    freeMemory(root);
+}
+
+Node *BST::getRoot()
+{
+    return root;
+}
+
+long BST::getSize()
+{
+    return size;
+}
+
+void BST::add(const Party &val)
+{
+    addPrivate(root, val);
+    size++;
+}
+
+void BST::preOrderPrivate(Node *root)
+{
+    if (root != NULL)
     {
-        freeMemory(root->left);
-        freeMemory(root->right);
+        cout << root->data << " ";
+        preOrderPrivate(root->left);
+        preOrderPrivate(root->right);
     }
-    delete root;
+}
+
+void BST::display()
+{
+    preOrderPrivate(root);
 }
