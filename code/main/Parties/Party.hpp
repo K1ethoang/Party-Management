@@ -40,7 +40,6 @@ Party::~Party(){
 // Khởi tạo các hàm thuộc tính
 void Party::setID(const long &_id)
 {
->>>>>>> bc63c71753760b6dd8ed53e0dda8606018d16055
     id = _id;
 }
 

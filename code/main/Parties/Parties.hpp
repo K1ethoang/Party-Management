@@ -80,6 +80,16 @@ void BST::freeMemory(Node *root)
     }
 }
 
+void BST::preOrderPrivate(Node *root)
+{
+    if (root != NULL)
+    {
+        root->data.Output();
+        preOrderPrivate(root->left);
+        preOrderPrivate(root->right);
+    }
+}
+
 void BST::inOrderPrivate(Node *root)
 {
     if (root != NULL)
@@ -96,7 +106,7 @@ void BST::postOrderPrivate(Node *root)
     {
         postOrderPrivate(root->left);
         postOrderPrivate(root->right);
-        cout << root->data << " ";
+        root->data.Output();
     }
 }
 
@@ -140,16 +150,6 @@ void BST::add(const Party &val)
 {
     addPrivate(root, val);
     size++;
-}
-
-void BST::preOrderPrivate(Node *root)
-{
-    if (root != NULL)
-    {
-        cout << root->data << " ";
-        preOrderPrivate(root->left);
-        preOrderPrivate(root->right);
-    }
 }
 
 void BST::display()
