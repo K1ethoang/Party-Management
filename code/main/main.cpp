@@ -6,10 +6,5 @@ using namespace std;
 
 int main()
 {
-    BST list;
-    Party p;
-    p.setID(123);
-    p.settableNumber(234);
-    list.add();
     return 0;
 }
