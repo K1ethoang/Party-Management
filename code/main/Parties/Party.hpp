@@ -3,9 +3,11 @@
 #include <fstream>
 using namespace std;
 
+
 struct Date
 {
     int dd, mm, yyyy;
+
 };
 
 class Party {
@@ -36,7 +38,12 @@ class Party {
 };
 
 Party::Party(){
-
+    typeParty = "UNKNOWN";
+    id = -1;
+    tableNumber = -1;
+    date.dd = 0;
+    date.mm = 0;
+    date.yyyy = 0;
 }
 Party::~Party(){
 
@@ -60,7 +67,7 @@ void Party::setTableNumber(const int &_tableNumber){
 }
 int Party::getTableNumber(){
     return  tableNumber;
-};
+}
 
 
 void Party::setDate(const Date &_date){
@@ -162,3 +169,7 @@ ostream& operator << (ostream &os, Party &p){
     os << "Thoi gian dat tiec: " << p.date.dd << "/" << p.date.mm << "/" << p.date.yyyy;
     return os;
 }
+
+
+
+
