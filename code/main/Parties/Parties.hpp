@@ -51,7 +51,6 @@ public:
     long getSize();
     void add(const Party &val); // thêm tiệc
     Node *returnNode(const Party &val);
-    // bool isExistParty(const string &id); // kiểm tra đã có tiệc này chưa
     void display(); // xuất các tiệc
 };
 
@@ -84,7 +83,7 @@ void BST::preOrderPrivate(Node *root)
 {
     if (root != NULL)
     {
-        root->data.Output();
+        cout << root->data;
         preOrderPrivate(root->left);
         preOrderPrivate(root->right);
     }
@@ -95,7 +94,7 @@ void BST::inOrderPrivate(Node *root)
     if (root != NULL)
     {
         inOrderPrivate(root->left);
-        root->data.Output();
+        cout << root->data;
         inOrderPrivate(root->right);
     }
 }
@@ -106,7 +105,7 @@ void BST::postOrderPrivate(Node *root)
     {
         postOrderPrivate(root->left);
         postOrderPrivate(root->right);
-        root->data.Output();
+        cout << root->data;
     }
 }
 
