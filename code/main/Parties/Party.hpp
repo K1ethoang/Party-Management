@@ -1,8 +1,13 @@
 #pragma once
 #include <iostream>
 #include <fstream>
+#include "time.h"
+#include "string.h"
 using namespace std;
 
+const string coming_Soon = "Sắp tới";
+const string going_On = "Ðang diễn ra ";
+const string Accomplished = "Ðã hoàn thành";
 
 struct Date
 {
@@ -15,7 +20,8 @@ class Party {
         string typeParty;
         long id;                                                         // ID cua buoi tiec 
         int tableNumber;                                                 // So ban cua buoi tiec
-        Date date;                                            // Thoi gian to chuc buoi tiec
+        Date date;                                                       // Thoi gian to chuc buoi tiec
+        string status;                                          
     public:
         Party();
         ~Party();
@@ -31,10 +37,14 @@ class Party {
         void setDate(const int &_day, const int &_month, const int &_year);
 
         void setTableNumber(const int &_tableNumber);
-        int getTableNumber(); 
+        int getTableNumber();
 
-        friend istream& operator >> (istream &, Party &);
-        friend ostream& operator << (ostream &, Party &);
+        void setStatus();
+        string getStatus();
+
+
+        friend istream &operator>>(istream &is, Party &p);
+        friend ostream &operator<<(ostream &os, Party &p); 
 };
 
 Party::Party(){
@@ -49,10 +59,12 @@ Party::~Party(){
 
 }
 
+
 // Khởi tạo các hàm thuộc tính
 void Party::setID(const long &_id)
 {
-    if(id > 0){
+    if(id > 0)
+    {
         id = _id;
     }
 }
@@ -62,12 +74,14 @@ long Party::getID()
 }
 
 
+
 void Party::setTableNumber(const int &_tableNumber){
     tableNumber = _tableNumber;
 }
 int Party::getTableNumber(){
     return  tableNumber;
 }
+
 
 
 void Party::setDate(const Date &_date){
@@ -85,31 +99,48 @@ Date Party::getDate(){
 }
 
 
+
 bool isValidDate(int day, int month, int year) // kiểm tra ngày nhập
 {
-    if (year <= 0 || month <= 0 || month > 12 || day <= 0 || day > 31 || year >= 2022)
-        return 0;
-    if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12)
-    {
-        if (day <= 31)
-            return 1;
-    }
-    if (month == 4 || month == 6 || month == 9 || month == 11)
-    {
-        if (day <= 30)
-            return 1;
-    }
-    if ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0)
-    {
-        if (day <= 29)
-            return 1;
-    }
-    else
-    {
-        if (day <= 28)
-            return 1;
-    }
-    return 0;
+    if(month<1 || month>12)
+	{
+		return 0;
+	}
+	while (month>=1 && month <=12)
+	{
+		switch (month)
+		{
+			case 1: case 3: case 5: case 7: case 8: case 10: case 12:
+				if(day <1 || day >31)
+				{
+					return 0;
+				}
+				break; 
+			case 4: case 6: case 9: case 11:
+				if(day <1 || day >30)
+				{
+					return 0;
+				}
+				break; 
+			case 2:
+				if(year % 4 ==0  || year % 400 ==0)
+				{
+					if(day <1 || day >29)	
+					{
+						return 0;
+					}
+				} 
+				else 
+				{
+					if(day <1 || day >28)	
+					{
+						return 0;
+					}
+				}
+		}
+		break;
+	}
+    return 1;
 }
 void inputDate(Date &date)
 {
@@ -125,6 +156,8 @@ void inputDate(Date &date)
             printf("\n\t%40c(!) Ngay sinh khong hop le - Nhap lai (!)\n\a", ' ');
     }while (!isValidDate(date.dd, date.mm, date.yyyy));
 }
+
+
 
 void Party::set_TypeParty(){
     int select;
@@ -152,21 +185,55 @@ string Party::get_TypeParty(){
 }
 
 
+
+void Party::setStatus()
+{
+    time_t now=time(0);
+	tm *tgian = localtime(&now);
+    cout << tgian->tm_year+1900;
+	// kh.tg.ngay = tgian->tm_mday;
+	// kh.tg.thang = tgian->tm_mon + 1;
+	// kh.tg.nam = tgian->tm_year + 1900 ; 
+	// kh.tg.gio = tgian->tm_hour ; 
+	// kh.tg.phut = tgian->tm_min;
+	// kh.tg.giay = tgian->tm_sec;	
+    if((date.yyyy < tgian->tm_year+1900) || ((date.yyyy == tgian->tm_year+1900) && (date.mm < tgian->tm_mon+1)) || ((date.yyyy == tgian->tm_year+1900) && (date.mm == tgian->tm_mon+1) && (date.dd < tgian->tm_mday)))
+    {
+        status = Accomplished;
+    }
+    else if(date.yyyy == tgian->tm_year+1900 && date.mm == tgian->tm_mon+1 && date.dd == tgian->tm_mday)
+    {
+        status = going_On;
+    }
+    else
+    {
+        status = coming_Soon;
+    }
+}
+string Party::getStatus()
+{
+    return status;
+}
+
+
 istream& operator >> (istream &is, Party &p){
     p.set_TypeParty();
-    cout << "Nhap ID cua buoi tiec: ";
-    is >> p.id; // ID cua buoi tiec
+    // cout << "Nhap ID cua buoi tiec: ";
+    // is >> p.id; // ID cua buoi tiec
     cout << "Nhap so ban cua buoi tiec: ";
     is >> p.tableNumber; // So ban cua buoi tiec
     cout << "Nhap thoi gian to chuc tiec " << endl;
     inputDate(p.date); // Thoi gian to chuc buoi tiec
+    
+    p.setStatus();
     return is;
 }
 ostream& operator << (ostream &os, Party &p){
     os << "Loai tiec: " << p.typeParty << endl;;
     os<< "ID cua buoi tiec: " << p.id << endl;
     os << "So ban: " << p.tableNumber << endl;
-    os << "Thoi gian dat tiec: " << p.date.dd << "/" << p.date.mm << "/" << p.date.yyyy;
+    os << "Thoi gian dat tiec: " << p.date.dd << "/" << p.date.mm << "/" << p.date.yyyy << endl;
+    os << "Trang thai cua buoi tiec: " << p.status << endl;
     return os;
 }
 

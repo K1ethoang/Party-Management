@@ -5,6 +5,9 @@ using namespace std;
 
 int main()
 {
+    int n = 0;
+    
+
     Party p;
     cout << "\n\t\t-----THONG TIN CUA BUOI TIEC DA NHAP-----\n";
     cin >> p;
