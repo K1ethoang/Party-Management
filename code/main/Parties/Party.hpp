@@ -12,7 +12,6 @@ const string Accomplished = "Ðã hoàn thành";
 struct Date
 {
     int dd, mm, yyyy;
-
 };
 
 class Party {
@@ -47,16 +46,12 @@ class Party {
         friend ostream &operator<<(ostream &os, Party &p); 
 };
 
-Party::Party(){
-    typeParty = "UNKNOWN";
-    id = -1;
-    tableNumber = -1;
-    date.dd = 0;
-    date.mm = 0;
-    date.yyyy = 0;
+Party::Party()
+{
 }
-Party::~Party(){
 
+Party::~Party()
+{
 }
 
 
@@ -68,6 +63,7 @@ void Party::setID(const long &_id)
         id = _id;
     }
 }
+
 long Party::getID()
 {
     return id;
@@ -78,8 +74,10 @@ long Party::getID()
 void Party::setTableNumber(const int &_tableNumber){
     tableNumber = _tableNumber;
 }
-int Party::getTableNumber(){
-    return  tableNumber;
+
+int Party::getTableNumber()
+{
+    return tableNumber;
 }
 
 
@@ -89,12 +87,16 @@ void Party::setDate(const Date &_date){
     date.mm = _date.mm;
     date.yyyy = _date.yyyy;
 }
-void Party::setDate(const int &_day, const int &_month, const int &_year){
+
+void Party::setDate(const int &_day, const int &_month, const int &_year)
+{
     date.dd = _day;
     date.mm = _month;
     date.yyyy = _year;
 }
-Date Party::getDate(){
+
+Date Party::getDate()
+{
     return date;
 }
 
@@ -142,7 +144,7 @@ bool isValidDate(int day, int month, int year) // kiểm tra ngày nhập
 	}
     return 1;
 }
-void inputDate(Date &date)
+void inputDate(Date &date, const string &msg)
 {
     do
     {
@@ -153,8 +155,8 @@ void inputDate(Date &date)
         cout << "Nhap nam: ";
         cin >> date.yyyy;
         if (!isValidDate(date.dd, date.mm, date.yyyy))
-            printf("\n\t%40c(!) Ngay sinh khong hop le - Nhap lai (!)\n\a", ' ');
-    }while (!isValidDate(date.dd, date.mm, date.yyyy));
+            cout << "\n\t" << msg << "\n";
+    } while (!isValidDate(date.dd, date.mm, date.yyyy));
 }
 
 
@@ -170,20 +172,24 @@ void Party::set_TypeParty(){
     cout << "5. Tiec Buffet" << endl;
     cout << "6. Tiec Set Menu" << endl;
 
-    cout << "SELECT: "; cin >> select;
+    cout << "SELECT: ";
+    cin >> select;
 
-    for(int i=0; i<6; i++){
-        if(select == i+1){
+    for (int i = 0; i < 6; i++)
+    {
+        if (select == i + 1)
+        {
             typeParty = _typeParty[i];
             break;
         }
     }
-    cout << "Loai tiec ban vua chon: " << typeParty << endl;;
-}
-string Party::get_TypeParty(){
-    return typeParty;
+    cout << "Loai tiec ban vua chon: " << typeParty << endl;
 }
 
+string Party::get_TypeParty()
+{
+    return typeParty;
+}
 
 
 void Party::setStatus()
@@ -223,20 +229,17 @@ istream& operator >> (istream &is, Party &p){
     cout << "Nhap so ban cua buoi tiec: ";
     is >> p.tableNumber; // So ban cua buoi tiec
     cout << "Nhap thoi gian to chuc tiec " << endl;
-    inputDate(p.date); // Thoi gian to chuc buoi tiec
+    inputDate(p.date, "Ngay thang khong hop le"); // Thoi gian to chuc buoi tiec
     
     p.setStatus();
     return is;
 }
-ostream& operator << (ostream &os, Party &p){
-    os << "Loai tiec: " << p.typeParty << endl;;
-    os<< "ID cua buoi tiec: " << p.id << endl;
+ostream &operator<<(ostream &os, Party &p)
+{
+    os << "Loai tiec: " << p.typeParty << endl;
+    os << "ID cua buoi tiec: " << p.id << endl;
     os << "So ban: " << p.tableNumber << endl;
     os << "Thoi gian dat tiec: " << p.date.dd << "/" << p.date.mm << "/" << p.date.yyyy << endl;
     os << "Trang thai cua buoi tiec: " << p.status << endl;
     return os;
 }
-
-
-
-

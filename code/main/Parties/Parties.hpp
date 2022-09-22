@@ -2,7 +2,7 @@
 #include <iostream>
 #include "Party.hpp"
 
-#define Party Party
+// #define Party Party
 
 using namespace std;
 
@@ -36,12 +36,12 @@ private:
 
     // methods private
 private:
-    void addPrivate(Node *&root, const Party &val); // thêm node
-    void preOrderPrivate(Node *root);               // duyệt đầu
-    void inOrderPrivate(Node *root);                // duyệt giữa
-    void postOrderPrivate(Node *root);              // duyệt sau
-    void freeMemory(Node *root);                    // giải phóng bộ nhớ
-    Node *returnNodePrivate(Node *root, const Party &val);
+    void addPrivate(Node *&root, Party val); // thêm node
+    void preOrderPrivate(Node *root);        // duyệt đầu
+    void inOrderPrivate(Node *root);         // duyệt giữa
+    void postOrderPrivate(Node *root);       // duyệt sau
+    void freeMemory(Node *root);             // giải phóng bộ nhớ
+    Node *returnNodePrivate(Node *root, Party val);
 
     // methods public
 public:
@@ -51,12 +51,11 @@ public:
     long getSize();
     void add(const Party &val); // thêm tiệc
     Node *returnNode(const Party &val);
-    // bool isExistParty(const string &id); // kiểm tra đã có tiệc này chưa
     void display(); // xuất các tiệc
 };
 
 // Methods private
-void BST::addPrivate(Node *&root, const Party &val)
+void BST::addPrivate(Node *&root, Party val)
 {
     if (root == NULL)
         root = new Node(val);
@@ -64,7 +63,7 @@ void BST::addPrivate(Node *&root, const Party &val)
     {
         if (val.getID() < root->data.getID())
             addPrivate(root->left, val);
-        else if (val.getId() > root->data.getID())
+        else if (val.getID() > root->data.getID())
             addPrivate(root->right, val);
     }
 }
@@ -80,12 +79,22 @@ void BST::freeMemory(Node *root)
     }
 }
 
+void BST::preOrderPrivate(Node *root)
+{
+    if (root != NULL)
+    {
+        cout << root->data;
+        preOrderPrivate(root->left);
+        preOrderPrivate(root->right);
+    }
+}
+
 void BST::inOrderPrivate(Node *root)
 {
     if (root != NULL)
     {
         inOrderPrivate(root->left);
-        cout << root->data.Output() << " ";
+        cout << root->data;
         inOrderPrivate(root->right);
     }
 }
@@ -96,11 +105,11 @@ void BST::postOrderPrivate(Node *root)
     {
         postOrderPrivate(root->left);
         postOrderPrivate(root->right);
-        cout << root->data << " ";
+        cout << root->data;
     }
 }
 
-Node *BST::returnNodePrivate(Node *root, const Party &val)
+Node *BST::returnNodePrivate(Node *root, Party val)
 {
     // Nếu node rỗng trả về NULL
     if (root == NULL)
@@ -109,6 +118,11 @@ Node *BST::returnNodePrivate(Node *root, const Party &val)
     {
         // Nếu phần tử cần tìm nhỏ hơn node hiện tại
         if (val.getID() < root->data.getID())
+            returnNodePrivate(root->left, val);
+        else if (val.getID() > root->data.getID())
+            returnNodePrivate(root->right, val);
+        else
+            return root;
     }
 }
 
@@ -140,16 +154,6 @@ void BST::add(const Party &val)
 {
     addPrivate(root, val);
     size++;
-}
-
-void BST::preOrderPrivate(Node *root)
-{
-    if (root != NULL)
-    {
-        cout << root->data << " ";
-        preOrderPrivate(root->left);
-        preOrderPrivate(root->right);
-    }
 }
 
 void BST::display()
