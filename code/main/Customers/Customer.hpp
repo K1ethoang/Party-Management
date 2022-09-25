@@ -18,7 +18,7 @@ public:
     string getFullName();
     void setFullName(const string &_fullName);
     string getPhoneNumber();
-    void setPhoneNumber(const string &_phoneNumber);
+    void setPhoneNumber(string _phoneNumber);
     long getIdOfParty();
     void setIdOfParty(const long &_idOfParty);
     friend istream &operator>>(istream &is, Customer &c);
@@ -56,12 +56,20 @@ string Customer::getPhoneNumber()
     return phoneNumber;
 }
 
-void Customer::setPhoneNumber(const string &_phoneNumber)
+void Customer::setPhoneNumber(string _phoneNumber)
 {
-    if (_phoneNumber.length() != 10)
-        cout << "\nSo dien thoai khong hop le!";
-    else
+    do
+    {
+        if (_phoneNumber.length() != 10)
+        {
+            cout << "\nSo dien thoai khong hop le!!" << endl;
+            cout << "\nNhap lai: ";
+            fflush(stdin);
+            cin >> _phoneNumber;
+        }
         phoneNumber = _phoneNumber;
+
+    } while (_phoneNumber.length() != 10);
 }
 
 long Customer::getIdOfParty()
@@ -71,7 +79,7 @@ long Customer::getIdOfParty()
 
 void Customer::setIdOfParty(const long &_idOfParty)
 {
-    if (idOfParty > 0)
+    if (_idOfParty > 0)
         idOfParty = _idOfParty;
     else
         cout << "\nId cua bua tiec khong hop le!";
@@ -79,25 +87,24 @@ void Customer::setIdOfParty(const long &_idOfParty)
 
 istream &operator>>(istream &is, Customer &c)
 {
+    string phoneNumber;
     cout << "\n\t\t-----NHAP THONG TIN KHACH HANG-----\n";
     cout << "\nNhap ho va ten: ";
     fflush(stdin);
     getline(is, c.fullName);
-    do
-    {
-        cout << "\nNhap so dien thoai: ";
-        getline(is, c.phoneNumber);
-        if (c.phoneNumber.length() != 10)
-            cout << "\nSo dien thoai khong hop le! Nhap lai";
-    } while (c.phoneNumber.length() != 10);
-
+    cout << "\nNhap so dien thoai: ";
+    cin >> phoneNumber;
+    c.setPhoneNumber(phoneNumber);
     return is;
 }
 
 ostream &operator<<(ostream &os, Customer c)
 {
+
     cout << "\n\t\t-----THONG TIN KHACH HANG DA NHAP-----\n";
+    cout << "\nid: " << c.idOfParty;
     cout << "\nHo va ten: " << c.fullName;
     cout << "\nSo dien thoai: " << c.phoneNumber;
+
     return os;
 }

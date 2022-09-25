@@ -21,11 +21,14 @@ private:
 public:
     Customers();
     ~Customers(); // hàm hủy
+    long getSize();
     Node *createNode(const Item &val);
     void addLast(const Item &val);
     void removeFirst();
     void removeLast();
     void remove(const long &id);
+    void find(const long &id);
+    void edit(const long &id);
 };
 
 Customers::Customers()
@@ -43,6 +46,11 @@ Customers::~Customers() // duyệt qua từng phần tử để giải phóng
         delete t;
     }
     Size = 0;
+}
+
+long Customers::getSize()
+{
+    return Size;
 }
 
 Node *Customers::createNode(const Item &val)
@@ -130,5 +138,77 @@ void Customers::remove(const long &id)
             }
             m = k;
         }
+    }
+}
+
+void Customers::find(const long &id)
+{
+    for (Node *i = Head; i != NULL; i = i->pNext)
+    {
+        if (i->data.getIdOfParty() == id)
+        {
+            cout << i->data;
+            break;
+        }
+    }
+}
+
+void Customers::edit(const long &id)
+{
+    bool exist = false;
+
+    for (Node *i = Head; i != NULL; i = i->pNext)
+    {
+
+        if (i->data.getIdOfParty() == id)
+        {
+            exist = true;
+            int choose;
+            bool exit = false;
+            do
+            {
+                system("cls");
+                cout << "\n\t\tNOI DUNG CAN CHINH SUA" << endl;
+                cout << "1. Ho va ten" << endl;
+                cout << "2. So dien thoai" << endl;
+                cout << "0. Thoat" << endl;
+                cout << "\nNhap lua chon cua ban: ";
+                cin >> choose;
+                switch (choose)
+                {
+                case 1:
+                {
+                    string Name;
+                    cout << "\nNhap ho va ten moi: ";
+                    fflush(stdin);
+                    getline(cin, Name);
+                    i->data.setFullName(Name);
+                    cout << "\nCap nhat thanh cong!" << endl;
+                    break;
+                }
+                case 2:
+                {
+                    string phoneNumber;
+                    cout << "\nNhap so dien thoai moi: ";
+                    fflush(stdin);
+                    cin >> phoneNumber;
+                    i->data.setPhoneNumber(phoneNumber);
+                    cout << "\nCap nhat thanh cong!" << endl;
+                    break;
+                }
+                case 0:
+                    exit = true;
+                default:
+                    break;
+                }
+                cout << i->data;
+                system("pause");
+            } while (!exit);
+            break;
+        }
+    }
+    if (exist == false)
+    {
+        cout << "\nKhong ton tai khach hang nay" << endl;
     }
 }
