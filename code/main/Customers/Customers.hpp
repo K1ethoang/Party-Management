@@ -21,6 +21,8 @@ private:
 public:
     Customers();
     ~Customers(); // hàm hủy
+    Node *getHead();
+    Node *getTail();
     long getSize();
     Node *createNode(const Item &val);
     void addLast(const Item &val);
@@ -46,6 +48,16 @@ Customers::~Customers() // duyệt qua từng phần tử để giải phóng
         delete t;
     }
     Size = 0;
+}
+
+Node *Customers::getHead()
+{
+    return Head;
+}
+
+Node *Customers::getTail()
+{
+    return Tail;
 }
 
 long Customers::getSize()
@@ -182,6 +194,7 @@ void Customers::edit(const long &id)
                     cout << "\nNhap ho va ten moi: ";
                     fflush(stdin);
                     getline(cin, Name);
+                    cout << Name << endl;
                     i->data.setFullName(Name);
                     cout << "\nCap nhat thanh cong!" << endl;
                     break;

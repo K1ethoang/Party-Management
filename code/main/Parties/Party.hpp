@@ -176,6 +176,7 @@ istream &operator>>(istream &is, Party &p)
     inputDate(p.date); // Thoi gian to chuc buoi tiec
     return is;
 }
+
 ostream &operator<<(ostream &os, Party &p)
 {
     os << "Loai tiec: " << p.typeParty << endl;
