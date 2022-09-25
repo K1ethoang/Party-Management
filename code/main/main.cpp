@@ -8,7 +8,7 @@ using namespace std;
 
 int main()
 {
-    Customer cc;
+    /*Customer cc;
     Customers c;
     cin >> cc;
     cc.setIdOfParty(2);
@@ -18,6 +18,6 @@ int main()
     // c.edit(2);
     cc.setFullName("test");
     cc.setPhoneNumber("9999999999");
-    cout << cc;
+    cout << cc;*/
     return 0;
 }
