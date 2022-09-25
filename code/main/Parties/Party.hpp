@@ -38,6 +38,12 @@ public:
 
 Party::Party()
 {
+    typeParty = "UNKNOWN";
+    id = -1;
+    tableNumber = -1;
+    date.dd = 0;
+    date.mm = 0;
+    date.yyyy = 0;
 }
 
 Party::~Party()
@@ -170,6 +176,7 @@ istream &operator>>(istream &is, Party &p)
     inputDate(p.date); // Thoi gian to chuc buoi tiec
     return is;
 }
+
 ostream &operator<<(ostream &os, Party &p)
 {
     os << "Loai tiec: " << p.typeParty << endl;
