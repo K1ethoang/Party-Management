@@ -5,9 +5,9 @@
 #include "string.h"
 using namespace std;
 
-const string coming_Soon = "Sắp tới";
-const string going_On = "Ðang diễn ra ";
-const string Accomplished = "Ðã hoàn thành";
+const string coming_Soon = "Sap dien ra";
+const string going_On = "Ðang dien ra";
+const string Accomplished = "Da hoan thanh";
 
 struct Date
 {
@@ -48,6 +48,12 @@ class Party {
 
 Party::Party()
 {
+    typeParty = "UNKNOWN";
+    id = -1;
+    tableNumber = -1;
+    date.dd = 0;
+    date.mm = 0;
+    date.yyyy = 0;
 }
 
 Party::~Party()
