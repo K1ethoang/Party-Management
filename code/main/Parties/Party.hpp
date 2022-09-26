@@ -13,11 +13,46 @@ struct Date
 {
     int dd, mm, yyyy;
 };
-
-class Party {
+class ID{
     private:
-        string typeParty;
-        long id;                                                         // ID cua buoi tiec 
+        long id;
+    public:
+        void InputID();
+        void OutputID();
+        ID();
+        void setID(const long &_id);
+        long getID();
+};
+void ID::InputID()
+{
+    cout << "Nhap ID: "; cin >> id;
+}
+void ID::OutputID()
+{
+    cout << "ID: " << id << endl;
+}
+ID::ID()
+{
+    id = 1;
+}
+void ID::setID(const long &_id)
+{
+    if(id > 0)
+    {
+        id = _id;
+    }
+}
+long ID::getID()
+{
+    return id;
+}
+
+
+
+class Party : public ID
+{
+    private:
+        string typeParty;                                                       // ID cua buoi tiec 
         int tableNumber;                                                 // So ban cua buoi tiec
         Date date;                                                       // Thoi gian to chuc buoi tiec
         string status;                                          
@@ -28,8 +63,6 @@ class Party {
         void set_TypeParty();
         string get_TypeParty();
 
-        void setID(const long &_id);
-        long getID();
 
         void setDate(const Date &_date);
         Date getDate();
@@ -49,7 +82,6 @@ class Party {
 Party::Party()
 {
     typeParty = "UNKNOWN";
-    id = -1;
     tableNumber = -1;
     date.dd = 0;
     date.mm = 0;
@@ -62,18 +94,6 @@ Party::~Party()
 
 
 // Khởi tạo các hàm thuộc tính
-void Party::setID(const long &_id)
-{
-    if(id > 0)
-    {
-        id = _id;
-    }
-}
-
-long Party::getID()
-{
-    return id;
-}
 
 
 
@@ -85,7 +105,6 @@ int Party::getTableNumber()
 {
     return tableNumber;
 }
-
 
 
 void Party::setDate(const Date &_date){
@@ -232,6 +251,7 @@ istream& operator >> (istream &is, Party &p){
     p.set_TypeParty();
     // cout << "Nhap ID cua buoi tiec: ";
     // is >> p.id; // ID cua buoi tiec
+    p.InputID();
     cout << "Nhap so ban cua buoi tiec: ";
     is >> p.tableNumber; // So ban cua buoi tiec
     cout << "Nhap thoi gian to chuc tiec " << endl;
@@ -243,7 +263,7 @@ istream& operator >> (istream &is, Party &p){
 ostream &operator<<(ostream &os, Party &p)
 {
     os << "Loai tiec: " << p.typeParty << endl;
-    os << "ID cua buoi tiec: " << p.id << endl;
+    p.OutputID();
     os << "So ban: " << p.tableNumber << endl;
     os << "Thoi gian dat tiec: " << p.date.dd << "/" << p.date.mm << "/" << p.date.yyyy << endl;
     os << "Trang thai cua buoi tiec: " << p.status << endl;

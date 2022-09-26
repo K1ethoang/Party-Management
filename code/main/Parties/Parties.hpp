@@ -45,13 +45,13 @@ private:
 
     // methods public
 public:
-    BST();  // hàm tạo
-    ~BST(); // hàm huỷ
+    BST();                              // hàm tạo
+    ~BST();                             // hàm huỷ
     Node *getRoot();
     long getSize();
-    void add(const Party &val); // thêm tiệc
+    void add(const Party &val);         // thêm tiệc
     Node *returnNode(const Party &val);
-    void display(); // xuất các tiệc
+    void display();                     // xuất các tiệc
 };
 
 // Methods private

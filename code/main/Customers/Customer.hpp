@@ -2,25 +2,24 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include "../Parties/Party.hpp"
+
 using namespace std;
 
-class Customer
+class Customer : public ID
 {
 private:
     string fullName;
     string phoneNumber;
-    long idOfParty;
 
 public:
     Customer();
-    Customer(const string &_fullName, const string &_phoneNumber, const long &_idOfParty);
+    Customer(const string &_fullName, const string &_phoneNumber);
     ~Customer();
     string getFullName();
     void setFullName(const string &_fullName);
     string getPhoneNumber();
     void setPhoneNumber(const string &_phoneNumber);
-    long getIdOfParty();
-    void setIdOfParty(const long &_idOfParty);
     friend istream &operator>>(istream &is, Customer &c);
     friend ostream &operator<<(ostream &os, Customer c);
 };
@@ -29,14 +28,12 @@ Customer::Customer()
 {
     fullName = "UNKNOWN";
     phoneNumber = "1234567890";
-    idOfParty = 0;
 }
 
-Customer::Customer(const string &_fullName, const string &_phoneNumber, const long &_idOfParty)
+Customer::Customer(const string &_fullName, const string &_phoneNumber)
 {
     fullName = _fullName;
     setPhoneNumber(_phoneNumber);
-    setIdOfParty(_idOfParty);
 }
 
 Customer::~Customer() {}
@@ -64,19 +61,6 @@ void Customer::setPhoneNumber(const string &_phoneNumber)
         phoneNumber = _phoneNumber;
 }
 
-long Customer::getIdOfParty()
-{
-    return idOfParty;
-}
-
-void Customer::setIdOfParty(const long &_idOfParty)
-{
-    if (idOfParty > 0)
-        idOfParty = _idOfParty;
-    else
-        cout << "\nId cua bua tiec khong hop le!";
-}
-
 istream &operator>>(istream &is, Customer &c)
 {
     cout << "\n\t\t-----NHAP THONG TIN KHACH HANG-----\n";
@@ -98,6 +82,7 @@ ostream &operator<<(ostream &os, Customer c)
 {
     cout << "\n\t\t-----THONG TIN KHACH HANG DA NHAP-----\n";
     cout << "\nHo va ten: " << c.fullName;
-    cout << "\nSo dien thoai: " << c.phoneNumber;
+    cout << "\nSo dien thoai: " << c.phoneNumber << endl;
+    c.OutputID();
     return os;
 }
