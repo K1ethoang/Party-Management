@@ -82,6 +82,10 @@ class Party : public ID
 Party::Party()
 {
     typeParty = "UNKNOWN";
+<<<<<<< HEAD
+=======
+    id = -1;
+>>>>>>> 3502dfa868877bd7fb4b21b9f0b93848c100c45f
     tableNumber = -1;
     date.dd = 0;
     date.mm = 0;
@@ -260,6 +264,7 @@ istream& operator >> (istream &is, Party &p){
     p.setStatus();
     return is;
 }
+
 ostream &operator<<(ostream &os, Party &p)
 {
     os << "Loai tiec: " << p.typeParty << endl;
