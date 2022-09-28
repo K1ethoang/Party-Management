@@ -9,17 +9,25 @@ using namespace std;
 int main()
 {
     int n = 0;
-    
+    BST bst;
 
-    Party p;
+    Party p, e, d;
     cout << "\n\t\t-----THONG TIN CUA BUOI TIEC DA NHAP-----\n";
     cin >> p;
-    cout << "\n\t\t-----XUAT THONG TIN CUA BUOI TIEC-----\n";
-    cout << p;
+    bst.add(p);
+    cout << "\n\t\t-----THONG TIN CUA BUOI TIEC DA NHAP-----\n";
+    cin >> e;
+    bst.add(e);
+    cout << "\n\t\t-----THONG TIN CUA BUOI TIEC DA NHAP-----\n";
+    cin >> d;
+    bst.add(d);
 
-    Customer c;
-    cin >> c;
-    cout << c;
+    // cout << "\n\t\t-----XUAT THONG TIN CUA BUOI TIEC-----\n";
+    // bst.display();
+
+    // Customer c;
+    // cin >> c;
+    // cout << c;
 
     return 0;
 }

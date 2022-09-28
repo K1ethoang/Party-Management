@@ -6,7 +6,7 @@
 using namespace std;
 
 const string coming_Soon = "Sap dien ra";
-const string going_On = "Ðang dien ra";
+const string going_On = "Dang dien ra";
 const string Accomplished = "Da hoan thanh";
 
 struct Date
@@ -52,7 +52,7 @@ long ID::getID()
 class Party : public ID
 {
     private:
-        string typeParty;                                                       // ID cua buoi tiec 
+        string typeParty;                                                // ID cua buoi tiec 
         int tableNumber;                                                 // So ban cua buoi tiec
         Date date;                                                       // Thoi gian to chuc buoi tiec
         string status;                                          
@@ -82,10 +82,6 @@ class Party : public ID
 Party::Party()
 {
     typeParty = "UNKNOWN";
-<<<<<<< HEAD
-=======
-    id = -1;
->>>>>>> 3502dfa868877bd7fb4b21b9f0b93848c100c45f
     tableNumber = -1;
     date.dd = 0;
     date.mm = 0;
@@ -225,7 +221,7 @@ void Party::setStatus()
 {
     time_t now=time(0);
 	tm *tgian = localtime(&now);
-    cout << tgian->tm_year+1900;
+    // cout << tgian->tm_year+1900;
 	// kh.tg.ngay = tgian->tm_mday;
 	// kh.tg.thang = tgian->tm_mon + 1;
 	// kh.tg.nam = tgian->tm_year + 1900 ; 
@@ -260,8 +256,8 @@ istream& operator >> (istream &is, Party &p){
     is >> p.tableNumber; // So ban cua buoi tiec
     cout << "Nhap thoi gian to chuc tiec " << endl;
     inputDate(p.date, "Ngay thang khong hop le"); // Thoi gian to chuc buoi tiec
-    
     p.setStatus();
+    cout << "Trang thai cua buoi tiec: " << p.getStatus() << endl;
     return is;
 }
 
