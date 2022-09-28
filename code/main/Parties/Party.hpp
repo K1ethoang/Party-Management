@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <fstream>
+#include <iomanip>
 #include "time.h"
 #include "string.h"
 using namespace std;
@@ -18,7 +19,7 @@ class ID{
         long id;
     public:
         void InputID();
-        void OutputID();
+        long OutputID();
         ID();
         void setID(const long &_id);
         long getID();
@@ -27,9 +28,9 @@ void ID::InputID()
 {
     cout << "Nhap ID: "; cin >> id;
 }
-void ID::OutputID()
+long ID::OutputID()
 {
-    cout << "ID: " << id << endl;
+    return id;
 }
 ID::ID()
 {
@@ -188,7 +189,7 @@ void inputDate(Date &date, const string &msg)
 
 void Party::set_TypeParty(){
     int select;
-    string _typeParty[6] = {"tiec tra", "tiec cuoi", "tiec sinh nhat", "tiec buffet", "tiec set menu"};
+    string _typeParty[6] = {"Tiec Tra", "Tiec Cuoi", "Tiec Sinh Nhat", "Tiec Buffet", "Tiec Set Menu"};
     cout << "-----------LOAI TIEC-----------" << endl;
     cout << "1. Tiec tra" << endl;
     cout << "2. Tiec cuoi" << endl;
@@ -249,13 +250,11 @@ string Party::getStatus()
 
 istream& operator >> (istream &is, Party &p){
     p.set_TypeParty();
-    // cout << "Nhap ID cua buoi tiec: ";
-    // is >> p.id; // ID cua buoi tiec
     p.InputID();
     cout << "Nhap so ban cua buoi tiec: ";
-    is >> p.tableNumber; // So ban cua buoi tiec
+    is >> p.tableNumber;                                // So ban cua buoi tiec
     cout << "Nhap thoi gian to chuc tiec " << endl;
-    inputDate(p.date, "Ngay thang khong hop le"); // Thoi gian to chuc buoi tiec
+    inputDate(p.date, "Ngay thang khong hop le");       // Thoi gian to chuc buoi tiec
     p.setStatus();
     cout << "Trang thai cua buoi tiec: " << p.getStatus() << endl;
     return is;
@@ -263,10 +262,7 @@ istream& operator >> (istream &is, Party &p){
 
 ostream &operator<<(ostream &os, Party &p)
 {
-    os << "Loai tiec: " << p.typeParty << endl;
-    p.OutputID();
-    os << "So ban: " << p.tableNumber << endl;
-    os << "Thoi gian dat tiec: " << p.date.dd << "/" << p.date.mm << "/" << p.date.yyyy << endl;
-    os << "Trang thai cua buoi tiec: " << p.status << endl;
+    int i=1111;
+    os << "\n\t\t|   " << setiosflags(ios:: left) << setw(6) << i <<"|" << "       "  <<setw(22) << p.typeParty << "|" << "   " << setw(9) <<  p.tableNumber << "|" << "        " << setw(10) << p.OutputID() << "|" <<  "    " << setw(2) << p.date.dd << "/" << setw(2) << p.date.mm << "/" << setw(15) << p.date.yyyy << "|" << "    " << setw(20) << p.status << "|" ;
     return os;
 }

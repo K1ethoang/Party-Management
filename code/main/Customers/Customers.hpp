@@ -9,7 +9,7 @@ struct node
     node *pNext;
 };
 
-typedef Customer Item;
+typedef Customer ItemC;
 
 class Customers
 {
@@ -24,8 +24,8 @@ public:
     node *getHead();
     node *getTail();
     long getSize();
-    node *createnode(const Item &val);
-    void addLast(const Item &val);
+    node *createnode(const ItemC &val);
+    void addLast(const ItemC &val);
     void removeFirst();
     void removeLast();
     void remove(const long &id);
@@ -65,7 +65,7 @@ long Customers::getSize()
     return Size;
 }
 
-node *Customers::createnode(const Item &val)
+node *Customers::createnode(const ItemC &val)
 {
     node *p = new node;
     p->data = val;
@@ -73,7 +73,7 @@ node *Customers::createnode(const Item &val)
     return p;
 }
 
-void Customers::addLast(const Item &val)
+void Customers::addLast(const ItemC &val)
 {
     node *p = createnode(val);
     if (Head == NULL)
