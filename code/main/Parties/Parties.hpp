@@ -2,19 +2,19 @@
 #include <iostream>
 #include "Party.hpp"
 
-#define Item Party
+#define ItemP Party
 
 using namespace std;
 
 class NodeP
 {
 public:
-    Item data;
+    ItemP data;
     NodeP *left;
-    NodeP *right;
+    NodeP *right; 
     // Methods
     NodeP();
-    NodeP(Item _data);
+    NodeP(ItemP _data);
 };
 
 NodeP::NodeP()
@@ -22,7 +22,7 @@ NodeP::NodeP()
     left = right = NULL;
 }
 
-NodeP::NodeP(Item _data)
+NodeP::NodeP(ItemP _data)
 {
     data = _data;
     left = right = NULL;
@@ -36,12 +36,12 @@ private:
 
     // methods private
 private:
-    void addPrivate(NodeP *&root, Item val); // thêm node
+    void addPrivate(NodeP *&root, ItemP val); // thêm node
     void preOrderPrivate(NodeP *root);       // duyệt đầu
     void inOrderPrivate(NodeP *root);        // duyệt giữa
     void postOrderPrivate(NodeP *root);      // duyệt sau
     void freeMemory(NodeP *root);            // giải phóng bộ nhớ
-    Item returnNodePrivate(NodeP *root, const long &ID);
+    ItemP returnNodePrivate(NodeP *root, const long &ID);
 
     // methods public
 public:
@@ -55,7 +55,7 @@ public:
 };
 
 // Methods private
-void BST::addPrivate(NodeP *&root, Item val)
+void BST::addPrivate(NodeP *&root, ItemP val)
 {
     if (root == NULL)
         root = new NodeP(val);
@@ -109,11 +109,11 @@ void BST::postOrderPrivate(NodeP *root)
     }
 }
 
-Item BST::returnNodePrivate(NodeP *root, const long &ID)
+ItemP BST::returnNodePrivate(NodeP *root, const long &ID)
 {
     // Nếu node rỗng trả về NULL
     if (root == NULL)
-        return Item();
+        return ItemP();
     else
     {
         // Nếu phần tử cần tìm nhỏ hơn node hiện tại

@@ -3,29 +3,29 @@
 #include "Customer.hpp"
 using namespace std;
 
-struct Node
+struct node
 {
     Customer data;
-    Node *pNext;
+    node *pNext;
 };
 
-typedef Customer Item;
+typedef Customer ItemC;
 
 class Customers
 {
 private:
-    Node *Head;
-    Node *Tail;
+    node *Head;
+    node *Tail;
     long Size;
 
 public:
     Customers();
     ~Customers(); // hàm hủy
-    Node *getHead();
-    Node *getTail();
+    node *getHead();
+    node *getTail();
     long getSize();
-    Node *createNode(const Item &val);
-    void addLast(const Item &val);
+    node *createnode(const ItemC &val);
+    void addLast(const ItemC &val);
     void removeFirst();
     void removeLast();
     void remove(const long &id);
@@ -40,7 +40,7 @@ Customers::Customers()
 }
 Customers::~Customers() // duyệt qua từng phần tử để giải phóng
 {
-    Node *t = NULL;
+    node *t = NULL;
     while (Head != NULL)
     {
         t = Head;
@@ -50,12 +50,12 @@ Customers::~Customers() // duyệt qua từng phần tử để giải phóng
     Size = 0;
 }
 
-Node *Customers::getHead()
+node *Customers::getHead()
 {
     return Head;
 }
 
-Node *Customers::getTail()
+node *Customers::getTail()
 {
     return Tail;
 }
@@ -65,17 +65,17 @@ long Customers::getSize()
     return Size;
 }
 
-Node *Customers::createNode(const Item &val)
+node *Customers::createnode(const ItemC &val)
 {
-    Node *node = new Node;
-    node->data = val;
-    node->pNext = NULL;
-    return node;
+    node *p = new node;
+    p->data = val;
+    p->pNext = NULL;
+    return p;
 }
 
-void Customers::addLast(const Item &val)
+void Customers::addLast(const ItemC &val)
 {
-    Node *p = createNode(val);
+    node *p = createnode(val);
     if (Head == NULL)
     {
         Head = p;
@@ -97,7 +97,7 @@ void Customers::removeFirst()
         return;
     }
 
-    Node *l = Head;     // node l là node sẽ xóa
+    node *l = Head;     // node l là node sẽ xóa
     Head = Head->pNext; // cập nhật lại head là phần tử tiếp theo
     delete l;
     Size--;
@@ -109,7 +109,7 @@ void Customers::removeLast()
     {
         return;
     }
-    for (Node *i = Head; i != NULL; i = i->pNext)
+    for (node *i = Head; i != NULL; i = i->pNext)
     {
         // phát hiện kế cuối
         if (i->pNext == Tail)
@@ -126,23 +126,23 @@ void Customers::removeLast()
 void Customers::remove(const long &id)
 {
 
-    if (Head->data.getIdOfParty() == id)
+    if (Head->data.getID() == id)
     {
         removeFirst();
     }
-    else if (Tail->data.getIdOfParty() == id)
+    else if (Tail->data.getID() == id)
     {
         removeLast();
     }
     else
     {
-        Node *m = new Node;
-        for (Node *k = Head; k != NULL; k = k->pNext)
+        node *m = new node;
+        for (node *k = Head; k != NULL; k = k->pNext)
         {
             // phát hiện ra phần tử cần xóa
-            if (k->data.getIdOfParty() == id)
+            if (k->data.getID() == id)
             {
-                Node *g = k;
+                node *g = k;
                 m->pNext = k->pNext;
                 delete g;
                 Size--;
@@ -155,9 +155,9 @@ void Customers::remove(const long &id)
 
 void Customers::find(const long &id)
 {
-    for (Node *i = Head; i != NULL; i = i->pNext)
+    for (node *i = Head; i != NULL; i = i->pNext)
     {
-        if (i->data.getIdOfParty() == id)
+        if (i->data.getID() == id)
         {
             cout << i->data;
             break;
@@ -169,10 +169,10 @@ void Customers::edit(const long &id)
 {
     bool exist = false;
 
-    for (Node *i = Head; i != NULL; i = i->pNext)
+    for (node *i = Head; i != NULL; i = i->pNext)
     {
 
-        if (i->data.getIdOfParty() == id)
+        if (i->data.getID() == id)
         {
             exist = true;
             int choose;
