@@ -5,7 +5,6 @@
 #include "../Parties/Party.hpp"
 #include "../Parties/Parties.hpp"
 
-
 using namespace std;
 
 class Customer : public ID
@@ -65,7 +64,7 @@ void Customer::setPhoneNumber(const string &_phoneNumber)
 
 istream &operator>>(istream &is, Customer &c)
 {
-    cout << "\n\t\t-----NHAP THONG TIN KHACH HANG-----\n";
+    cout << "\n\t\tNHAP THONG TIN KHACH HANG\n";
     cout << "\nNhap ho va ten: ";
     fflush(stdin);
     getline(is, c.fullName);
@@ -82,7 +81,7 @@ istream &operator>>(istream &is, Customer &c)
 
 ostream &operator<<(ostream &os, Customer c)
 {
-    cout << "\n\t\t-----THONG TIN KHACH HANG DA NHAP-----\n";
+    cout << "\n\t\tTHONG TIN KHACH HANG DA NHAP\n";
     cout << "\nHo va ten: " << c.fullName;
     cout << "\nSo dien thoai: " << c.phoneNumber << endl;
     c.OutputID();

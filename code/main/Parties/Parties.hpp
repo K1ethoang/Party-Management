@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include "Party.hpp"
+#include "../Customers/Customer.hpp"
 
 #define ItemP Party
 
@@ -11,7 +12,7 @@ class NodeP
 public:
     ItemP data;
     NodeP *left;
-    NodeP *right; 
+    NodeP *right;
     // Methods
     NodeP();
     NodeP(ItemP _data);
@@ -37,10 +38,10 @@ private:
     // methods private
 private:
     void addPrivate(NodeP *&root, ItemP val); // thêm node
-    void preOrderPrivate(NodeP *root);       // duyệt đầu
-    void inOrderPrivate(NodeP *root);        // duyệt giữa
-    void postOrderPrivate(NodeP *root);      // duyệt sau
-    void freeMemory(NodeP *root);            // giải phóng bộ nhớ
+    void preOrderPrivate(NodeP *root);        // duyệt đầu
+    void inOrderPrivate(NodeP *root);         // duyệt giữa
+    void postOrderPrivate(NodeP *root);       // duyệt sau
+    void freeMemory(NodeP *root);             // giải phóng bộ nhớ
     ItemP returnNodePrivate(NodeP *root, const long &ID);
 
     // methods public
@@ -152,12 +153,21 @@ long BST::getSize()
 
 void BST::add()
 {
+    Customer c;
+    cin >> c;
+    cout << c;
     Party p;
-    cout << "Nhap thong tin tiec can them: " << endl;
     cin >> p;
+    cout << p;
     addPrivate(root, p);
     size++;
     cout << "Them thanh cong!" << endl;
+
+    // Party p;
+    // cout << "Nhap thong tin tiec can them: " << endl;
+    // cin >> p;
+    // addPrivate(root, p);
+    // size++;
 }
 
 void BST::searchParty()
