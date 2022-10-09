@@ -4,6 +4,9 @@
 #include <iomanip>
 #include "time.h"
 #include "string.h"
+// #include "..\ID.hpp"
+#include "../Customers/Customer.hpp"
+#include "../Customers/Customers.hpp"
 using namespace std;
 
 const string coming_Soon = "Sap dien ra";
@@ -14,56 +17,28 @@ struct Date
 {
     int dd, mm, yyyy;
 };
-class ID{
-    private:
-        long id;
-    public:
-        void InputID();
-        long OutputID();
-        ID();
-        void setID(const long &_id);
-        long getID();
-};
-void ID::InputID()
-{
-    cout << "Nhap ID: "; cin >> id;
-}
-long ID::OutputID()
-{
-    return id;
-}
-ID::ID()
-{
-    id = 1;
-}
-void ID::setID(const long &_id)
-{
-    if(id > 0)
-    {
-        id = _id;
-    }
-}
-long ID::getID()
-{
-    return id;
-}
-
-
 
 class Party : public ID
 {
     private:
+        static int order;
+        int stt;
         string typeParty;                                                // ID cua buoi tiec 
         int tableNumber;                                                 // So ban cua buoi tiec
         Date date;                                                       // Thoi gian to chuc buoi tiec
-        string status;                                          
+        string status; 
+        Customer c;                                         
     public:
         Party();
         ~Party();
 
+        int getOrder();
+        int getStt();
+
+        Customer getCustomer();
+
         void set_TypeParty();
         string get_TypeParty();
-
 
         void setDate(const Date &_date);
         Date getDate();
@@ -80,8 +55,19 @@ class Party : public ID
         friend ostream &operator<<(ostream &os, Party &p); 
 };
 
+Customer Party::getCustomer(){
+    return c;
+};
+
+int Party::order = 1;
+int Party::getStt(){
+    return stt;
+};
+
 Party::Party()
 {
+    // order ++;
+    stt = order;
     typeParty = "UNKNOWN";
     tableNumber = -1;
     date.dd = 0;
@@ -96,6 +82,9 @@ Party::~Party()
 
 // Khởi tạo các hàm thuộc tính
 
+int Party::getOrder(){
+    return order;
+}
 
 
 void Party::setTableNumber(const int &_tableNumber){
@@ -249,6 +238,9 @@ string Party::getStatus()
 
 
 istream& operator >> (istream &is, Party &p){
+    p.order++;
+
+    is >> p.c;
     p.set_TypeParty();
     p.InputID();
     cout << "Nhap so ban cua buoi tiec: ";
@@ -256,13 +248,11 @@ istream& operator >> (istream &is, Party &p){
     cout << "Nhap thoi gian to chuc tiec " << endl;
     inputDate(p.date, "Ngay thang khong hop le");       // Thoi gian to chuc buoi tiec
     p.setStatus();
-    cout << "Trang thai cua buoi tiec: " << p.getStatus() << endl;
     return is;
 }
 
 ostream &operator<<(ostream &os, Party &p)
 {
-    int i=1111;
-    os << "\n\t\t|   " << setiosflags(ios:: left) << setw(6) << i <<"|" << "       "  <<setw(22) << p.typeParty << "|" << "   " << setw(9) <<  p.tableNumber << "|" << "        " << setw(10) << p.OutputID() << "|" <<  "    " << setw(2) << p.date.dd << "/" << setw(2) << p.date.mm << "/" << setw(15) << p.date.yyyy << "|" << "    " << setw(20) << p.status << "|" ;
+    os << "\n\t\t|   " << setiosflags(ios:: left) << setw(6) << p.getStt() <<"|" << "       "  <<setw(22) << p.typeParty << "|" << "   " << setw(9) <<  p.tableNumber << "|" << "        " << setw(10) << p.OutputID() << "|" <<  "    " << setw(2) << p.date.dd << "/" << setw(2) << p.date.mm << "/" << setw(15) << p.date.yyyy << "|" << "    " << setw(20) << p.status << "|" ;
     return os;
 }

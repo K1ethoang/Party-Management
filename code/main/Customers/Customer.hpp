@@ -2,9 +2,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
-#include "../Parties/Party.hpp"
-#include "../Parties/Parties.hpp"
-
+#include "..\ID.hpp"
 
 using namespace std;
 
