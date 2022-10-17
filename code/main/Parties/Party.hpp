@@ -24,31 +24,43 @@ public:
     void InputID();
     long OutputID();
     ID();
-    void setID(const long &_id);
+    void setID(long &_id);
     long getID();
 };
 
 void ID::InputID()
 {
-    cout << "Nhap ID: ";
-    cin >> id;
+    long _id;
+    cout << "\nNhap ID: ";
+    cin >> _id;
+    setID(_id);
 }
 
 long ID::OutputID()
 {
     return id;
 }
+
 ID::ID()
 {
-    id = 1;
+    id = -1;
 }
-void ID::setID(const long &_id)
+
+void ID::setID(long &_id)
 {
-    if (id > 0)
+    do
     {
-        id = _id;
-    }
+        if (_id <= 0)
+        {
+            cout << "\n\tId vua nhap khong hop le!!";
+            cout << "\nNhap lai: ";
+            cin >> _id;
+        }
+        else
+            id = _id;
+    } while (_id <= 0);
 }
+
 long ID::getID()
 {
     return id;
@@ -85,6 +97,7 @@ public:
 
 Party::Party()
 {
+    ID();
     typeParty = "UNKNOWN";
     tableNumber = -1;
     date.dd = 0;

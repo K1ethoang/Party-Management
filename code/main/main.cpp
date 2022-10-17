@@ -1,13 +1,7 @@
-#include <iostream>
-#include "./Customers/Customer.hpp"
-#include "./Customers/Customers.hpp"
-// #include "./Parties/Party.hpp"
-// #include "./Parties/Parties.hpp"
-// #pragma once
-
-using namespace std;
+#include "./program/program.hpp"
 
 int main()
 {
+    program();
     return 0;
 }

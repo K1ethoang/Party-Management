@@ -18,6 +18,7 @@ public:
     T back();
     int sizeOf();
     void display();
+    void clear();
 };
 
 template <class T>
@@ -27,6 +28,8 @@ Queue<T>::Queue()
 template <class T>
 Queue<T>::~Queue()
 {
+    if (size == 0)
+        return;
     Node<T> *t = NULL;
     while (pFront != NULL)
     {
@@ -34,6 +37,7 @@ Queue<T>::~Queue()
         pFront = pFront->pNext;
         delete t;
     }
+    pFront = pBack = NULL;
     size = 0;
 }
 
@@ -48,7 +52,7 @@ bool Queue<T>::isEmpty()
 template <class T>
 void Queue<T>::push(const T &value) // thêm vào cuối
 {
-    Node<T> *p = new Node(value);
+    Node<T> *p = new Node<T>(value);
     if (p == NULL)
     {
         cout << "\n\t\t(!) Not enough memory to allocation (!)" << endl;
@@ -101,9 +105,27 @@ int Queue<T>::sizeOf()
     return this->size;
 }
 
+void printfQ(int &stt)
+{
+    cout << "\t\t+---------+--------------------------------------------------------------------+----------------------+";
+    cout << "\n\t\t|   " << setiosflags(ios::left) << setw(6) << stt << "|";
+}
+
 template <class T>
 void Queue<T>::display()
 {
+    int stt = 0;
+
     for (Node<T> *t = pFront; t != NULL; t = t->pNext)
-        cout << t->data << " ";
+    {
+        stt++;
+        printfQ(stt);
+        cout << t->data << " " << endl;
+    }
+}
+
+template <class T>
+void Queue<T>::clear()
+{
+    ~Queue();
 }
