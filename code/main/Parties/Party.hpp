@@ -7,6 +7,7 @@
 // #include "..\ID.hpp"
 #include "../Customers/Customer.hpp"
 #include "../Customers/Customers.hpp"
+#include "../Template\Queue/Queue.hpp"
 using namespace std;
 
 const string coming_Soon = "Sap dien ra";
@@ -27,7 +28,8 @@ class Party : public ID
         int tableNumber;                                                 // So ban cua buoi tiec
         Date date;                                                       // Thoi gian to chuc buoi tiec
         string status; 
-        Customer c;                                         
+        Customer c;     
+        Queue<string> menu;                                    
     public:
         Party();
         ~Party();
@@ -50,6 +52,8 @@ class Party : public ID
         void setStatus();
         string getStatus();
 
+        void setMenu();
+        Queue<string> getMenu();
 
         friend istream &operator>>(istream &is, Party &p);
         friend ostream &operator<<(ostream &os, Party &p); 
@@ -179,26 +183,33 @@ void inputDate(Date &date, const string &msg)
 void Party::set_TypeParty(){
     int select;
     string _typeParty[6] = {"Tiec Tra", "Tiec Cuoi", "Tiec Sinh Nhat", "Tiec Buffet", "Tiec Set Menu"};
-    cout << "-----------LOAI TIEC-----------" << endl;
-    cout << "1. Tiec tra" << endl;
-    cout << "2. Tiec cuoi" << endl;
-    cout << "3. Tiec sinh nhat" << endl;
-    cout << "4. Tiec ruou" << endl;
-    cout << "5. Tiec Buffet" << endl;
-    cout << "6. Tiec Set Menu" << endl;
-
-    cout << "SELECT: ";
-    cin >> select;
-
-    for (int i = 0; i < 6; i++)
+    do
     {
-        if (select == i + 1)
+        cout << "-----------LOAI TIEC-----------" << endl;
+        cout << "1. Tiec tra" << endl;
+        cout << "2. Tiec cuoi" << endl;
+        cout << "3. Tiec sinh nhat" << endl;
+        cout << "4. Tiec ruou" << endl;
+        cout << "5. Tiec Buffet" << endl;
+        cout << "6. Tiec Set Menu" << endl;
+        cout << "SELECT: ";
+        cin >> select;
+        
+        for (int i = 0; i < 6; i++)
         {
-            typeParty = _typeParty[i];
-            break;
+            if (select == i + 1)
+            {
+                typeParty = _typeParty[i];
+                cout << "Da chon!" << endl;
+                break;
+            }
         }
+        
     }
-    cout << "Loai tiec ban vua chon: " << typeParty << endl;
+    while(select<1 || select>6);
+    
+    
+    
 }
 
 string Party::get_TypeParty()
@@ -231,15 +242,45 @@ void Party::setStatus()
         status = coming_Soon;
     }
 }
+
 string Party::getStatus()
 {
     return status;
 }
 
+void Party::setMenu()
+{
+    int luachon;
+    while(true)
+    {
+        string name_Food;
+        cout << "Ban co muon nhap mon an vao Menu? " << endl;
+        cout << "1. Yes" << endl;
+        cout << "0. No" << endl;
+        cin >> luachon ;
+        if(luachon == 0)
+        {
+            break;
+        }
+        else if(luachon == 1)
+        {
+            cout << "nhap ten mon an: "; fflush(stdin);
+            getline(cin, name_Food);
+            menu.push(name_Food);
+        }
+        else
+        {
+            cout << "Vui long nhap lai lua chon cua ban!!!" << endl;
+        }
+    }
+}
+Queue<string> Party::getMenu()
+{
+    return menu;
+}
 
 istream& operator >> (istream &is, Party &p){
     p.order++;
-
     is >> p.c;
     p.set_TypeParty();
     p.InputID();
@@ -248,11 +289,14 @@ istream& operator >> (istream &is, Party &p){
     cout << "Nhap thoi gian to chuc tiec " << endl;
     inputDate(p.date, "Ngay thang khong hop le");       // Thoi gian to chuc buoi tiec
     p.setStatus();
+    p.setMenu();
     return is;
 }
 
 ostream &operator<<(ostream &os, Party &p)
 {
     os << "\n\t\t|   " << setiosflags(ios:: left) << setw(6) << p.getStt() <<"|" << "       "  <<setw(22) << p.typeParty << "|" << "   " << setw(9) <<  p.tableNumber << "|" << "        " << setw(10) << p.OutputID() << "|" <<  "    " << setw(2) << p.date.dd << "/" << setw(2) << p.date.mm << "/" << setw(15) << p.date.yyyy << "|" << "    " << setw(20) << p.status << "|" ;
+    os << "\n\t\t+=========+=============================+============+==================+=========================+========================+" ;
+    p.getMenu().display();
     return os;
 }

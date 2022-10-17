@@ -77,7 +77,7 @@ void Queue<T>::pop()
     else
     {
         Node<T> *t = pFront;
-        pFront = pFront->pNext; // cập nhật lại Node đầu là Node kế tiếp
+        pFront = pFront->pNext; // cập nhật lại Node<T> đầu là Node<T> kế tiếp
         delete t;
         size--;
     }
