@@ -77,7 +77,7 @@ void Queue<T>::pop()
     else
     {
         Node<T> *t = pFront;
-        pFront = pFront->pNext; // cập nhật lại Node đầu là Node kế tiếp
+        pFront = pFront->pNext; // cập nhật lại Node<T> đầu là Node<T> kế tiếp
         delete t;
         size--;
     }
@@ -101,19 +101,12 @@ int Queue<T>::sizeOf()
     return this->size;
 }
 
-void printfQ(int &stt){
-    cout << "\t\t+---------+--------------------------------------------------------------------+----------------------+" ;
-    cout << "\n\t\t|   " << setiosflags(ios:: left) << setw(6) << stt <<"|" ;
-}
+
 
 template <class T>
 void Queue<T>::display()
 {   
-    int stt = 0;
-
     for (Node<T> *t = pFront; t != NULL; t = t->pNext){
-        stt++;
-        printfQ(stt);
         cout << t->data << " " << endl;
         
 }   }
