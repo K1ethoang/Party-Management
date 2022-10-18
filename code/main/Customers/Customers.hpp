@@ -24,7 +24,7 @@ public:
     node *getHead();
     node *getTail();
     long getSize();
-    node *createnode(const ItemC &val);
+    node *createNode(const ItemC &val);
     void addLast(const ItemC &val);
     void removeFirst();
     void removeLast();
@@ -65,7 +65,7 @@ long Customers::getSize()
     return Size;
 }
 
-node *Customers::createnode(const ItemC &val)
+node *Customers::createNode(const ItemC &val)
 {
     node *p = new node;
     p->data = val;
@@ -75,7 +75,7 @@ node *Customers::createnode(const ItemC &val)
 
 void Customers::addLast(const ItemC &val)
 {
-    node *p = createnode(val);
+    node *p = createNode(val);
     if (Head == NULL)
     {
         Head = p;

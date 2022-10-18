@@ -1,18 +1,8 @@
-#include <iostream>
-#include "./Customers/Customer.hpp"
-#include "./Customers/Customers.hpp"
-#include "./Parties/Party.hpp"
-#include "./Parties/Parties.hpp"
-#include "./ListFood/Foods.hpp"
-// #include "./Template\Queue/Queue.hpp"
-
-#pragma once
-using namespace std;
-
-// using namespace std;
+#include "./program/program.hpp"
 
 int main()
 {
+<<<<<<< HEAD
      
     TypeFood _tf;
     food _food;
@@ -51,5 +41,8 @@ int main()
     bst.display();
     cout << "\n\t\t+=========+=============================+============+==================+=========================+========================+" ;
 
+=======
+    program();
+>>>>>>> 848de0e44fbb6261fcd4c223149157032c392d6e
     return 0;
 }

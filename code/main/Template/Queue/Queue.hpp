@@ -18,6 +18,7 @@ public:
     T back();
     int sizeOf();
     void display();
+    void clear();
 };
 
 template <class T>
@@ -27,6 +28,8 @@ Queue<T>::Queue()
 template <class T>
 Queue<T>::~Queue()
 {
+    if (size == 0)
+        return;
     Node<T> *t = NULL;
     while (pFront != NULL)
     {
@@ -34,6 +37,7 @@ Queue<T>::~Queue()
         pFront = pFront->pNext;
         delete t;
     }
+    pFront = pBack = NULL;
     size = 0;
 }
 
@@ -101,12 +105,17 @@ int Queue<T>::sizeOf()
     return this->size;
 }
 
-
-
 template <class T>
 void Queue<T>::display()
-{   
-    for (Node<T> *t = pFront; t != NULL; t = t->pNext){
+{
+    for (Node<T> *t = pFront; t != NULL; t = t->pNext)
+    {
         cout << t->data << " " << endl;
-        
-}   }
+    }
+}
+
+template <class T>
+void Queue<T>::clear()
+{
+    ~Queue();
+}
