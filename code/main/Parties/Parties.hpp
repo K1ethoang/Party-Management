@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include "Party.hpp"
+#include "../Customers/Customer.hpp"
 
 #define ItemP Party
 
@@ -11,7 +12,7 @@ class NodeP
 public:
     ItemP data;
     NodeP *left;
-    NodeP *right; 
+    NodeP *right;
     // Methods
     NodeP();
     NodeP(ItemP _data);
@@ -36,12 +37,14 @@ private:
 
     // methods private
 private:
-    void addPrivate(NodeP *&root, ItemP val); // thêm node
-    void preOrderPrivate(NodeP *root);       // duyệt đầu
-    void inOrderPrivate(NodeP *root);        // duyệt giữa
-    void postOrderPrivate(NodeP *root);      // duyệt sau
-    void freeMemory(NodeP *root);            // giải phóng bộ nhớ
-    ItemP returnNodePrivate(NodeP *root, const long &ID);
+    bool isExistIDPrivate(NodeP *root, const long &_ID);
+    void addPrivate(NodeP *&root, ItemP val);              // thêm node
+    void preOrderPrivate(NodeP *root);                     // duyệt đầu
+    void inOrderPrivate(NodeP *root);                      // duyệt giữa
+    void postOrderPrivate(NodeP *root);                    // duyệt sau
+    void freeMemory(NodeP *root);                          // giải phóng bộ nhớ
+    ItemP returnNodePrivate(NodeP *root, const long &_ID); // tìm node
+    void removeNodePrivate(NodeP *root, const long &_ID);  // xoá node
 
     // methods public
 public:
@@ -49,12 +52,30 @@ public:
     ~BST(); // hàm huỷ
     NodeP *getRoot();
     long getSize();
-    void add();         // thêm tiệc
-    void searchParty(); // tìm tiệc
-    void display();     // xuất các tiệc
+    bool isExistID(const long &_ID); // kiểm tra trùng ID
+    void add(const ItemP &value);    // thêm tiệc
+    ItemP find();                    // tìm tiệc
+    void remove();                   // xoá tiệc
+    void display();                  // xuất các tiệc
 };
 
 // Methods private
+bool BST::isExistIDPrivate(NodeP *root, const long &_ID)
+{
+    if (root == NULL)
+        return false;
+    if (root->data.getID() == _ID)
+        return true;
+    else
+    {
+        if (_ID < root->data.getID())
+            return isExistIDPrivate(root->left, _ID);
+        else if (_ID > root->data.getID())
+            return isExistIDPrivate(root->right, _ID);
+    }
+    return false;
+}
+
 void BST::addPrivate(NodeP *&root, ItemP val)
 {
     if (root == NULL)
@@ -109,21 +130,29 @@ void BST::postOrderPrivate(NodeP *root)
     }
 }
 
-ItemP BST::returnNodePrivate(NodeP *root, const long &ID)
+ItemP BST::returnNodePrivate(NodeP *root, const long &_ID)
 {
     // Nếu node rỗng trả về NULL
     if (root == NULL)
         return ItemP();
     else
     {
-        // Nếu phần tử cần tìm nhỏ hơn node hiện tại
-        if (ID < root->data.getID())
-            returnNodePrivate(root->left, ID);
-        else if (ID > root->data.getID())
-            returnNodePrivate(root->right, ID);
-        else
+        if (root->data.getID() == _ID)
             return root->data;
+        else
+        {
+            // Nếu phần tử cần tìm nhỏ hơn node hiện tại
+            if (_ID < root->data.getID())
+                returnNodePrivate(root->left, _ID);
+            else if (_ID > root->data.getID())
+                returnNodePrivate(root->right, _ID);
+        }
     }
+    return ItemP();
+}
+
+void BST::removeNodePrivate(NodeP *root, const long &_ID)
+{
 }
 
 // Methods public
@@ -150,35 +179,39 @@ long BST::getSize()
     return size;
 }
 
-void BST::add()
+bool BST::isExistID(const long &_ID)
 {
-    Party p;
-    cout << "Nhap thong tin tiec can them: " << endl;
-    cin >> p;
-    addPrivate(root, p);
-    size++;
-    cout << "Them thanh cong!" << endl;
+    if (isExistIDPrivate(root, _ID))
+        return true;
+    return false;
 }
 
-void BST::searchParty()
+void BST::add(const ItemP &value)
+{
+    addPrivate(root, value);
+    size++;
+}
+
+ItemP BST::find()
 {
     long ID;
-    bool isExist = false;
-    do
-    {
-        cout << "Nhap id cua tiec: ";
-        cin >> ID;
-        Party res = returnNodePrivate(root, ID);
-        if (res.getID() < 0)
-        {
-            cout << "Id ban vua nhap khong dung hoac khong co tiec nay!!" << endl;
-        }
-        else
-        {
-            cout << res;
-            isExist = true;
-        }
-    } while (!isExist);
+    cout << "\nNhap ID can tim: ";
+    cin >> ID;
+    Party res = returnNodePrivate(root, ID);
+    if (res.getID() < 0)
+        cout << "\nKhong co !";
+    else
+        cout << res;
+    return res;
+}
+
+void BST::remove()
+{
+    long ID;
+    cout << "\nnNhap id cua tiec can xoa: ";
+    cin >> ID;
+    removeNodePrivate(root, ID);
+    cout << "\nXoa thanh cong !";
 }
 
 void BST::display()
