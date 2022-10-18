@@ -41,7 +41,13 @@ void program()
         }
         case 2:
         {
-            editDisplay(parties);
+            long ID;
+            cout << "\n\t\t\tNhap ID tiec can sua: ";
+            cin >> ID;
+            if (!parties.isExistID(ID))
+                cout << "\n\t\t\tKhong co ton tai tiec nay!! Nhap lai";
+            else
+                editDisplay(parties, ID);
             break;
         }
         case 3:

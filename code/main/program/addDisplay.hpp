@@ -1,12 +1,15 @@
 #include "program.hpp"
 
+#define ItemP Party
+
 inline void addDisplay(BST &parties);
+void saveData(BST &parties, ItemP data);
 
 inline void addDisplay(BST &parties)
 {
     int choose;
-    bool isExit = false;
-    Party p;
+    bool isExit = false, isSaved = false;
+    ItemP p;
     do
     {
         system("cls");
@@ -22,12 +25,21 @@ inline void addDisplay(BST &parties)
         switch (choose)
         {
         case 0:
-            isExit = true;
+        {
+            if (isSaved)
+                isExit = true;
+            else
+            {
+                cout << "\n\t\t\t\tLuu thong tin truoc khi thoat!!";
+                pressAnyKey();
+            }
             break;
+        }
         case 1:
         {
             cout << "\n\t\t\t\t1.1. Nhap thong tin khach hang\n";
             pressAnyKey();
+            isSaved = false;
             break;
         }
         case 2:
@@ -37,20 +49,21 @@ inline void addDisplay(BST &parties)
             cout << "\n\t\t\t\tThong tin tiec vua nhap\n";
             cout << p;
             pressAnyKey();
+            isSaved = false;
             break;
         }
         case 3:
         {
             cout << "\n\t\t\t\t1.3. Chon mon an\n";
             pressAnyKey();
+            isSaved = false;
             break;
         }
         case 4:
         {
             cout << "\n\t\t\t\t1.4. Luu thong tin\n";
-            parties.add(p);
-            cout << "\n\t\t\t\tLuu thanh cong\n";
-            cout << p;
+
+            isSaved = true;
             pressAnyKey();
             break;
         }
@@ -60,4 +73,11 @@ inline void addDisplay(BST &parties)
             break;
         }
     } while (!isExit);
+}
+
+void saveData(BST &parties, ItemP data)
+{
+    parties.add(data);
+    cout << "\n\t\t\t\tLuu thanh cong\n";
+    cout << data;
 }
