@@ -38,8 +38,8 @@ int main()
     BST bst;
     cout << "\n\t\t-----THONG TIN CUA BUOI TIEC DA NHAP-----\n";
     bst.add();
-    // cout << "\n\t\t-----THONG TIN CUA BUOI TIEC DA NHAP-----\n";
-    // bst.add();
+    cout << "\n\t\t-----THONG TIN CUA BUOI TIEC DA NHAP-----\n";
+    bst.add();
     // cout << "\n\t\t-----THONG TIN CUA BUOI TIEC DA NHAP-----\n";
     // bst.add(); 
 
