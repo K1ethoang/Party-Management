@@ -1,7 +1,5 @@
 #include "program.hpp"
 
-#define ItemP Party
-
 inline void addDisplay(BST &parties);
 void saveData(BST &parties, ItemP data);
 
@@ -9,6 +7,7 @@ inline void addDisplay(BST &parties)
 {
     int choose;
     bool isExit = false, isSaved = false;
+    ItemC c;
     ItemP p;
     do
     {
@@ -18,26 +17,18 @@ inline void addDisplay(BST &parties)
         cout << "\n\t\t\t\t| 1.2. Nhap thong tin tiec           |";
         cout << "\n\t\t\t\t| 1.3. Chon mon an                   |";
         cout << "\n\t\t\t\t| 1.4. Luu thong tin                 |";
-        cout << "\n\t\t\t\t| 0. Tro ve                          |";
+        cout << "\n\t\t\t\t| 1.0. Tro ve                        |";
         cout << "\n\t\t\t\t+ ================================== +";
         cout << "\n\t\t\t\tNhap lua chon cua ban -> ";
         cin >> choose;
         switch (choose)
         {
-        case 0:
-        {
-            if (isSaved)
-                isExit = true;
-            else
-            {
-                cout << "\n\t\t\t\tLuu thong tin truoc khi thoat!!";
-                pressAnyKey();
-            }
-            break;
-        }
         case 1:
         {
             cout << "\n\t\t\t\t1.1. Nhap thong tin khach hang\n";
+            cin >> c;
+            cout << "\n\t\t\t\tThong tin khach hang vua nhap\n";
+            cout << c;
             pressAnyKey();
             isSaved = false;
             break;
@@ -62,9 +53,16 @@ inline void addDisplay(BST &parties)
         case 4:
         {
             cout << "\n\t\t\t\t1.4. Luu thong tin\n";
-
+            saveData(parties, p);
             isSaved = true;
             pressAnyKey();
+            break;
+        }
+        case 0:
+        {
+            checkExit(isExit, isSaved);
+            if (isSaved)
+                saveData(parties, p);
             break;
         }
         default:

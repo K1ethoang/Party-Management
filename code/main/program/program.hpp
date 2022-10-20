@@ -2,6 +2,7 @@
 #include <iostream>
 #include "../Parties/Parties.hpp"
 #include "pressAnykey.hpp"
+#include "checkReturn.hpp"
 #include "./addDisplay.hpp"
 #include "./editDisplay.hpp"
 using namespace std;
@@ -45,7 +46,10 @@ void program()
             cout << "\n\t\t\tNhap ID tiec can sua: ";
             cin >> ID;
             if (!parties.isExistID(ID))
-                cout << "\n\t\t\tKhong co ton tai tiec nay!! Nhap lai";
+            {
+                cout << "\n\t\t\tKhong co ton tai tiec nay";
+                pressAnyKey();
+            }
             else
                 editDisplay(parties, ID);
             break;
@@ -55,6 +59,20 @@ void program()
             cout << "\n\t\t\t\tDanh sach cac tiec\n";
             parties.display();
             pressAnyKey();
+            break;
+        }
+        case 4:
+        {
+            long ID;
+            cout << "\n\t\t\t\tNhap ID tiec can xoa: ";
+            cin >> ID;
+            if (!parties.isExistID(ID))
+            {
+                cout << "\n\t\t\tKhong co ton tai tiec nay";
+                pressAnyKey();
+            }
+            else
+                parties.remove(ID);
             break;
         }
         default:

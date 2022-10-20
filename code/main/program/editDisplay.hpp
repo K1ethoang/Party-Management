@@ -1,13 +1,12 @@
 #include "program.hpp"
 
-#define ItemP Party
+inline void editDisplay(BST &parties, const long &ID);
 
-inline void editDisplay(BST parties, const long &ID);
-
-inline void editDisplay(BST parties, const long &ID)
+inline void editDisplay(BST &parties, const long &ID)
 {
     int choose;
     bool isExit = false, isSaved = false;
+    ItemP partyNeedToEdit = parties.search(ID);
     ItemP p;
     do
     {
@@ -23,27 +22,19 @@ inline void editDisplay(BST parties, const long &ID)
         cin >> choose;
         switch (choose)
         {
-        case 0:
-        {
-            if (isSaved)
-                isExit = true;
-            else
-                cout << "\n\t\t\t\tLuu thong tin truoc khi thoat!!";
-            pressAnyKey();
-            break;
-        }
         case 1:
         {
-            cout << "\n\t\t\t\t2.1. Nhap thong tin khach hang\n";
+            system("cls");
+            cout << "\n\t\t\t\t2.1. Thong tin khach hang\n";
             pressAnyKey();
             isSaved = false;
             break;
         }
         case 2:
         {
-            cout << "\n\t\t\t\t2.2. Nhap thong tin tiec\n";
+            system("cls");
+            cout << "\n\t\t\t\t2.2. Thong tin tiec\n";
             cin >> p;
-            cout << "\n\t\t\t\tThong tin tiec vua nhap\n";
             cout << p;
             pressAnyKey();
             isSaved = false;
@@ -51,7 +42,8 @@ inline void editDisplay(BST parties, const long &ID)
         }
         case 3:
         {
-            cout << "\n\t\t\t\t2.3. Chon mon an\n";
+            system("cls");
+            cout << "\n\t\t\t\t2.3. Mon an\n";
             pressAnyKey();
             isSaved = false;
             break;
@@ -59,11 +51,19 @@ inline void editDisplay(BST parties, const long &ID)
         case 4:
         {
             cout << "\n\t\t\t\t2.4. Luu thong tin\n";
-            parties.add(p);
+            partyNeedToEdit = p;
+            parties.update(partyNeedToEdit);
             cout << "\n\t\t\t\tLuu thanh cong\n";
             cout << p;
             isSaved = true;
             pressAnyKey();
+            break;
+        }
+        case 0:
+        {
+            checkExit(isExit, isSaved);
+            if (isSaved)
+                parties.update(partyNeedToEdit);
             break;
         }
         default:
