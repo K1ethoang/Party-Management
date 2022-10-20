@@ -1,13 +1,13 @@
 #include "program.hpp"
 
 inline void editDisplay(BST &parties, const long &ID);
+void chooseFunctionParty(ItemP &party);
 
 inline void editDisplay(BST &parties, const long &ID)
 {
     int choose;
     bool isExit = false, isSaved = false;
     ItemP partyNeedToEdit = parties.search(ID);
-    ItemP p;
     do
     {
         system("cls");
@@ -34,8 +34,8 @@ inline void editDisplay(BST &parties, const long &ID)
         {
             system("cls");
             cout << "\n\t\t\t\t2.2. Thong tin tiec\n";
-            cin >> p;
-            cout << p;
+            chooseFunctionParty(partyNeedToEdit);
+            partyNeedToEdit.outputParty();
             pressAnyKey();
             isSaved = false;
             break;
@@ -51,10 +51,9 @@ inline void editDisplay(BST &parties, const long &ID)
         case 4:
         {
             cout << "\n\t\t\t\t2.4. Luu thong tin\n";
-            partyNeedToEdit = p;
             parties.update(partyNeedToEdit);
             cout << "\n\t\t\t\tLuu thanh cong\n";
-            cout << p;
+            partyNeedToEdit.outputParty();
             isSaved = true;
             pressAnyKey();
             break;
@@ -64,6 +63,76 @@ inline void editDisplay(BST &parties, const long &ID)
             checkExit(isExit, isSaved);
             if (isSaved)
                 parties.update(partyNeedToEdit);
+            break;
+        }
+        default:
+            cout << "\n\t\t\t\tLua chon khong hop le !! Nhap lai";
+            pressAnyKey();
+            break;
+        }
+    } while (!isExit);
+}
+
+void chooseFunctionParty(ItemP &party)
+{
+    int choose;
+    bool isExit = false, isSaved = false;
+    do
+    {
+        system("cls");
+        cout << "\n\t\t\t\t1. Loai tiec";
+        cout << "\n\t\t\t\t2. So ban";
+        cout << "\n\t\t\t\t3. Thoi gian to chuc";
+        cout << "\n\t\t\t\t4. Mon an";
+        cout << "\n\t\t\t\t5. Luu";
+        cout << "\n\t\t\t\t0. Thoat";
+        cout << "\n\t\t\t\tNhap lua chon cua ban -> ";
+        cin >> choose;
+        switch (choose)
+        {
+        case 1:
+        {
+            string newTypeParty = typeParty_();
+            party.set_TypeParty(newTypeParty);
+            pressAnyKey();
+            break;
+        }
+        case 2:
+        {
+            int newTableNumber;
+            cout << "\n\t\t\tNhap so ban moi: ";
+            cin >> newTableNumber;
+            party.setTableNumber(newTableNumber);
+            pressAnyKey();
+            break;
+        }
+        case 3:
+        {
+            Date newDate;
+            cout << "\n\t\t\tNhap thoi gian to chuc moi: ";
+            inputDate(newDate, "Ngay thang khong hop le"); // Thoi gian to chuc buoi tiec
+            party.setDate(newDate);
+            party.setStatus();
+            pressAnyKey();
+            break;
+        }
+        case 4:
+        {
+            cout << "\n\t\t\tNhap thoi gian to chuc moi\n";
+            pressAnyKey();
+            break;
+        }
+        case 5:
+        {
+            cout << "\n\t\t\tLuu thanh cong\n\n";
+            isSaved = true;
+            party.outputParty();
+            pressAnyKey();
+            break;
+        }
+        case 0:
+        {
+            checkExit(isExit, isSaved);
             break;
         }
         default:
