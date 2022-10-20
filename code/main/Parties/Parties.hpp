@@ -44,7 +44,9 @@ private:
     void postOrderPrivate(NodeP *root);                    // duyệt sau
     void freeMemory(NodeP *root);                          // giải phóng bộ nhớ
     ItemP returnNodePrivate(NodeP *root, const long &_ID); // tìm node
-    void removeNodePrivate(NodeP *root, const long &_ID);  // xoá node
+    void updateNodePrivate(NodeP *root, ItemP value);      // cập nhật node
+    long findSmallestPrivate(NodeP *root);
+    void removeNodePrivate(NodeP *root, const long &_ID); // xoá node
 
     // methods public
 public:
@@ -54,9 +56,11 @@ public:
     long getSize();
     bool isExistID(const long &_ID); // kiểm tra trùng ID
     void add(const ItemP &value);    // thêm tiệc
-    ItemP find();                    // tìm tiệc
-    void remove();                   // xoá tiệc
-    void display();                  // xuất các tiệc
+    ItemP search(const long &ID);    // tìm tiệc
+    void update(const ItemP &value); // chỉnh sửa tiệc
+    long findSmallest(NodeP *root);
+    void remove(const long &ID); // xoá tiệc
+    void display();              // xuất các tiệc
 };
 
 // Methods private
@@ -151,6 +155,26 @@ ItemP BST::returnNodePrivate(NodeP *root, const long &_ID)
     return ItemP();
 }
 
+void BST::updateNodePrivate(NodeP *root, ItemP value)
+{
+    if (root != NULL)
+    {
+        if (root->data.getID() == value.getID())
+            root->data = value;
+        else
+        {
+            if (value.getID() < root->data.getID())
+                updateNodePrivate(root->left, value);
+            else if (value.getID() > root->data.getID())
+                updateNodePrivate(root->right, value);
+        }
+    }
+}
+
+long BST::findSmallestPrivate(NodeP *root)
+{
+}
+
 void BST::removeNodePrivate(NodeP *root, const long &_ID)
 {
 }
@@ -192,26 +216,24 @@ void BST::add(const ItemP &value)
     size++;
 }
 
-ItemP BST::find()
+ItemP BST::search(const long &ID)
 {
-    long ID;
-    cout << "\nNhap ID can tim: ";
-    cin >> ID;
-    Party res = returnNodePrivate(root, ID);
-    if (res.getID() < 0)
-        cout << "\nKhong co !";
-    else
-        cout << res;
-    return res;
+    return returnNodePrivate(root, ID);
 }
 
-void BST::remove()
+void BST::update(const ItemP &value)
 {
-    long ID;
-    cout << "\nnNhap id cua tiec can xoa: ";
-    cin >> ID;
+    updateNodePrivate(root, value);
+}
+
+long BST::findSmallest(NodeP *root)
+{
+    return findSmallestPrivate(root);
+}
+
+void BST::remove(const long &ID)
+{
     removeNodePrivate(root, ID);
-    cout << "\nXoa thanh cong !";
 }
 
 void BST::display()

@@ -14,6 +14,61 @@ const string coming_Soon = "Sap dien ra";
 const string going_On = "Dang dien ra";
 const string Accomplished = "Da hoan thanh";
 
+string typeParty_()
+{
+    int select;
+    string _typeParty[6] = {"Tiec Tra", "Tiec Cuoi", "Tiec Sinh Nhat", "Tiec Buffet", "Tiec Set Menu"};
+    do
+    {
+        cout << "-----------LOAI TIEC-----------" << endl;
+        for (int i = 0; i < 6; i++)
+        {
+            cout << i + 1 << ". " << _typeParty[i] << endl;
+        }
+        cin >> select;
+
+        for (int i = 0; i < 6; i++)
+        {
+            if (select == i + 1)
+            {
+                cout << "Da chon!" << endl;
+                return _typeParty[i];
+            }
+        }
+
+    } while (select < 1 || select > 6);
+}
+
+Queue<string> Menu()
+{
+    Queue<string> menu_;
+    int luachon;
+    while (true)
+    {
+        string name_Food;
+        cout << "Ban co muon nhap mon an vao Menu? " << endl;
+        cout << "1. Yes" << endl;
+        cout << "0. No" << endl;
+        cin >> luachon;
+        if (luachon == 0)
+        {
+            break;
+        }
+        else if (luachon == 1)
+        {
+            cout << "nhap ten mon an: ";
+            fflush(stdin);
+            getline(cin, name_Food);
+            menu_.push(name_Food);
+        }
+        else
+        {
+            cout << "Vui long nhap lai lua chon cua ban!!!" << endl;
+        }
+    }
+    return menu_;
+}
+//
 struct Date
 {
     int dd, mm, yyyy;
@@ -22,9 +77,7 @@ struct Date
 class Party : public ID
 {
 private:
-    static int order;
-    int stt;
-    string typeParty; // ID cua buoi tiec
+    string typeParty; // loai tiec
     int tableNumber;  // So ban cua buoi tiec
     Date date;        // Thoi gian to chuc buoi tiec
     string status;
@@ -35,12 +88,10 @@ public:
     Party();
     ~Party();
 
-    int getOrder();
-    int getStt();
-
+    void setCustomer(const Customer &_c);
     Customer getCustomer();
 
-    void set_TypeParty();
+    void set_TypeParty(const string &_typeParty);
     string get_TypeParty();
 
     void setDate(const Date &_date);
@@ -53,28 +104,27 @@ public:
     void setStatus();
     string getStatus();
 
-    void setMenu();
+    void setMenu(const Queue<string> &_menu);
     Queue<string> getMenu();
+
+    void outputParty();
 
     friend istream &operator>>(istream &is, Party &p);
     friend ostream &operator<<(ostream &os, Party &p);
 };
+
+void Party::setCustomer(const Customer &_c)
+{
+    c = _c;
+}
 
 Customer Party::getCustomer()
 {
     return c;
 };
 
-int Party::order = 1;
-int Party::getStt()
-{
-    return stt;
-};
-
 Party::Party()
 {
-    // order ++;
-    stt = order;
     typeParty = "UNKNOWN";
     tableNumber = -1;
     date.dd = 0;
@@ -87,11 +137,6 @@ Party::~Party()
 }
 
 // Khởi tạo các hàm thuộc tính
-
-int Party::getOrder()
-{
-    return order;
-}
 
 void Party::setTableNumber(const int &_tableNumber)
 {
@@ -188,33 +233,9 @@ void inputDate(Date &date, const string &msg)
     } while (!isValidDate(date.dd, date.mm, date.yyyy));
 }
 
-void Party::set_TypeParty()
+void Party::set_TypeParty(const string &_typeParty)
 {
-    int select;
-    string _typeParty[6] = {"Tiec Tra", "Tiec Cuoi", "Tiec Sinh Nhat", "Tiec Buffet", "Tiec Set Menu"};
-    do
-    {
-        cout << "-----------LOAI TIEC-----------" << endl;
-        cout << "1. Tiec tra" << endl;
-        cout << "2. Tiec cuoi" << endl;
-        cout << "3. Tiec sinh nhat" << endl;
-        cout << "4. Tiec ruou" << endl;
-        cout << "5. Tiec Buffet" << endl;
-        cout << "6. Tiec Set Menu" << endl;
-        cout << "SELECT: ";
-        cin >> select;
-
-        for (int i = 0; i < 6; i++)
-        {
-            if (select == i + 1)
-            {
-                typeParty = _typeParty[i];
-                cout << "Da chon!" << endl;
-                break;
-            }
-        }
-
-    } while (select < 1 || select > 6);
+    typeParty = _typeParty;
 }
 
 string Party::get_TypeParty()
@@ -252,56 +273,45 @@ string Party::getStatus()
     return status;
 }
 
-void Party::setMenu()
+void Party::setMenu(const Queue<string> &_menu)
 {
-    int luachon;
-    while (true)
-    {
-        string name_Food;
-        cout << "Ban co muon nhap mon an vao Menu? " << endl;
-        cout << "1. Yes" << endl;
-        cout << "0. No" << endl;
-        cin >> luachon;
-        if (luachon == 0)
-        {
-            break;
-        }
-        else if (luachon == 1)
-        {
-            cout << "nhap ten mon an: ";
-            fflush(stdin);
-            getline(cin, name_Food);
-            menu.push(name_Food);
-        }
-        else
-        {
-            cout << "Vui long nhap lai lua chon cua ban!!!" << endl;
-        }
-    }
+    menu = _menu;
 }
 Queue<string> Party::getMenu()
 {
     return menu;
 }
 
+void Party::outputParty()
+{
+
+    cout << "\t\tID cua tiec: " << OutputID() << endl;
+    cout << "\t\tLoai tiec: " << typeParty << endl;
+    cout << "\t\tSo ban cua tiec: " << tableNumber << endl;
+    cout << "\t\tThoi gian dat tiec: " << date.dd << "/" << date.mm << "/" << date.yyyy << endl;
+}
+
 istream &operator>>(istream &is, Party &p)
 {
-    p.order++;
-    is >> p.c;
-    p.set_TypeParty();
+    // is >> p.c;
+    string res = typeParty_();
+    p.set_TypeParty(res);
     p.InputID();
     cout << "Nhap so ban cua buoi tiec: ";
     is >> p.tableNumber; // So ban cua buoi tiec
     cout << "Nhap thoi gian to chuc tiec " << endl;
     inputDate(p.date, "Ngay thang khong hop le"); // Thoi gian to chuc buoi tiec
     p.setStatus();
-    p.setMenu();
+    Queue<string> resMenu = Menu(); // food của menu
+    p.setMenu(resMenu);
     return is;
 }
 
 ostream &operator<<(ostream &os, Party &p)
 {
-    os << "\n\t\t|   " << setiosflags(ios::left) << setw(6) << p.getStt() << "|"
+    // p.outputParty();
+    os << "\n\t\t|   " << setiosflags(ios::left) << setw(6) << " "
+       << "|"
        << "       " << setw(22) << p.typeParty << "|"
        << "   " << setw(9) << p.tableNumber << "|"
        << "        " << setw(10) << p.OutputID() << "|"
