@@ -17,21 +17,24 @@ const string Accomplished = "Da hoan thanh";
 string typeParty_()
 {
     int select;
-    string _typeParty[6] = {"Tiec Tra", "Tiec Cuoi", "Tiec Sinh Nhat", "Tiec Buffet", "Tiec Set Menu"};
+    string _typeParty[6] = {"Tiec Tra", "Tiec Cuoi", "Tiec Sinh Nhat", "Tiec Buffet", "Tiec Ruou", "Tiec Set Menu"};
     do
     {
-        cout << "-----------LOAI TIEC-----------" << endl;
+        cout << "\n\t\t\t\t __________LOAI TIEC__________ " << endl;
+        cout << "\t\t\t\t|                             |" << endl;
         for (int i = 0; i < 6; i++)
         {
-            cout << i + 1 << ". " << _typeParty[i] << endl;
+            cout << "\t\t\t\t| " << i + 1 << ". " << setiosflags(ios::left) << setw(25) << _typeParty[i] << "|" << endl;
         }
+        cout << "\t\t\t\t|_____________________________|" << endl;
+        cout << "\t\t\t\tNhap loai tiec muon chon -> ";
         cin >> select;
 
         for (int i = 0; i < 6; i++)
         {
             if (select == i + 1)
             {
-                cout << "Da chon!" << endl;
+                cout << "\t\t\t\t--> Da chon thanh cong!" << endl;
                 return _typeParty[i];
             }
         }
@@ -42,28 +45,28 @@ string typeParty_()
 Queue<string> Menu()
 {
     Queue<string> menu_;
-    int luachon;
+    char luachon;
     while (true)
     {
+        // system("cls");
         string name_Food;
-        cout << "Ban co muon nhap mon an vao Menu? " << endl;
-        cout << "1. Yes" << endl;
-        cout << "0. No" << endl;
+        cout << "<+> Ban co muon THEM mon an vao Menu? (1.YES / 0.NO)?" << endl;
+        cout << "\tSelect -> ";
         cin >> luachon;
-        if (luachon == 0)
+        if (luachon == '0')
         {
             break;
         }
-        else if (luachon == 1)
+        else if (luachon == '1')
         {
-            cout << "nhap ten mon an: ";
+            cout << "\tNhap mon an: ";
             fflush(stdin);
             getline(cin, name_Food);
             menu_.push(name_Food);
         }
         else
         {
-            cout << "Vui long nhap lai lua chon cua ban!!!" << endl;
+            cout << "<!> Vui long nhap lai lua chon cua ban!!!" << endl;
         }
     }
     return menu_;
@@ -222,11 +225,11 @@ void inputDate(Date &date, const string &msg)
 {
     do
     {
-        cout << "Nhap ngay: ";
+        cout << "\t Nhap ngay : ";
         cin >> date.dd;
-        cout << "Nhap thang: ";
+        cout << "\t Nhap thang: ";
         cin >> date.mm;
-        cout << "Nhap nam: ";
+        cout << "\t Nhap nam  : ";
         cin >> date.yyyy;
         if (!isValidDate(date.dd, date.mm, date.yyyy))
             cout << "\n\t" << msg << "\n";
@@ -284,11 +287,10 @@ Queue<string> Party::getMenu()
 
 void Party::outputParty()
 {
-
-    cout << "\t\tID cua tiec: " << OutputID() << endl;
-    cout << "\t\tLoai tiec: " << typeParty << endl;
-    cout << "\t\tSo ban cua tiec: " << tableNumber << endl;
-    cout << "\t\tThoi gian dat tiec: " << date.dd << "/" << date.mm << "/" << date.yyyy << endl;
+    cout << "\t\t\t\tID cua tiec       : " << OutputID() << endl;
+    cout << "\t\t\t\tLoai tiec         : " << typeParty << endl;
+    cout << "\t\t\t\tSo ban cua tiec   : " << tableNumber << endl;
+    cout << "\t\t\t\tThoi gian dat tiec: " << date.dd << "/" << date.mm << "/" << date.yyyy << endl;
 }
 
 istream &operator>>(istream &is, Party &p)
@@ -297,13 +299,13 @@ istream &operator>>(istream &is, Party &p)
     string res = typeParty_();
     p.set_TypeParty(res);
     p.InputID();
-    cout << "Nhap so ban cua buoi tiec: ";
+    cout << "<+> Nhap so ban cua buoi tiec: ";
     is >> p.tableNumber; // So ban cua buoi tiec
-    cout << "Nhap thoi gian to chuc tiec " << endl;
+    cout << "<+> Nhap thoi gian to chuc tiec:" << endl;
     inputDate(p.date, "Ngay thang khong hop le"); // Thoi gian to chuc buoi tiec
     p.setStatus();
-    Queue<string> resMenu = Menu(); // food của menu
-    p.setMenu(resMenu);
+    // Queue<string> resMenu = Menu(); // food của menu
+    // p.setMenu(resMenu);
     return is;
 }
 

@@ -2,12 +2,14 @@
 
 inline void editDisplay(BST &parties, const long &ID);
 void chooseFunctionParty(ItemP &party);
+void chooseFunctionCustomer(ItemC &customer);
 
 inline void editDisplay(BST &parties, const long &ID)
 {
     int choose;
     bool isExit = false, isSaved = false;
-    ItemP partyNeedToEdit = parties.search(ID);
+    ItemP partyNeedToEdit = parties.search(ID); // search ID có party cần chỉnh sửa
+    ItemC customerNeedToEdit = partyNeedToEdit.getCustomer();
     do
     {
         system("cls");
@@ -26,6 +28,7 @@ inline void editDisplay(BST &parties, const long &ID)
         {
             system("cls");
             cout << "\n\t\t\t\t2.1. Thong tin khach hang\n";
+            chooseFunctionCustomer(customerNeedToEdit);
             pressAnyKey();
             isSaved = false;
             break;
@@ -127,6 +130,62 @@ void chooseFunctionParty(ItemP &party)
             cout << "\n\t\t\tLuu thanh cong\n\n";
             isSaved = true;
             party.outputParty();
+            pressAnyKey();
+            break;
+        }
+        case 0:
+        {
+            checkExit(isExit, isSaved);
+            break;
+        }
+        default:
+            cout << "\n\t\t\t\tLua chon khong hop le !! Nhap lai";
+            pressAnyKey();
+            break;
+        }
+    } while (!isExit);
+}
+
+void chooseFunctionCustomer(ItemC &customer)
+{
+    int choose;
+    bool isExit = false, isSaved = false;
+    do
+    {
+        system("cls");
+        cout << "\n\t\t\t\t1. Ho ten";
+        cout << "\n\t\t\t\t2. So dien thoai";
+        cout << "\n\t\t\t\t3. Luu";
+        cout << "\n\t\t\t\t0. Thoat";
+        cout << "\n\t\t\t\tNhap lua chon cua ban -> ";
+        cin >> choose;
+        switch (choose)
+        {
+        case 1:
+        {
+            string newNameCustomer;
+            cout << "\n\t\t\tNhap ho va ten moi: ";
+            fflush(stdin);
+            getline(cin, newNameCustomer);
+            customer.setFullName(newNameCustomer);
+            pressAnyKey();
+            break;
+        }
+        case 2:
+        {
+            string newPhoneNumberCustomer;
+            cout << "\n\t\t\tNhap so dien thoai moi: ";
+            fflush(stdin);
+            getline(cin, newPhoneNumberCustomer);
+            customer.setPhoneNumber(newPhoneNumberCustomer);
+            pressAnyKey();
+            break;
+        }
+        case 3:
+        {
+            cout << "\n\t\t\tLuu thanh cong\n\n";
+            isSaved = true;
+            customer.outputCustomer();
             pressAnyKey();
             break;
         }
