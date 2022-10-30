@@ -17,7 +17,7 @@ public:
 void ID::InputID()
 {
     long _id;
-    cout << "\nNhap ID: ";
+    cout << "\n<+> Nhap ID: ";
     cin >> _id;
     setID(_id);
 }

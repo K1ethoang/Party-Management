@@ -20,6 +20,7 @@ public:
     void setFullName(const string &_fullName);
     string getPhoneNumber();
     void setPhoneNumber(const string &_phoneNumber);
+    void outputCustomer();
     friend istream &operator>>(istream &is, Customer &c);
     friend ostream &operator<<(ostream &os, Customer c);
 };
@@ -59,6 +60,14 @@ void Customer::setPhoneNumber(const string &_phoneNumber)
         cout << "\nSo dien thoai khong hop le!";
     else
         phoneNumber = _phoneNumber;
+}
+
+void Customer::outputCustomer()
+{
+    cout << "\n\t\tTHONG TIN KHACH HANG DA NHAP\n";
+    cout << "\nHo va ten: " << fullName;
+    cout << "\nSo dien thoai: " << phoneNumber << endl;
+    OutputID();
 }
 
 istream &operator>>(istream &is, Customer &c)

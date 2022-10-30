@@ -45,8 +45,8 @@ private:
     void freeMemory(NodeP *root);                          // giải phóng bộ nhớ
     ItemP returnNodePrivate(NodeP *root, const long &_ID); // tìm node
     void updateNodePrivate(NodeP *root, ItemP value);      // cập nhật node
-    long findSmallestPrivate(NodeP *root);
-    void removeNodePrivate(NodeP *root, const long &_ID); // xoá node
+    void findNodeSmallestPrivate(NodeP *&x, NodeP *&y);
+    void removeNodePrivate(NodeP *&root, const long &_ID); // xoá node
 
     // methods public
 public:
@@ -58,9 +58,8 @@ public:
     void add(const ItemP &value);    // thêm tiệc
     ItemP search(const long &ID);    // tìm tiệc
     void update(const ItemP &value); // chỉnh sửa tiệc
-    long findSmallest(NodeP *root);
-    void remove(const long &ID); // xoá tiệc
-    void display();              // xuất các tiệc
+    void remove(const long &ID);     // xoá tiệc
+    void display();                  // xuất các tiệc
 };
 
 // Methods private
@@ -171,12 +170,56 @@ void BST::updateNodePrivate(NodeP *root, ItemP value)
     }
 }
 
-long BST::findSmallestPrivate(NodeP *root)
+void BST::findNodeSmallestPrivate(NodeP *&x, NodeP *&y) // Node *y = root->right
 {
+    // duyệt sang bên trái nhất
+    if (y->left != NULL)
+    {
+        findNodeSmallestPrivate(x, y->left); // tìm ra node trái nhất
+    }
+    else // tìm ra được node trái nhất rồi (y->left == NULL)
+    {
+        x->data = y->data; // cập nhật cái data của node cần xoá chính là data của node thế mạng
+        x = y;             // cho node x (là node mà chúng ta sẽ xoá đi sau này) cho node x trỏ đến node thế mạng ==> ra khỏi hàm thì sẽ xoá node x
+        y = y->right;      // bản chất chỗ này chính là cập nhật lại mlk cho node cha của node thế mạng (mà chúng ta xoá) với node con của node thế mạng
+    }
 }
 
-void BST::removeNodePrivate(NodeP *root, const long &_ID)
+void BST::removeNodePrivate(NodeP *&root, const long &_ID)
 {
+    if (root == NULL)
+        return;
+    else
+    {
+        if (_ID < root->data.getID())
+            removeNodePrivate(root->left, _ID);
+        else if (_ID > root->data.getID())
+            removeNodePrivate(root->right, _ID);
+        else // đã tìm ra node cần xoá - root->data.getID() == _ID
+        {
+            // node x là node thế mạng - tí nữa xoá nó
+            // xoá được cho cả node lá
+            NodeP *x = root;
+            if (root->left == NULL) // nếu nhánh trái NULL <=> đây chính là con phải
+            {
+                root = root->right; // duyệt sang phải của cái node cần xoá
+                // để update mlk giữa node cha của node cần xoá với node con của node cần xoá
+            }
+            else if (root->right == NULL) // nếu nhánh phải NULL <=> đây là node có 1 con chính là con trái
+            {
+                root = root->left; // duyệt sang trái của cái node cần xoá
+                // để update mlk giữa node cha của node cần xoá với node con của node cần xoá
+            }
+            else // node cần xoá là node có 2 con
+            {
+                // cách 1: Tìm node trái nhất của cây con phải (cây con phải của node cần xoá)
+                NodeP *y = root->right; // node y là node thế mạng cho node cần xoá - node này sẽ đảm bảo nhận nhiệm vụ là tìm ra node trái nhất
+
+                // cách 2: ngược lại với cách 1
+            }
+            delete x;
+        }
+    }
 }
 
 // Methods public
@@ -224,11 +267,6 @@ ItemP BST::search(const long &ID)
 void BST::update(const ItemP &value)
 {
     updateNodePrivate(root, value);
-}
-
-long BST::findSmallest(NodeP *root)
-{
-    return findSmallestPrivate(root);
 }
 
 void BST::remove(const long &ID)

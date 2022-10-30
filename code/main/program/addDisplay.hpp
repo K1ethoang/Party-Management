@@ -25,7 +25,8 @@ inline void addDisplay(BST &parties)
         {
         case 1:
         {
-            cout << "\n\t\t\t\t1.1. Nhap thong tin khach hang\n";
+            system("cls");
+            cout << "\n\t\t\t\t[1.1. NHAP THONG TIN KHACH HANG]\n";
             cin >> c;
             cout << c;
             p.setCustomer(c);
@@ -35,7 +36,8 @@ inline void addDisplay(BST &parties)
         }
         case 2:
         {
-            cout << "\n\t\t\t\t1.2. Nhap thong tin tiec\n";
+            system("cls");
+            cout << "\n\t\t\t\t[1.2. NHAP THONG TIN TIEC]\n";
             cin >> p;
             do
             {
@@ -47,7 +49,8 @@ inline void addDisplay(BST &parties)
                     p.setID(id);
                 }
             } while (parties.isExistID(p.getID()));
-            cout << "\n\t\t\t\tThong tin tiec vua nhap\n";
+            system("cls");
+            cout << "\n\t\t\t\t[Thong tin tiec vua nhap]\n";
             p.outputParty();
             pressAnyKey();
             isSaved = false;
@@ -55,14 +58,16 @@ inline void addDisplay(BST &parties)
         }
         case 3:
         {
-            cout << "\n\t\t\t\t1.3. Chon mon an\n";
+            cout << "\n\t\t\t\t[1.3. Chon mon an]\n";
+            Queue<string> resMenu = Menu(); // food của menu
+            // p.setMenu(resMenu);
             pressAnyKey();
             isSaved = false;
             break;
         }
         case 4:
         {
-            cout << "\n\t\t\t\t1.4. Luu thong tin\n\n";
+            cout << "\n\t\t\t\t[1.4. Luu thong tin]\n\n";
             saveData(parties, p);
             isSaved = true;
             pressAnyKey();
@@ -73,6 +78,8 @@ inline void addDisplay(BST &parties)
             checkExit(isExit, isSaved);
             if (isSaved)
                 saveData(parties, p);
+            if (p.getID() == -1)
+                parties.remove(-1);
             break;
         }
         default:
