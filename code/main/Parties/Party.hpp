@@ -319,14 +319,15 @@ istream &operator>>(istream &is, Party &p)
 ostream &operator<<(ostream &os, Party &p)
 {
     // p.outputParty();
-    os << "\n\t\t|   " << setiosflags(ios::left) << setw(6) << " "
-       << "|"
-       << "       " << setw(22) << p.typeParty << "|"
-       << "   " << setw(9) << p.tableNumber << "|"
+    os << "\n\t\t" << setiosflags(ios::left) << "|"
        << "        " << setw(10) << p.OutputID() << "|"
-       << "    " << setw(2) << p.date.dd << "/" << setw(2) << p.date.mm << "/" << setw(15) << p.date.yyyy << "|"
-       << "    " << setw(20) << p.status << "|";
-    os << "\n\t\t+=========+=============================+============+==================+=========================+========================+";
+       << "               " << setw(24) << p.typeParty << "|"
+       << "          " << setw(12) << p.tableNumber << "|"
+       << "         " << setw(2) << p.date.dd << "/" << setw(2) << p.date.mm << "/" << setw(12) << p.date.yyyy << "|"
+       << "        " << setw(18) << p.status << "|";
+    os << "\n\t\t+==================+=======================================+======================+===========================+==========================+";
+    // os << "Name: " << p.c.getFullName() << endl;
     p.getMenu().display();
+
     return os;
 }
