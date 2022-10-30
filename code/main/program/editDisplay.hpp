@@ -29,7 +29,6 @@ inline void editDisplay(BST &parties, const long &ID)
             system("cls");
             cout << "\n\t\t\t\t2.1. Thong tin khach hang\n";
             chooseFunctionCustomer(customerNeedToEdit);
-            pressAnyKey();
             isSaved = false;
             break;
         }
@@ -39,7 +38,6 @@ inline void editDisplay(BST &parties, const long &ID)
             cout << "\n\t\t\t\t2.2. Thong tin tiec\n";
             chooseFunctionParty(partyNeedToEdit);
             partyNeedToEdit.outputParty();
-            pressAnyKey();
             isSaved = false;
             break;
         }
@@ -58,7 +56,6 @@ inline void editDisplay(BST &parties, const long &ID)
             cout << "\n\t\t\t\tLuu thanh cong\n";
             partyNeedToEdit.outputParty();
             isSaved = true;
-            pressAnyKey();
             break;
         }
         case 0:

@@ -107,7 +107,7 @@ public:
     void setStatus();
     string getStatus();
 
-    void setMenu(const Queue<string> &_menu);
+    void setMenu(Queue<string> _menu);
     Queue<string> getMenu();
 
     void outputParty();
@@ -276,10 +276,17 @@ string Party::getStatus()
     return status;
 }
 
-void Party::setMenu(const Queue<string> &_menu)
+void Party::setMenu(Queue<string> _menu)
 {
-    menu = _menu;
+    if (menu.sizeOf() != 0)
+        menu.clear();
+    while (_menu.sizeOf() != 0)
+    {
+        menu.push(_menu.front());
+        _menu.pop();
+    }
 }
+
 Queue<string> Party::getMenu()
 {
     return menu;
