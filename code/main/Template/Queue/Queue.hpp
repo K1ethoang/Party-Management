@@ -117,5 +117,15 @@ void Queue<T>::display()
 template <class T>
 void Queue<T>::clear()
 {
-    ~Queue();
+    if (size == 0)
+        return;
+    Node<T> *t = NULL;
+    while (pFront != NULL)
+    {
+        t = pFront;
+        pFront = pFront->pNext;
+        delete t;
+    }
+    pFront = pBack = NULL;
+    size = 0;
 }

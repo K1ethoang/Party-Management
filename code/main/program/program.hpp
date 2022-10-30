@@ -73,10 +73,13 @@ void program()
             if (!parties.isExistID(ID))
             {
                 cout << "\n\t\t\tKhong co ton tai tiec nay";
-                pressAnyKey();
             }
             else
+            {
                 parties.remove(ID);
+                cout << "\n\t\t\tXoa thanh cong!\n";
+            }
+            pressAnyKey();
             break;
         }
         default:
