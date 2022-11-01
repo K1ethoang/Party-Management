@@ -12,22 +12,23 @@ inline void addDisplay(BST &parties)
     do
     {
         system("cls");
-        cout << "\n\t\t\t\t+ ============== THEM ============== +";
-        cout << "\n\t\t\t\t| 1.1. Nhap thong tin khach hang     |";
-        cout << "\n\t\t\t\t| 1.2. Nhap thong tin tiec           |";
-        cout << "\n\t\t\t\t| 1.3. Chon mon an                   |";
-        cout << "\n\t\t\t\t| 1.4. Luu thong tin                 |";
-        cout << "\n\t\t\t\t| 1.0. Tro ve                        |";
-        cout << "\n\t\t\t\t+ ================================== +";
-        cout << "\n\t\t\t\tNhap lua chon cua ban -> ";
+        cout << "\n\t\t\t\t\t\t\t\t\t+ ============== THEM ============== +";
+        cout << "\n\t\t\t\t\t\t\t\t\t| 1.1. Nhap thong tin khach hang     |";
+        cout << "\n\t\t\t\t\t\t\t\t\t| 1.2. Nhap thong tin tiec           |";
+        cout << "\n\t\t\t\t\t\t\t\t\t| 1.3. Chon mon an                   |";
+        cout << "\n\t\t\t\t\t\t\t\t\t| 1.4. Luu thong tin                 |";
+        cout << "\n\t\t\t\t\t\t\t\t\t| 1.0. Tro ve                        |";
+        cout << "\n\t\t\t\t\t\t\t\t\t+ ================================== +";
+        cout << "\n\t\t\t\t\t\t\t\t\tNhap lua chon cua ban -> ";
         cin >> choose;
         switch (choose)
         {
         case 1:
         {
             system("cls");
-            cout << "\n\t\t\t\t[1.1. NHAP THONG TIN KHACH HANG]\n";
+            cout << "\n\t\t\t\t\t\t\t\t\t[1.1. NHAP THONG TIN KHACH HANG]\n";
             cin >> c;
+            system("cls");
             cout << c;
             p.setCustomer(c);
             pressAnyKey();
@@ -37,7 +38,7 @@ inline void addDisplay(BST &parties)
         case 2:
         {
             system("cls");
-            cout << "\n\t\t\t\t[1.2. NHAP THONG TIN TIEC]\n";
+            cout << "\n\t\t\t\t\t\t\t\t\t[1.2. NHAP THONG TIN TIEC]";
             cin >> p;
             do
             {
@@ -50,7 +51,8 @@ inline void addDisplay(BST &parties)
                 }
             } while (parties.isExistID(p.getID()));
             system("cls");
-            cout << "\n\t\t\t\t[Thong tin tiec vua nhap]\n";
+            // system("cls");
+            cout << "\n\t\t\t\t\t\t\t\t\t[Thong tin tiec vua nhap]\n\n";
             p.outputParty();
             pressAnyKey();
             isSaved = false;
@@ -58,7 +60,7 @@ inline void addDisplay(BST &parties)
         }
         case 3:
         {
-            cout << "\n\t\t\t\t[1.3. Chon mon an]\n";
+            cout << "\n\t\t\t\t\t\t\t\t\t[1.3. Chon mon an]\n";
             Queue<string> resMenu = Menu(); // food của menu
             // p.setMenu(resMenu);
             pressAnyKey();
@@ -67,7 +69,7 @@ inline void addDisplay(BST &parties)
         }
         case 4:
         {
-            cout << "\n\t\t\t\t[1.4. Luu thong tin]\n\n";
+            cout << "\n\n\t\t\t\t\t\t\t\t\t[1.4. Luu thong tin thanh cong]\n\n";
             saveData(parties, p);
             isSaved = true;
             pressAnyKey();
@@ -83,7 +85,7 @@ inline void addDisplay(BST &parties)
             break;
         }
         default:
-            cout << "\n\t\t\t\tLua chon khong hop le !! Nhap lai";
+            cout << "\n\t\t\t\t\t\t\t\t\tLua chon khong hop le !! Nhap lai";
             pressAnyKey();
             break;
         }
@@ -93,6 +95,6 @@ inline void addDisplay(BST &parties)
 void saveData(BST &parties, ItemP party)
 {
     parties.add(party);
-    cout << "\n\t\t\t\tLuu thanh cong\n";
+    cout << "\t\t\t\t\t\t\t\t\tLuu thanh cong\n";
     party.outputParty();
 }

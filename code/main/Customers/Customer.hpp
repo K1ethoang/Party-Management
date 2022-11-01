@@ -3,6 +3,7 @@
 #include <string>
 #include <fstream>
 #include "..\ID.hpp"
+#include "../EditName/editName.hpp"
 
 using namespace std;
 
@@ -64,24 +65,24 @@ void Customer::setPhoneNumber(const string &_phoneNumber)
 
 void Customer::outputCustomer()
 {
-    cout << "\n\t\tTHONG TIN KHACH HANG DA NHAP\n";
-    cout << "\nHo va ten: " << fullName;
-    cout << "\nSo dien thoai: " << phoneNumber << endl;
+    cout << "\n\t\t\t\t\t\t\t\t\t[THONG TIN KHACH HANG DA NHAP]";
+    cout << "\n\t\t\t\t\t\t\t\t\t> Ho va ten: " << fullName;
+    cout << "\n\t\t\t\t\t\t\t\t\t> So dien thoai: " << phoneNumber << endl;
     OutputID();
 }
 
 istream &operator>>(istream &is, Customer &c)
 {
-    cout << "\n\t\tNHAP THONG TIN KHACH HANG\n";
-    cout << "\nNhap ho va ten: ";
+    cout << "\n\t\t\t\t\t\t\t\t\tNhap ho va ten: ";
     fflush(stdin);
     getline(is, c.fullName);
+    editName_(c.fullName);
     do
     {
-        cout << "\nNhap so dien thoai: ";
+        cout << "\t\t\t\t\t\t\t\t\tNhap so dien thoai: ";
         getline(is, c.phoneNumber);
         if (c.phoneNumber.length() != 10)
-            cout << "\nSo dien thoai khong hop le! Nhap lai";
+            cout << "\n\t\t\t\t\t\t\t\t\t<!> So dien thoai khong hop le! Nhap lai\n";
     } while (c.phoneNumber.length() != 10);
 
     return is;
@@ -89,9 +90,9 @@ istream &operator>>(istream &is, Customer &c)
 
 ostream &operator<<(ostream &os, Customer c)
 {
-    cout << "\n\t\tTHONG TIN KHACH HANG DA NHAP\n";
-    cout << "\nHo va ten: " << c.fullName;
-    cout << "\nSo dien thoai: " << c.phoneNumber << endl;
+    cout << "\n\t\t\t\t\t\t\t\t\t[Thong tin khach hang da nhap]\n";
+    cout << "\n\t\t\t\t\t\t\t\t\tHo va ten: " << c.fullName;
+    cout << "\n\t\t\t\t\t\t\t\t\tSo dien thoai: " << c.phoneNumber << endl;
     c.OutputID();
     return os;
 }

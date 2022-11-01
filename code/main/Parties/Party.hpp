@@ -20,21 +20,21 @@ string typeParty_()
     string _typeParty[6] = {"Tiec Tra", "Tiec Cuoi", "Tiec Sinh Nhat", "Tiec Buffet", "Tiec Ruou", "Tiec Set Menu"};
     do
     {
-        cout << "\n\t\t\t\t __________LOAI TIEC__________ " << endl;
-        cout << "\t\t\t\t|                             |" << endl;
+        cout << "\n\n\t\t\t\t\t\t\t\t\t __________LOAI TIEC__________ " << endl;
+        cout << "\t\t\t\t\t\t\t\t\t|                             |" << endl;
         for (int i = 0; i < 6; i++)
         {
-            cout << "\t\t\t\t| " << i + 1 << ". " << setiosflags(ios::left) << setw(25) << _typeParty[i] << "|" << endl;
+            cout << "\t\t\t\t\t\t\t\t\t| " << i + 1 << ". " << setiosflags(ios::left) << setw(25) << _typeParty[i] << "|" << endl;
         }
-        cout << "\t\t\t\t|_____________________________|" << endl;
-        cout << "\t\t\t\tNhap loai tiec muon chon -> ";
+        cout << "\t\t\t\t\t\t\t\t\t|_____________________________|" << endl;
+        cout << "\t\t\t\t\t\t\t\t\tNhap loai tiec muon chon -> ";
         cin >> select;
 
         for (int i = 0; i < 6; i++)
         {
             if (select == i + 1)
             {
-                cout << "\t\t\t\t--> Da chon thanh cong!" << endl;
+                cout << "\t\t\t\t\t\t\t\t\t--> Da chon thanh cong!" << endl;
                 return _typeParty[i];
             }
         }
@@ -84,6 +84,7 @@ private:
     int tableNumber;  // So ban cua buoi tiec
     Date date;        // Thoi gian to chuc buoi tiec
     string status;
+    float sumMoney;
     Customer c;
     Queue<string> menu;
 
@@ -112,9 +113,23 @@ public:
 
     void outputParty();
 
+    // void setSumMoney(const);
+    float getSumMoney();
+
+    void ThanhToan();
+    void printBill(); // in bill
+
     friend istream &operator>>(istream &is, Party &p);
     friend ostream &operator<<(ostream &os, Party &p);
 };
+
+// void Party::setSumMoney(const float _sumMoney){
+
+// }
+float Party::getSumMoney()
+{
+    return sumMoney;
+}
 
 void Party::setCustomer(const Customer &_c)
 {
@@ -138,14 +153,11 @@ Party::Party()
 Party::~Party()
 {
 }
-
 // Khởi tạo các hàm thuộc tính
-
 void Party::setTableNumber(const int &_tableNumber)
 {
     tableNumber = _tableNumber;
 }
-
 int Party::getTableNumber()
 {
     return tableNumber;
@@ -157,19 +169,16 @@ void Party::setDate(const Date &_date)
     date.mm = _date.mm;
     date.yyyy = _date.yyyy;
 }
-
 void Party::setDate(const int &_day, const int &_month, const int &_year)
 {
     date.dd = _day;
     date.mm = _month;
     date.yyyy = _year;
 }
-
 Date Party::getDate()
 {
     return date;
 }
-
 bool isValidDate(int day, int month, int year) // kiểm tra ngày nhập
 {
     if (month < 1 || month > 12)
@@ -225,14 +234,15 @@ void inputDate(Date &date, const string &msg)
 {
     do
     {
-        cout << "\t Nhap ngay : ";
+        cout << "\t\t\t\t\t\t\t\t\t   > Nhap ngay : ";
         cin >> date.dd;
-        cout << "\t Nhap thang: ";
+        cout << "\t\t\t\t\t\t\t\t\t   > Nhap thang: ";
         cin >> date.mm;
-        cout << "\t Nhap nam  : ";
+        cout << "\t\t\t\t\t\t\t\t\t   > Nhap nam  : ";
         cin >> date.yyyy;
         if (!isValidDate(date.dd, date.mm, date.yyyy))
-            cout << "\n\t" << msg << "\n";
+            cout << "\n"
+                 << msg << "\n";
     } while (!isValidDate(date.dd, date.mm, date.yyyy));
 }
 
@@ -240,12 +250,10 @@ void Party::set_TypeParty(const string &_typeParty)
 {
     typeParty = _typeParty;
 }
-
 string Party::get_TypeParty()
 {
     return typeParty;
 }
-
 void Party::setStatus()
 {
     time_t now = time(0);
@@ -294,10 +302,38 @@ Queue<string> Party::getMenu()
 
 void Party::outputParty()
 {
-    cout << "\t\t\t\tID cua tiec       : " << OutputID() << endl;
-    cout << "\t\t\t\tLoai tiec         : " << typeParty << endl;
-    cout << "\t\t\t\tSo ban cua tiec   : " << tableNumber << endl;
-    cout << "\t\t\t\tThoi gian dat tiec: " << date.dd << "/" << date.mm << "/" << date.yyyy << endl;
+    cout << "\t\t\t\t\t\t\t\t\tID cua tiec       : " << OutputID() << endl;
+    cout << "\t\t\t\t\t\t\t\t\tLoai tiec         : " << typeParty << endl;
+    cout << "\t\t\t\t\t\t\t\t\tSo ban cua tiec   : " << tableNumber << endl;
+    cout << "\t\t\t\t\t\t\t\t\tThoi gian dat tiec: " << date.dd << "/" << date.mm << "/" << date.yyyy << endl;
+}
+void Party::ThanhToan()
+{
+}
+void Party::printBill()
+{
+    cout << "\t\t\t+==================================>>>HOA DON THANH TOAN<<<==================================+" << endl;
+    cout << "\t\t\t|                                                                                            |" << endl;
+    cout << "\t\t\t|                                                          13/03/2003 14:03                  |" << endl;
+    cout << "\t\t\t|                                                                                            |" << endl;
+    cout << "\t\t\t|    > Ten: " << setiosflags(ios::left) << setw(81) << c.getFullName() << "|" << endl;
+    cout << "\t\t\t|    > SDT: " << setiosflags(ios::left) << setw(81) << c.getPhoneNumber() << "|" << endl;
+    cout << "\t\t\t|                                                                                            |" << endl;
+    cout << "\t\t\t|    > ID: " << setiosflags(ios::left) << setw(82) << OutputID() << "|" << endl;
+    cout << "\t\t\t|    > Loai tiec: " << setiosflags(ios::left) << setw(75) << typeParty << "|" << endl;
+    cout << "\t\t\t|    > So ban: " << setiosflags(ios::left) << setw(78) << tableNumber << "|" << endl;
+    cout << "\t\t\t|    > Thoi gian to chuc: " << setiosflags(ios::left) << setw(2) << date.dd << "/" << setw(2) << date.mm << "/" << setw(61) << date.yyyy << "|" << endl;
+    cout << "\t\t\t|                                                                                            |" << endl;
+    cout << "\t\t\t|    +----------------------------------------------------------------------------------+    |" << endl;
+    cout << "\t\t\t|    |   STT  |               Mon                 |   So luong   |        Gia ca        |    |" << endl;
+    cout << "\t\t\t|    +----------------------------------------------------------------------------------+    |" << endl;
+    cout << "\t\t\t|    |   12   |   lau                             |              |                      |    |" << endl;
+    cout << "\t\t\t|    |   " << setiosflags(ios::left) << setw(5) << "|"
+         << "   " << setw(32) << " "
+         << "|" << endl;
+    // cout << "name: " << c.getFullName();
+    // cout << "sdt: " << c.getPhoneNumber();
+    // cout << "ID: " << OutputID() << endl;
 }
 
 istream &operator>>(istream &is, Party &p)
@@ -306,11 +342,12 @@ istream &operator>>(istream &is, Party &p)
     string res = typeParty_();
     p.set_TypeParty(res);
     p.InputID();
-    cout << "<+> Nhap so ban cua buoi tiec: ";
+    cout << "\t\t\t\t\t\t\t\t\tNhap so ban cua buoi tiec: ";
     is >> p.tableNumber; // So ban cua buoi tiec
-    cout << "<+> Nhap thoi gian to chuc tiec:" << endl;
-    inputDate(p.date, "Ngay thang khong hop le"); // Thoi gian to chuc buoi tiec
+    cout << "\t\t\t\t\t\t\t\t\tNhap thoi gian to chuc tiec:" << endl;
+    inputDate(p.date, "\t\t\t\t\t\t\t\t\t!!! Ngay thang khong hop le!"); // Thoi gian to chuc buoi tiec
     p.setStatus();
+    system("pause");
     // Queue<string> resMenu = Menu(); // food của menu
     // p.setMenu(resMenu);
     return is;
@@ -319,13 +356,13 @@ istream &operator>>(istream &is, Party &p)
 ostream &operator<<(ostream &os, Party &p)
 {
     // p.outputParty();
-    os << "\n\t\t" << setiosflags(ios::left) << "|"
+    os << "\n\t\t\t" << setiosflags(ios::left) << "|"
        << "        " << setw(10) << p.OutputID() << "|"
        << "               " << setw(24) << p.typeParty << "|"
        << "          " << setw(12) << p.tableNumber << "|"
        << "         " << setw(2) << p.date.dd << "/" << setw(2) << p.date.mm << "/" << setw(12) << p.date.yyyy << "|"
        << "        " << setw(18) << p.status << "|";
-    os << "\n\t\t+==================+=======================================+======================+===========================+==========================+";
+    os << "\n\t\t\t+==================+=======================================+======================+===========================+==========================+";
     // os << "Name: " << p.c.getFullName() << endl;
     p.getMenu().display();
 

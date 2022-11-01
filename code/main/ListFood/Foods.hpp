@@ -18,6 +18,7 @@ private:
     nodeF *fHead;
     nodeF *fTail;
     long fSize;
+
 public:
     Foods();
     ~Foods();
@@ -92,21 +93,25 @@ void Foods::addfLast(const ItemF &_fData)
     fSize++;
 }
 
-void Foods::InputFood(){
+void Foods::InputFood()
+{
     // cout << "Nhap"
 }
-void Foods::displayFoods(){
+void Foods::displayFoods()
+{
     // cout << "\n\t\t+=====================================================================================================+" ;
     // cout << "\n\t\t|                                              LIST FOOD                                              |" ;
     // cout << "\n\t\t+=========+====================================================================+======================+" ;
     // cout << "\n\t\t|   STT   |                                 FOOD                               |        PRICE         |" << endl;
-    for(nodeF *k = fHead; k!=NULL; k=k->fNext){
+    for (nodeF *k = fHead; k != NULL; k = k->fNext)
+    {
         cout << "Loai food: " << k->fData.nameTypefood << endl;
-        for(int i=0; i < k->fData.listFood.size(); i++){
+        for (int i = 0; i < k->fData.listFood.size(); i++)
+        {
             // fflush(stdin);
-            cout << "Tem food: "<<  k->fData.listFood[i].foodName << endl;
+            cout << "Ten food: " << k->fData.listFood[i].foodName << endl;
             cout << "Gia food: " << k->fData.listFood[i].foodPrice << endl;
         }
-        cout << "==================================" << endl;   
+        cout << "==================================" << endl;
     }
 }
