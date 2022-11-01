@@ -1,112 +1,108 @@
 #pragma once
 #include <iostream>
-// #include "Customer.hpp"
-using namespace std;
+#include <string>
 #include "Food.hpp"
+#include "Queue.hpp"
+using namespace std;
 
-struct nodeF
+typedef Food ItemF;
+
+// NodeF
+class NodeF
 {
-    TypeFood fData;
-    nodeF *fNext;
+public:
+    ItemF data;
+    NodeF *prev;
+    NodeF *next;
+    NodeF();
+    NodeF(const ItemF &_value);
 };
-typedef TypeFood ItemF;
 
-class Foods
+// FoodsDLL
+class FoodsDLL
 {
 private:
-    /* data */
-    nodeF *fHead;
-    nodeF *fTail;
-    long fSize;
-public:
-    Foods();
-    ~Foods();
-    nodeF *getfHead();
-    nodeF *getfTail();
-    long getfSize();
-    nodeF *createnodeF(const ItemF &_fData);
-    void addfLast(const ItemF &_fData);
-    void removefFirst();
-    void removefLast();
+    NodeF *head;
+    NodeF *tail;
+    long size;
 
-    void InputFood();
-    void displayFoods();
-    // void remove(const long &id);
-    // void find(const long &id);
-    // void edit(const long &id);
+public:
+    FoodsDLL();
+    ~FoodsDLL();
+    void setHead(NodeF *_head);
+    NodeF *getHead();
+    void setTail(NodeF *_tail);
+    NodeF *getTail();
+    void setSize(const long &_size);
+    long getSize();
+    void addLast(const ItemF &value);
 };
 
-Foods::Foods(/* args */)
+// NodeF
+NodeF::NodeF()
 {
-    fHead = fTail = NULL;
-    fSize = 0;
+    prev = next = NULL;
 }
 
-Foods::~Foods()
+NodeF::NodeF(const ItemF &_value)
 {
-    nodeF *t = NULL;
-    while (fHead != NULL)
+    data = _value;
+    prev = next = NULL;
+}
+
+// FoodsDLL
+FoodsDLL::FoodsDLL()
+{
+    head = tail = NULL;
+    size = 0;
+}
+
+FoodsDLL::~FoodsDLL()
+{
+    NodeF *t = NULL;
+    while (head != NULL)
     {
-        t = fHead;
-        fHead = fHead->fNext;
+        t = head;
+        head = head->next;
         delete t;
     }
-    fSize = 0;
+    size = 0;
 }
 
-nodeF *Foods::getfHead()
+void FoodsDLL::setHead(NodeF *_head)
 {
-    return fHead;
+    head = _head;
 }
 
-nodeF *Foods::getfTail()
+NodeF *FoodsDLL::getHead()
 {
-    return fTail;
+    return head;
 }
 
-long Foods::getfSize()
+void FoodsDLL::setTail(NodeF *_tail)
 {
-    return fSize;
+    tail = _tail;
 }
 
-nodeF *Foods::createnodeF(const ItemF &_fData)
+NodeF *FoodsDLL::getTail()
 {
-    nodeF *p = new nodeF;
-    p->fData = _fData;
-    p->fNext = NULL;
-    return p;
+    return tail;
 }
-void Foods::addfLast(const ItemF &_fData)
+void FoodsDLL::setSize(const long &_size)
 {
-    nodeF *p = createnodeF(_fData);
-    if (fHead == NULL)
+    size = _size;
+}
+
+long FoodsDLL::getSize()
+{
+    return size;
+}
+
+void FoodsDLL::addLast(const ItemF &value)
+{
+    NodeF *n = new NodeF(value);
+    if(size == 0)
     {
-        fHead = p;
-        fTail = p;
-    }
-    else
-    {
-        fTail->fNext = p;
-        fTail = p;
-    }
-    fSize++;
-}
-
-void Foods::InputFood(){
-    // cout << "Nhap"
-}
-void Foods::displayFoods(){
-    // cout << "\n\t\t+=====================================================================================================+" ;
-    // cout << "\n\t\t|                                              LIST FOOD                                              |" ;
-    // cout << "\n\t\t+=========+====================================================================+======================+" ;
-    // cout << "\n\t\t|   STT   |                                 FOOD                               |        PRICE         |" << endl;
-    for(nodeF *k = fHead; k!=NULL; k=k->fNext){
-        cout << "Loai food: " << k->fData.nameTypefood << endl;
-        for(int i=0; i < k->fData.listFood.size(); i++){
-            // fflush(stdin);
-            cout << "Tem food: "<<  k->fData.listFood[i].foodName << endl;
-            cout << "Gia food: " << k->fData.listFood[i].foodPrice << endl;
-        }
-        cout << "==================================" << endl;   
+        
     }
 }
