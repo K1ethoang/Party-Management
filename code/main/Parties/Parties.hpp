@@ -2,10 +2,9 @@
 #include <iostream>
 #include "Party.hpp"
 #include "../Customers/Customer.hpp"
+using namespace std;
 
 #define ItemP Party
-
-using namespace std;
 
 class NodeP
 {
