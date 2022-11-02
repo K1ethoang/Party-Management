@@ -100,10 +100,13 @@ void program()
             }
             else
             {
+                ItemP partyNeedToPrintBill = parties.search(ID);
+                partyNeedToPrintBill.outputParty();
                 // parties.remove(ID);
-                // cout << "\n\t\t\t\t\t\t\t\t\t>>> Xoa thanh cong! <<<\n";
+                cout << "\n\t\t\t\t\t\t\t\t\t>>> In hoa don thanh cong! <<<\n";
             }
             pressAnyKey();
+            break;
         }
         default:
             cout << "\n\t\t\t\t\t\t\t\t\t>>> Lua chon khong hop le !! Nhap lai <<<";

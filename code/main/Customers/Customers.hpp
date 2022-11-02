@@ -183,6 +183,7 @@ void Customers::edit(const long &id)
                 cout << "\n\t\tNOI DUNG CAN CHINH SUA" << endl;
                 cout << "1. Ho va ten" << endl;
                 cout << "2. So dien thoai" << endl;
+                cout << "3. Dia chi" << endl;
                 cout << "0. Thoat" << endl;
                 cout << "\nNhap lua chon cua ban: ";
                 cin >> choose;
@@ -206,6 +207,16 @@ void Customers::edit(const long &id)
                     fflush(stdin);
                     cin >> phoneNumber;
                     i->data.setPhoneNumber(phoneNumber);
+                    cout << "\nCap nhat thanh cong!" << endl;
+                    break;
+                }
+                case 3:
+                {
+                    string addRess;
+                    cout << "\nNhap dia chi moi: ";
+                    fflush(stdin);
+                    cin >> addRess;
+                    i->data.setPhoneNumber(addRess);
                     cout << "\nCap nhat thanh cong!" << endl;
                     break;
                 }

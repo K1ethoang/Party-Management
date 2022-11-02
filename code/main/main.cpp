@@ -2,11 +2,11 @@
 
 int main()
 {
-    Party p;
-    Customer c;
-    cin >> c;
-    p.setCustomer(c);
-    p.printBill();
-    // program();
+    // Party p;
+    // Customer c;
+    // cin >> c;
+    // p.setCustomer(c);
+    // p.printBill();
+    program();
     return 0;
 }

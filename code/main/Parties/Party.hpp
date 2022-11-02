@@ -94,28 +94,20 @@ public:
 
     void setCustomer(const Customer &_c);
     Customer getCustomer();
-
     void set_TypeParty(const string &_typeParty);
     string get_TypeParty();
-
     void setDate(const Date &_date);
     Date getDate();
     void setDate(const int &_day, const int &_month, const int &_year);
-
     void setTableNumber(const int &_tableNumber);
     int getTableNumber();
-
     void setStatus();
     string getStatus();
-
     void setMenu(Queue<string> _menu);
     Queue<string> getMenu();
-
     void outputParty();
-
     // void setSumMoney(const);
     float getSumMoney();
-
     void ThanhToan();
     void printBill(); // in bill
 
@@ -318,6 +310,7 @@ void Party::printBill()
     cout << "\t\t\t|                                                                                            |" << endl;
     cout << "\t\t\t|    > Ten: " << setiosflags(ios::left) << setw(81) << c.getFullName() << "|" << endl;
     cout << "\t\t\t|    > SDT: " << setiosflags(ios::left) << setw(81) << c.getPhoneNumber() << "|" << endl;
+    cout << "\t\t\t|    > Dia chi: " << setiosflags(ios::left) << setw(77) << c.getAddress() << "|" << endl;
     cout << "\t\t\t|                                                                                            |" << endl;
     cout << "\t\t\t|    > ID: " << setiosflags(ios::left) << setw(82) << OutputID() << "|" << endl;
     cout << "\t\t\t|    > Loai tiec: " << setiosflags(ios::left) << setw(75) << typeParty << "|" << endl;

@@ -152,7 +152,8 @@ void chooseFunctionCustomer(ItemC &customer)
         system("cls");
         cout << "\n\t\t\t\t\t\t\t\t\t1. Ho ten";
         cout << "\n\t\t\t\t\t\t\t\t\t2. So dien thoai";
-        cout << "\n\t\t\t\t\t\t\t\t\t3. Luu";
+        cout << "\n\t\t\t\t\t\t\t\t\t3. Dia chi";
+        cout << "\n\t\t\t\t\t\t\t\t\t4. Luu";
         cout << "\n\t\t\t\t\t\t\t\t\t0. Thoat";
         cout << "\n\t\t\t\t\t\t\t\t\tNhap lua chon cua ban -> ";
         cin >> choose;
@@ -164,6 +165,7 @@ void chooseFunctionCustomer(ItemC &customer)
             cout << "\n\t\t\t\t\t\t\t\tNhap ho va ten moi: ";
             fflush(stdin);
             getline(cin, newNameCustomer);
+            editString_(newNameCustomer);
             customer.setFullName(newNameCustomer);
             pressAnyKey();
             break;
@@ -179,6 +181,17 @@ void chooseFunctionCustomer(ItemC &customer)
             break;
         }
         case 3:
+        {
+            string newAddressCustomer;
+            cout << "\n\t\t\t\t\t\t\t\tNhap dia chi moi: ";
+            fflush(stdin);
+            getline(cin, newAddressCustomer);
+            editString_(newAddressCustomer);
+            customer.setAddress(newAddressCustomer);
+            pressAnyKey();
+            break;
+        }
+        case 4:
         {
             system("cls");
             cout << "\n\t\t\t\t\t\t\t\t\tLuu thanh cong!\n";
