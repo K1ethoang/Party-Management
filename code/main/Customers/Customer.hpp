@@ -2,10 +2,12 @@
 #include <iostream>
 #include <string>
 #include <fstream>
-#include "..\ID.hpp"
+#include "../ID/ID.hpp"
+#include "../EditName/editName.hpp"
 
 using namespace std;
 
+// Customer
 class Customer : public ID
 {
 private:
@@ -23,8 +25,37 @@ public:
     void outputCustomer();
     friend istream &operator>>(istream &is, Customer &c);
     friend ostream &operator<<(ostream &os, Customer c);
+    void readACustomer(ifstream &fileIn);
+    void writeACustomer(ofstream &fileOut);
 };
 
+typedef Customer ItemC;
+
+// hàm ngoài
+bool isValidPhoneNumber(string _phoneNumber);
+
+// hàm ngoài
+bool isValidPhoneNumber(string _phoneNumber)
+{
+    bool isValid = false;
+    int lengthPhoneNumber = _phoneNumber.length();
+    if (lengthPhoneNumber == 10)
+    {
+        for (int i = 0; i < lengthPhoneNumber; i++)
+        {
+            if (_phoneNumber[i] - 48 >= 0 && _phoneNumber[i] - 48 <= 9)
+                isValid = true;
+            else
+                isValid = false;
+        }
+    }
+    else
+        isValid = false;
+
+    return isValid;
+}
+
+// Customer
 Customer::Customer()
 {
     fullName = "UNKNOWN";
@@ -47,6 +78,7 @@ string Customer::getFullName()
 void Customer::setFullName(const string &_fullName)
 {
     fullName = _fullName;
+    formatName(fullName);
 }
 
 string Customer::getPhoneNumber()
@@ -56,42 +88,57 @@ string Customer::getPhoneNumber()
 
 void Customer::setPhoneNumber(const string &_phoneNumber)
 {
-    if (_phoneNumber.length() != 10)
-        cout << "\nSo dien thoai khong hop le!";
-    else
-        phoneNumber = _phoneNumber;
+    phoneNumber = _phoneNumber;
 }
 
 void Customer::outputCustomer()
 {
-    cout << "\n\t\tTHONG TIN KHACH HANG DA NHAP\n";
-    cout << "\nHo va ten: " << fullName;
-    cout << "\nSo dien thoai: " << phoneNumber << endl;
-    OutputID();
+    cout << "\n\t\t\t\t\t\t\t\t\tHo va ten      : " << fullName;
+    cout << "\n\t\t\t\t\t\t\t\t\tSo dien thoai  : " << phoneNumber << endl;
+    outputID();
 }
 
 istream &operator>>(istream &is, Customer &c)
 {
-    cout << "\n\t\tNHAP THONG TIN KHACH HANG\n";
-    cout << "\nNhap ho va ten: ";
+    cout << "\n\t\t\t\t\t\t\t\t\tNhap ho va ten: ";
     fflush(stdin);
     getline(is, c.fullName);
+    formatName(c.fullName);
     do
     {
-        cout << "\nNhap so dien thoai: ";
+        cout << "\t\t\t\t\t\t\t\t\tNhap so dien thoai: ";
         getline(is, c.phoneNumber);
-        if (c.phoneNumber.length() != 10)
-            cout << "\nSo dien thoai khong hop le! Nhap lai";
-    } while (c.phoneNumber.length() != 10);
-
+        if (!isValidPhoneNumber(c.phoneNumber))
+            cout << "\n\t\t\t\t\t\t\t\t\t<!> So dien thoai khong hop le! Nhap lai\n";
+    } while (!isValidPhoneNumber(c.phoneNumber));
     return is;
 }
 
 ostream &operator<<(ostream &os, Customer c)
 {
-    cout << "\n\t\tTHONG TIN KHACH HANG DA NHAP\n";
-    cout << "\nHo va ten: " << c.fullName;
-    cout << "\nSo dien thoai: " << c.phoneNumber << endl;
-    c.OutputID();
+    cout << "\n\t\t\t\t\t\t\t\t\t[Thong tin khach hang da nhap]\n";
+    cout << "\n\t\t\t\t\t\t\t\t\tHo va ten      : " << c.fullName;
+    cout << "\n\t\t\t\t\t\t\t\t\tSo dien thoai  : " << c.phoneNumber << endl;
+    c.outputID();
     return os;
+}
+
+void Customer::readACustomer(ifstream &fileIn)
+{
+    string newLine;
+    long ID;
+    fileIn >> ID;
+    setID(ID);
+    getline(fileIn, newLine);
+    getline(fileIn, fullName);
+    getline(fileIn, phoneNumber);
+}
+
+void Customer::writeACustomer(ofstream &fileOut)
+{
+
+    fileOut << "\n"
+            << getID() << endl;
+    fileOut << fullName << endl;
+    fileOut << phoneNumber;
 }

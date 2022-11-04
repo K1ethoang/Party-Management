@@ -5,7 +5,6 @@
 - This program makes it easier for restaurants to manage their parties.
 - Members:
   - Hoàng Gia Kiệt (Leader).
-  - Nguyễn Thị Thanh Như.
   - Trần Văn Hậu.
 
 ## Contents

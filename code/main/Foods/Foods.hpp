@@ -1,8 +1,8 @@
 #pragma once
 #include <iostream>
 #include <string>
-#include "Food.hpp"
-#include "Queue.hpp"
+#include <fstream>
+#include "./Food.hpp"
 using namespace std;
 
 typedef Food ItemF;
@@ -36,6 +36,8 @@ public:
     void setSize(const long &_size);
     long getSize();
     void addLast(const ItemF &value);
+    void importFood(const string &fileInPath);
+    void display();
 };
 
 // NodeF
@@ -59,14 +61,13 @@ FoodsDLL::FoodsDLL()
 
 FoodsDLL::~FoodsDLL()
 {
-    NodeF *t = NULL;
-    while (head != NULL)
+    NodeF *t = head;
+    for (long i = 0; i < size; i++)
     {
-        t = head;
-        head = head->next;
         delete t;
+        t = t->next;
+        size--;
     }
-    size = 0;
 }
 
 void FoodsDLL::setHead(NodeF *_head)
@@ -101,8 +102,46 @@ long FoodsDLL::getSize()
 void FoodsDLL::addLast(const ItemF &value)
 {
     NodeF *n = new NodeF(value);
-    if(size == 0)
+    if (size == 0)
+        head = tail = n;
+    else
     {
-        
+        n->next = head;
+        n->prev = tail;
+        tail->next = n;
+        tail = n;
+        head->prev = tail;
+    }
+    size++;
+}
+
+void FoodsDLL::importFood(const string &fileInPath)
+{
+    ifstream fileIn(fileInPath);
+    string _typeName, _name, _newLine;
+    ItemF _food;
+    long _price;
+    getline(fileIn, _typeName);   // đọc kiêu food
+    while (fileIn.eof() == false) // con trỏ chỉ vị chưa tới cuối
+    {
+        getline(fileIn, _name, '-'); // đọc tên của food
+        fileIn >> _price;            // đọc giá của food
+        getline(fileIn, _newLine);   // đọc kí tự enter
+        _food.setName(_name);
+        _food.setPrice(_price);
+        addLast(_food);
+    }
+    fileIn.close();
+}
+
+void FoodsDLL::display()
+{
+    if (size == 0)
+        return;
+    NodeF *t = head;
+    for (long i = 0; i < size; i++)
+    {
+        cout << t->data.getName() << " " << t->data.getPrice() << endl;
+        t = t->next;
     }
 }

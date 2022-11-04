@@ -15,11 +15,11 @@ void checkExit(bool &isExit, bool &isSaved)
         do
         {
             system("cls");
-            cout << "\n\t\t\tBan chua luu thong tin, chac chan muon thoat?";
-            cout << "\n\t\t\t\t1. Luu va thoat";
-            cout << "\n\t\t\t\t2. Khong luu va thoat";
-            cout << "\n\t\t\t\t0. Tro ve";
-            cout << "\n\t\t\tLua chon cua ban -> ";
+            cout << "\n\t\t\t\t\t\t\t\t\tBan chua luu thong tin, chac chan muon thoat?";
+            cout << "\n\t\t\t\t\t\t\t\t\t\t1. Luu va thoat";
+            cout << "\n\t\t\t\t\t\t\t\t\t\t2. Khong luu va thoat";
+            cout << "\n\t\t\t\t\t\t\t\t\t\t0. Tro ve";
+            cout << "\n\t\t\t\t\t\t\t\t\tLua chon cua ban -> ";
             cin >> option;
             switch (option)
             {
