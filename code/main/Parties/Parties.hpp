@@ -1,11 +1,5 @@
 #pragma once
-#include <iostream>
 #include "Party.hpp"
-#include "../Customers/Customer.hpp"
-
-#define ItemP Party
-
-using namespace std;
 
 class NodeP
 {
@@ -29,7 +23,7 @@ NodeP::NodeP(ItemP _data)
     left = right = NULL;
 }
 
-class BST
+class PartiesBST
 {
 private:
     NodeP *root;
@@ -39,19 +33,20 @@ private:
 private:
     bool isExistIDPrivate(NodeP *root, const long &_ID);
     void addPrivate(NodeP *&root, ItemP val);              // thêm node
-    void preOrderPrivate(NodeP *root);                     // duyệt đầu
-    void inOrderPrivate(NodeP *root);                      // duyệt giữa
-    void postOrderPrivate(NodeP *root);                    // duyệt sau
+    void printPreOrderPrivate(NodeP *root);                // in duyệt đầu
+    void printInOrderPrivate(NodeP *root);                 // in duyệt giữa
+    void printPostOrderPrivate(NodeP *root);               // in duyệt sau
     void freeMemory(NodeP *root);                          // giải phóng bộ nhớ
     ItemP returnNodePrivate(NodeP *root, const long &_ID); // tìm node
     void updateNodePrivate(NodeP *root, ItemP value);      // cập nhật node
     void findNodeSmallestPrivate(NodeP *&x, NodeP *&y);
     void removeNodePrivate(NodeP *&root, const long &_ID); // xoá node
+    void exportPartiesDataPrivate(NodeP *root, ofstream &fileOut);
 
     // methods public
 public:
-    BST();  // hàm tạo
-    ~BST(); // hàm huỷ
+    PartiesBST();  // hàm tạo
+    ~PartiesBST(); // hàm huỷ
     NodeP *getRoot();
     long getSize();
     bool isExistID(const long &_ID); // kiểm tra trùng ID
@@ -60,10 +55,12 @@ public:
     void update(const ItemP &value); // chỉnh sửa tiệc
     void remove(const long &ID);     // xoá tiệc
     void display();                  // xuất các tiệc
+    void importPartiesData(const string &_fileInPath);
+    void exportPartiesData(const string &_fileOutPath);
 };
 
 // Methods private
-bool BST::isExistIDPrivate(NodeP *root, const long &_ID)
+bool PartiesBST::isExistIDPrivate(NodeP *root, const long &_ID)
 {
     if (root == NULL)
         return false;
@@ -79,7 +76,7 @@ bool BST::isExistIDPrivate(NodeP *root, const long &_ID)
     return false;
 }
 
-void BST::addPrivate(NodeP *&root, ItemP val)
+void PartiesBST::addPrivate(NodeP *&root, ItemP val)
 {
     if (root == NULL)
         root = new NodeP(val);
@@ -92,7 +89,7 @@ void BST::addPrivate(NodeP *&root, ItemP val)
     }
 }
 
-void BST::freeMemory(NodeP *root)
+void PartiesBST::freeMemory(NodeP *root)
 {
     if (root != NULL)
     {
@@ -103,58 +100,51 @@ void BST::freeMemory(NodeP *root)
     }
 }
 
-void BST::preOrderPrivate(NodeP *root)
+void PartiesBST::printPreOrderPrivate(NodeP *root)
 {
     if (root != NULL)
     {
         cout << root->data;
-        preOrderPrivate(root->left);
-        preOrderPrivate(root->right);
+        printPreOrderPrivate(root->left);
+        printPreOrderPrivate(root->right);
     }
 }
 
-void BST::inOrderPrivate(NodeP *root)
+void PartiesBST::printInOrderPrivate(NodeP *root)
 {
     if (root != NULL)
     {
-        inOrderPrivate(root->left);
+        printInOrderPrivate(root->left);
         cout << root->data;
-        inOrderPrivate(root->right);
+        printInOrderPrivate(root->right);
     }
 }
 
-void BST::postOrderPrivate(NodeP *root)
+void PartiesBST::printPostOrderPrivate(NodeP *root)
 {
     if (root != NULL)
     {
-        postOrderPrivate(root->left);
-        postOrderPrivate(root->right);
+        printPostOrderPrivate(root->left);
+        printPostOrderPrivate(root->right);
         cout << root->data;
     }
 }
 
-ItemP BST::returnNodePrivate(NodeP *root, const long &_ID)
+ItemP PartiesBST::returnNodePrivate(NodeP *root, const long &_ID) // fix
 {
-    // Nếu node rỗng trả về NULL
-    if (root == NULL)
-        return ItemP();
-    else
+    if (root != NULL)
     {
-        if (root->data.getID() == _ID)
-            return root->data;
+        if (_ID < root->data.getID())
+            return returnNodePrivate(root->left, _ID);
+        else if (_ID > root->data.getID())
+            return returnNodePrivate(root->right, _ID);
         else
-        {
-            // Nếu phần tử cần tìm nhỏ hơn node hiện tại
-            if (_ID < root->data.getID())
-                returnNodePrivate(root->left, _ID);
-            else if (_ID > root->data.getID())
-                returnNodePrivate(root->right, _ID);
-        }
+            return root->data;
     }
     return ItemP();
 }
 
-void BST::updateNodePrivate(NodeP *root, ItemP value)
+void PartiesBST::updateNodePrivate(NodeP *root, ItemP value)
 {
     if (root != NULL)
     {
@@ -170,7 +160,7 @@ void BST::updateNodePrivate(NodeP *root, ItemP value)
     }
 }
 
-void BST::findNodeSmallestPrivate(NodeP *&x, NodeP *&y) // Node *y = root->right
+void PartiesBST::findNodeSmallestPrivate(NodeP *&x, NodeP *&y) // Node *y = root->right
 {
     // duyệt sang bên trái nhất
     if (y->left != NULL)
@@ -185,7 +175,7 @@ void BST::findNodeSmallestPrivate(NodeP *&x, NodeP *&y) // Node *y = root->right
     }
 }
 
-void BST::removeNodePrivate(NodeP *&root, const long &_ID)
+void PartiesBST::removeNodePrivate(NodeP *&root, const long &_ID)
 {
     if (root == NULL)
         return;
@@ -220,61 +210,110 @@ void BST::removeNodePrivate(NodeP *&root, const long &_ID)
             delete x;
         }
     }
+    size--;
+}
+
+void PartiesBST::exportPartiesDataPrivate(NodeP *root, ofstream &fileOut)
+{
+    if (root != NULL)
+    {
+        exportPartiesDataPrivate(root->left, fileOut);
+        root->data.writeAParty(fileOut);
+        exportPartiesDataPrivate(root->right, fileOut);
+    }
 }
 
 // Methods public
-BST::BST()
+PartiesBST::PartiesBST()
 {
     root = NULL;
     size = 0;
 }
 
-BST::~BST()
+PartiesBST::~PartiesBST()
 {
     if (size == 0)
         return;
     freeMemory(root);
 }
 
-NodeP *BST::getRoot()
+NodeP *PartiesBST::getRoot()
 {
     return root;
 }
 
-long BST::getSize()
+long PartiesBST::getSize()
 {
     return size;
 }
 
-bool BST::isExistID(const long &_ID)
+bool PartiesBST::isExistID(const long &_ID)
 {
     if (isExistIDPrivate(root, _ID))
         return true;
     return false;
 }
 
-void BST::add(const ItemP &value)
+void PartiesBST::add(const ItemP &value)
 {
     addPrivate(root, value);
     size++;
 }
 
-ItemP BST::search(const long &ID)
+ItemP PartiesBST::search(const long &ID)
 {
     return returnNodePrivate(root, ID);
 }
 
-void BST::update(const ItemP &value)
+void PartiesBST::update(const ItemP &value)
 {
     updateNodePrivate(root, value);
 }
 
-void BST::remove(const long &ID)
+void PartiesBST::remove(const long &ID)
 {
     removeNodePrivate(root, ID);
 }
 
-void BST::display()
+void PartiesBST::display()
 {
-    preOrderPrivate(root);
+    long _ID;
+    cout << "\n\t\t+==========================================================================================================================================================+" << endl;
+    cout << "\t\t|                                                                    DANH SACH CAC TIEC                                                                    |" << endl;
+    cout << "\t\t+============+=======================+=============================+===============+=====================+==========+=====================+================+" << endl;
+    cout << "\t\t|     ID     |       Thoi gian       |          Nguoi dat          |      SDT      |      Loai tiec      |  So ban  |   Trang thai tiec   |   Thanh toan   |" << endl;
+    cout << "\t\t+============+=======================+=============================+===============+=====================+==========+=====================+================+";
+    cout << "\t\t";
+    printInOrderPrivate(root);
+}
+
+void PartiesBST::importPartiesData(const string &_fileInPath)
+{
+    ifstream fileIn(_fileInPath);
+    if (fileIn.is_open())
+    {
+        string newline;
+        getline(fileIn, newline);
+        while (!fileIn.eof())
+        {
+            ItemP _party;
+            _party.readAParty(fileIn);
+            add(_party);
+        }
+    }
+    else
+        cout << "\n\t\t(!) Loi khi mo file \"khachHang.txt\"" << endl;
+    fileIn.close();
+}
+
+void PartiesBST::exportPartiesData(const string &_fileOutPath)
+{
+    ofstream fileOut(_fileOutPath);
+    if (fileOut.is_open())
+    {
+        exportPartiesDataPrivate(root, fileOut);
+    }
+    else
+        cout << "\n\t\t(!) Loi khi mo file \"khachHang.txt\"" << endl;
+    fileOut.close();
 }

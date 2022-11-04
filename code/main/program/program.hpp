@@ -1,18 +1,26 @@
 #pragma once
 #include <iostream>
+#include "../Customers/Customers.hpp"
 #include "../Parties/Parties.hpp"
+#include "../Foods/Foods.hpp"
 #include "pressAnykey.hpp"
 #include "checkReturn.hpp"
 #include "./addDisplay.hpp"
 #include "./editDisplay.hpp"
+#include "../constance.hpp"
 
 using namespace std;
 
+void program();
 void pressAnyKey();
 
 void program()
 {
-    BST parties;
+    CustomersSLL customers;
+    PartiesBST parties;
+    // parties.importPartiesData(PARTY_DATA_PATH);
+    // customers.importCustomersData(CUSTOMER_DATA_PATH);
+    // customers.display();
     int choose;
     bool isExit = false;
     do
@@ -39,31 +47,28 @@ void program()
         case 1:
         {
             addDisplay(parties);
+            parties.exportPartiesData(PARTY_DATA_PATH);
+
             break;
         }
         case 2:
         {
-            long ID;
+            long _ID;
             cout << "\n\t\t\t\t\t\t\t\t\tNhap ID tiec can sua: ";
-            cin >> ID;
-            if (!parties.isExistID(ID))
+            cin >> _ID;
+            if (parties.isExistID(_ID))
+                editDisplay(parties, _ID);
+            else
             {
-                system("cls");
                 cout << "\n\t\t\t\t\t\t\t\t\t<!> Khong co ton tai tiec nay";
                 pressAnyKey();
             }
-            else
-                editDisplay(parties, ID);
+            parties.exportPartiesData(PARTY_DATA_PATH);
+
             break;
         }
         case 3:
         {
-            cout << "\n\t\t\t+==================+=======================================+======================+===========================+==========================+" << endl;
-            cout << "\t\t\t|                                                           DANH SACH CAC TIEC                                                           |" << endl;
-            cout << "\t\t\t+==================+=======================================+======================+===========================+==========================+" << endl;
-            cout << "\t\t\t|        ID        |               Loai tiec               |        So ban        |         Thoi gian         |        Trang thai        |" << endl;
-            cout << "\t\t\t+==================+=======================================+======================+===========================+==========================+";
-            cout << "\t\t\t";
             parties.display();
             pressAnyKey();
             break;
@@ -73,16 +78,15 @@ void program()
             long ID;
             cout << "\n\t\t\t\t\t\t\t\t\tNhap ID tiec can xoa: ";
             cin >> ID;
-            if (!parties.isExistID(ID))
-            {
-                cout << "\n\t\t\t\t\t\t\t\t\t>>> Khong co ton tai tiec nay <<<";
-            }
-            else
+            if (parties.isExistID(ID))
             {
                 parties.remove(ID);
                 cout << "\n\t\t\t\t\t\t\t\t\t>>> Xoa thanh cong! <<<\n";
             }
+            else
+                cout << "\n\t\t\t\t\t\t\t\t\t>>> Khong co ton tai tiec nay <<<";
             pressAnyKey();
+            parties.exportPartiesData(PARTY_DATA_PATH);
             break;
         }
         case 5:
@@ -100,16 +104,13 @@ void program()
             }
             else
             {
-                ItemP partyNeedToPrintBill = parties.search(ID);
-                partyNeedToPrintBill.outputParty();
                 // parties.remove(ID);
-                cout << "\n\t\t\t\t\t\t\t\t\t>>> In hoa don thanh cong! <<<\n";
+                // cout << "\n\t\t\t\t\t\t\t\t\t>>> Xoa thanh cong! <<<\n";
             }
             pressAnyKey();
-            break;
         }
         default:
-            cout << "\n\t\t\t\t\t\t\t\t\t>>> Lua chon khong hop le !! Nhap lai <<<";
+            cout << "\n\t\t\t\t\t\t\t\t\t(!) Lua chon khong hop le (!)";
             pressAnyKey();
             break;
         }

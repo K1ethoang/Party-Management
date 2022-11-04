@@ -1,10 +1,10 @@
 #include "program.hpp"
 
-inline void editDisplay(BST &parties, const long &ID);
+inline void editDisplay(PartiesBST &parties, const long &ID);
 void chooseFunctionParty(ItemP &party);
 void chooseFunctionCustomer(ItemC &customer);
 
-inline void editDisplay(BST &parties, const long &ID)
+inline void editDisplay(PartiesBST &parties, const long &ID)
 {
     int choose;
     bool isExit = false, isSaved = false;
@@ -53,8 +53,9 @@ inline void editDisplay(BST &parties, const long &ID)
         {
             cout << "\n\t\t\t\t\t\t\t\t\t2.4. Luu thong tin\n";
             parties.update(partyNeedToEdit);
-            cout << "\n\t\t\t\t\t\t\t\t\tLuu thanh cong\n";
+            cout << "\n\t\t\t\t\t\t\t\t\t<\\> Luu thanh cong <\\>\n";
             partyNeedToEdit.outputParty();
+            pressAnyKey();
             isSaved = true;
             break;
         }
@@ -92,8 +93,8 @@ void chooseFunctionParty(ItemP &party)
         {
         case 1:
         {
-            string newTypeParty = typeParty_();
-            party.set_TypeParty(newTypeParty);
+            string newTypeParty = chooseTypeParty();
+            party.setTypeParty(newTypeParty);
             pressAnyKey();
             break;
         }
@@ -110,9 +111,9 @@ void chooseFunctionParty(ItemP &party)
         {
             Date newDate;
             cout << "\n\t\t\t\t\t\t\t\t\tNhap thoi gian to chuc moi: " << endl;
-            inputDate(newDate, "Ngay thang khong hop le"); // Thoi gian to chuc buoi tiec
+            newDate.inputDate("\t\t\t\t\t\t\t\t\t(!) Ngay thang khong hop le (!)");
             party.setDate(newDate);
-            party.setStatus();
+            party.setPartyStatus();
             pressAnyKey();
             break;
         }
@@ -124,7 +125,7 @@ void chooseFunctionParty(ItemP &party)
         }
         case 5:
         {
-            cout << "\n\t\t\t\t\t\t\t\t\tLuu thanh cong\n\n";
+            cout << "\n\t\t\t\t\t\t\t\t\t<\\> Luu thanh cong <\\>\n";
             isSaved = true;
             party.outputParty();
             pressAnyKey();
@@ -165,7 +166,7 @@ void chooseFunctionCustomer(ItemC &customer)
             cout << "\n\t\t\t\t\t\t\t\tNhap ho va ten moi: ";
             fflush(stdin);
             getline(cin, newNameCustomer);
-            editString_(newNameCustomer);
+            formatName(newNameCustomer);
             customer.setFullName(newNameCustomer);
             pressAnyKey();
             break;
@@ -173,28 +174,32 @@ void chooseFunctionCustomer(ItemC &customer)
         case 2:
         {
             string newPhoneNumberCustomer;
-            cout << "\n\t\t\t\t\t\t\t\tNhap so dien thoai moi: ";
-            fflush(stdin);
-            getline(cin, newPhoneNumberCustomer);
-            customer.setPhoneNumber(newPhoneNumberCustomer);
+            do
+            {
+                cout << "\n\t\t\t\t\t\t\t\t\tNhap so dien thoai moi: ";
+                fflush(stdin);
+                getline(cin, newPhoneNumberCustomer);
+                if (!isValidPhoneNumber(newPhoneNumberCustomer))
+                    cout << "\n\t\t\t\t\t\t\t\t\t(!) So dien thoai khong hop le (!)\n";
+            } while (!isValidPhoneNumber(newPhoneNumberCustomer));
             pressAnyKey();
             break;
         }
         case 3:
         {
-            string newAddressCustomer;
+            string newCCCDCustomer;
             cout << "\n\t\t\t\t\t\t\t\tNhap dia chi moi: ";
             fflush(stdin);
-            getline(cin, newAddressCustomer);
-            editString_(newAddressCustomer);
-            customer.setAddress(newAddressCustomer);
+            getline(cin, newCCCDCustomer);
+            formatName(newCCCDCustomer);
+            customer.setCCCD(newCCCDCustomer);
             pressAnyKey();
             break;
         }
         case 4:
         {
             system("cls");
-            cout << "\n\t\t\t\t\t\t\t\t\tLuu thanh cong!\n";
+            cout << "\n\t\t\t\t\t\t\t\t\t<\\> Luu thanh cong <\\>\n";
             isSaved = true;
             customer.outputCustomer();
             pressAnyKey();

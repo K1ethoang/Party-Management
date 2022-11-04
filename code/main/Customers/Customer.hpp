@@ -2,11 +2,12 @@
 #include <iostream>
 #include <string>
 #include <fstream>
-#include "..\ID.hpp"
-#include "../EditString/editString.hpp"
+#include "../ID/ID.hpp"
+#include "../EditName/editName.hpp"
 #include "../Person/Person.hpp"
 using namespace std;
 
+// Customer
 class Customer : public ID, public Person
 {
 public:
@@ -17,13 +18,66 @@ public:
     void setFullName(const string &_fullName);
     string getPhoneNumber();
     void setPhoneNumber(const string &_phoneNumber);
-    string getAddress();
-    void setAddress(const string &_address);
+    string getCCCD();
+    void setCCCD(const string &_CCCD);
     void outputCustomer();
     friend istream &operator>>(istream &is, Customer &c);
     friend ostream &operator<<(ostream &os, Customer c);
+    void readACustomer(ifstream &fileIn);
+    void writeACustomer(ofstream &fileOut);
 };
 
+typedef Customer ItemC;
+
+// hàm ngoài
+bool isValidPhoneNumber(string _phoneNumber);
+
+// hàm ngoài
+bool isValidPhoneNumber(string _phoneNumber)
+{
+    bool isValid = false;
+    int lengthPhoneNumber = _phoneNumber.length();
+    if (lengthPhoneNumber == 10)
+    {
+        for (int i = 0; i < lengthPhoneNumber; i++)
+        {
+            if (_phoneNumber[i] - 48 >= 0 && _phoneNumber[i] - 48 <= 9)
+                isValid = true;
+            else
+                isValid = false;
+        }
+    }
+    else
+        isValid = false;
+
+    return isValid;
+}
+
+// hàm ngoài
+bool isValidCCDD(string _CCCD);
+
+// hàm ngoài
+bool isValidCCDD(string _CCCD)
+{
+    bool isValid = false;
+    int lengthCCCD = _CCCD.length();
+    if (lengthCCCD == 12)
+    {
+        for (int i = 0; i < lengthCCCD; i++)
+        {
+            if (_CCCD[i] - 48 >= 0 && _CCCD[i] - 48 <= 9)
+                isValid = true;
+            else
+                isValid = false;
+        }
+    }
+    else
+        isValid = false;
+
+    return isValid;
+}
+
+// Customer
 Customer::Customer()
 {
     fullName = "UNKNOWN";
@@ -46,6 +100,7 @@ string Customer::getFullName()
 void Customer::setFullName(const string &_fullName)
 {
     fullName = _fullName;
+    formatName(fullName);
 }
 
 string Customer::getPhoneNumber()
@@ -55,29 +110,26 @@ string Customer::getPhoneNumber()
 
 void Customer::setPhoneNumber(const string &_phoneNumber)
 {
-    if (_phoneNumber.length() != 10)
-        cout << "\nSo dien thoai khong hop le!";
-    else
-        phoneNumber = _phoneNumber;
+    phoneNumber = _phoneNumber;
 }
 
-string Customer::getAddress()
+string Customer::getCCCD()
 {
-    return address;
-};
+    return CCCD;
+}
 
-void Customer::setAddress(const string &_address)
+void Customer::setCCCD(const string &_CCCD)
 {
-    address = _address;
-};
+    CCCD = _CCCD;
+}
 
 void Customer::outputCustomer()
 {
     cout << "\n\t\t\t\t\t\t\t\t\t[THONG TIN KHACH HANG DA NHAP]";
-    cout << "\n\t\t\t\t\t\t\t\t\t> Ho va ten: " << fullName;
-    cout << "\n\t\t\t\t\t\t\t\t\t> So dien thoai: " << phoneNumber;
-    cout << "\n\t\t\t\t\t\t\t\t\t> Dia chi: " << address;
-    OutputID();
+    cout << "\n\t\t\t\t\t\t\t\t\t> Ho va ten     : " << fullName;
+    cout << "\n\t\t\t\t\t\t\t\t\t> So dien thoai : " << phoneNumber;
+    cout << "\n\t\t\t\t\t\t\t\t\t> So CCCD       : " << CCCD;
+    outputID();
 }
 
 istream &operator>>(istream &is, Customer &c)
@@ -85,27 +137,54 @@ istream &operator>>(istream &is, Customer &c)
     cout << "\n\t\t\t\t\t\t\t\t\tNhap ho va ten: ";
     fflush(stdin);
     getline(is, c.fullName);
-    editString_(c.fullName);
+    formatName(c.fullName);
+    // Nhập sđt và kiểm tra
     do
     {
         cout << "\t\t\t\t\t\t\t\t\tNhap so dien thoai: ";
         getline(is, c.phoneNumber);
-        if (c.phoneNumber.length() != 10)
+        if (!isValidPhoneNumber(c.phoneNumber))
             cout << "\n\t\t\t\t\t\t\t\t\t<!> So dien thoai khong hop le! Nhap lai\n";
-    } while (c.phoneNumber.length() != 10);
-    cout << "\t\t\t\t\t\t\t\t\tNhap dia chi: ";
-    fflush(stdin);
-    getline(is, c.address);
-    editString_(c.address);
+    } while (!isValidPhoneNumber(c.phoneNumber));
+    // Nhập số CCCD và kiểm tra
+    do
+    {
+        cout << "\t\t\t\t\t\t\t\t\tNhap so CCCD: ";
+        getline(is, c.CCCD);
+        if (!isValidCCDD(c.CCCD))
+            cout << "\n\t\t\t\t\t\t\t\t\t<!> So dien thoai khong hop le! Nhap lai\n";
+    } while (!isValidCCDD(c.CCCD));
+
     return is;
 }
 
 ostream &operator<<(ostream &os, Customer c)
 {
     cout << "\n\t\t\t\t\t\t\t\t\t[Thong tin khach hang da nhap]\n";
-    cout << "\n\t\t\t\t\t\t\t\t\tHo va ten: " << c.fullName;
-    cout << "\n\t\t\t\t\t\t\t\t\tSo dien thoai: " << c.phoneNumber;
-    cout << "\n\t\t\t\t\t\t\t\t\tDia chi: " << c.address << endl;
-    c.OutputID();
+    cout << "\n\t\t\t\t\t\t\t\t\tHo va ten      : " << c.fullName;
+    cout << "\n\t\t\t\t\t\t\t\t\tSo dien thoai  : " << c.phoneNumber;
+    cout << "\n\t\t\t\t\t\t\t\t\tSo CCCD        : " << c.CCCD << endl;
+    c.outputID();
     return os;
+}
+
+void Customer::readACustomer(ifstream &fileIn)
+{
+    string newLine;
+    long ID;
+    fileIn >> ID;
+    setID(ID);
+    getline(fileIn, newLine);
+    getline(fileIn, fullName);
+    getline(fileIn, phoneNumber);
+    getline(fileIn, CCCD);
+}
+
+void Customer::writeACustomer(ofstream &fileOut)
+{
+    fileOut << "\n"
+            << getID() << endl;
+    fileOut << fullName << endl;
+    fileOut << phoneNumber << endl;
+    fileOut << CCCD;
 }

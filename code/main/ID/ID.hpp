@@ -7,29 +7,21 @@ private:
     long id;
 
 public:
-    void InputID();
-    long OutputID();
     ID();
-    void setID(long &_id);
     long getID();
+    void setID(long &_id);
+    void inputID();
+    long outputID();
 };
-
-void ID::InputID()
-{
-    long _id;
-    cout << "\n\t\t\t\t\t\t\t\t\tNhap ID: ";
-    cin >> _id;
-    setID(_id);
-}
-
-long ID::OutputID()
-{
-    return id;
-}
 
 ID::ID()
 {
     id = -1;
+}
+
+long ID::getID()
+{
+    return id;
 }
 
 void ID::setID(long &_id)
@@ -47,7 +39,15 @@ void ID::setID(long &_id)
     } while (_id <= 0);
 }
 
-long ID::getID()
+void ID::inputID()
+{
+    long _id;
+    cout << "\n\t\t\t\t\t\t\t\t\tNhap ID: ";
+    cin >> _id;
+    setID(_id);
+}
+
+long ID::outputID()
 {
     return id;
 }

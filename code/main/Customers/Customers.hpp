@@ -1,46 +1,47 @@
 #pragma once
-#include <iostream>
+#include <iomanip>
 #include "Customer.hpp"
-using namespace std;
 
-struct node
+struct NodeC
 {
     Customer data;
-    node *pNext;
+    NodeC *pNext;
 };
 
-typedef Customer ItemC;
-
-class Customers
+class CustomersSLL
 {
 private:
-    node *Head;
-    node *Tail;
+    NodeC *Head;
+    NodeC *Tail;
     long Size;
 
 public:
-    Customers();
-    ~Customers(); // hàm hủy
-    node *getHead();
-    node *getTail();
+    CustomersSLL();
+    ~CustomersSLL(); // hàm hủy
+    NodeC *getHead();
+    NodeC *getTail();
     long getSize();
-    node *createNode(const ItemC &val);
+    NodeC *createNode(const ItemC &val);
     void addLast(const ItemC &val);
     void removeFirst();
     void removeLast();
     void remove(const long &id);
     void find(const long &id);
+    void sortByID();
     void edit(const long &id);
+    void display();
+    void importCustomersData(const string &_fileInPath);
+    void exportCustomersData(const string &_fileOutPath);
 };
 
-Customers::Customers()
+CustomersSLL::CustomersSLL()
 {
     Head = Tail = NULL;
     Size = 0;
 }
-Customers::~Customers() // duyệt qua từng phần tử để giải phóng
+CustomersSLL::~CustomersSLL() // duyệt qua từng phần tử để giải phóng
 {
-    node *t = NULL;
+    NodeC *t = NULL;
     while (Head != NULL)
     {
         t = Head;
@@ -50,32 +51,32 @@ Customers::~Customers() // duyệt qua từng phần tử để giải phóng
     Size = 0;
 }
 
-node *Customers::getHead()
+NodeC *CustomersSLL::getHead()
 {
     return Head;
 }
 
-node *Customers::getTail()
+NodeC *CustomersSLL::getTail()
 {
     return Tail;
 }
 
-long Customers::getSize()
+long CustomersSLL::getSize()
 {
     return Size;
 }
 
-node *Customers::createNode(const ItemC &val)
+NodeC *CustomersSLL::createNode(const ItemC &val)
 {
-    node *p = new node;
+    NodeC *p = new NodeC;
     p->data = val;
     p->pNext = NULL;
     return p;
 }
 
-void Customers::addLast(const ItemC &val)
+void CustomersSLL::addLast(const ItemC &val)
 {
-    node *p = createNode(val);
+    NodeC *p = createNode(val);
     if (Head == NULL)
     {
         Head = p;
@@ -89,27 +90,21 @@ void Customers::addLast(const ItemC &val)
     Size++;
 }
 
-void Customers::removeFirst()
+void CustomersSLL::removeFirst()
 {
-
     if (Head == NULL)
-    {
         return;
-    }
-
-    node *l = Head;     // node l là node sẽ xóa
+    NodeC *l = Head;    // node l là node sẽ xóa
     Head = Head->pNext; // cập nhật lại head là phần tử tiếp theo
     delete l;
     Size--;
 }
 
-void Customers::removeLast()
+void CustomersSLL::removeLast()
 {
     if (Head == NULL)
-    {
         return;
-    }
-    for (node *i = Head; i != NULL; i = i->pNext)
+    for (NodeC *i = Head; i != NULL; i = i->pNext)
     {
         // phát hiện kế cuối
         if (i->pNext == Tail)
@@ -123,26 +118,22 @@ void Customers::removeLast()
     }
 }
 
-void Customers::remove(const long &id)
+void CustomersSLL::remove(const long &id)
 {
 
     if (Head->data.getID() == id)
-    {
         removeFirst();
-    }
     else if (Tail->data.getID() == id)
-    {
         removeLast();
-    }
     else
     {
-        node *m = new node;
-        for (node *k = Head; k != NULL; k = k->pNext)
+        NodeC *m = new NodeC;
+        for (NodeC *k = Head; k != NULL; k = k->pNext)
         {
             // phát hiện ra phần tử cần xóa
             if (k->data.getID() == id)
             {
-                node *g = k;
+                NodeC *g = k;
                 m->pNext = k->pNext;
                 delete g;
                 Size--;
@@ -153,9 +144,9 @@ void Customers::remove(const long &id)
     }
 }
 
-void Customers::find(const long &id)
+void CustomersSLL::find(const long &id)
 {
-    for (node *i = Head; i != NULL; i = i->pNext)
+    for (NodeC *i = Head; i != NULL; i = i->pNext)
     {
         if (i->data.getID() == id)
         {
@@ -165,74 +156,130 @@ void Customers::find(const long &id)
     }
 }
 
-void Customers::edit(const long &id)
+void CustomersSLL::sortByID() // thuật toán sắp xếp chọn
 {
-    bool exist = false;
-
-    for (node *i = Head; i != NULL; i = i->pNext)
+    for (NodeC *i = Head; i != Tail; i = i->pNext)
     {
-
-        if (i->data.getID() == id)
+        NodeC *minIndex = i;
+        for (NodeC *j = i->pNext; j != NULL; j = j->pNext)
         {
-            exist = true;
-            int choose;
-            bool exit = false;
-            do
-            {
-                system("cls");
-                cout << "\n\t\tNOI DUNG CAN CHINH SUA" << endl;
-                cout << "1. Ho va ten" << endl;
-                cout << "2. So dien thoai" << endl;
-                cout << "3. Dia chi" << endl;
-                cout << "0. Thoat" << endl;
-                cout << "\nNhap lua chon cua ban: ";
-                cin >> choose;
-                switch (choose)
-                {
-                case 1:
-                {
-                    string Name;
-                    cout << "\nNhap ho va ten moi: ";
-                    fflush(stdin);
-                    getline(cin, Name);
-                    cout << Name << endl;
-                    i->data.setFullName(Name);
-                    cout << "\nCap nhat thanh cong!" << endl;
-                    break;
-                }
-                case 2:
-                {
-                    string phoneNumber;
-                    cout << "\nNhap so dien thoai moi: ";
-                    fflush(stdin);
-                    cin >> phoneNumber;
-                    i->data.setPhoneNumber(phoneNumber);
-                    cout << "\nCap nhat thanh cong!" << endl;
-                    break;
-                }
-                case 3:
-                {
-                    string addRess;
-                    cout << "\nNhap dia chi moi: ";
-                    fflush(stdin);
-                    cin >> addRess;
-                    i->data.setPhoneNumber(addRess);
-                    cout << "\nCap nhat thanh cong!" << endl;
-                    break;
-                }
-                case 0:
-                    exit = true;
-                default:
-                    break;
-                }
-                cout << i->data;
-                system("pause");
-            } while (!exit);
-            break;
+            if (minIndex->data.getID() > j->data.getID())
+                minIndex = j;
+        }
+        if (minIndex != i)
+            swap(i->data, minIndex->data);
+    }
+}
+
+// void CustomersSLL::edit(const long &id)
+// {
+//     bool exist = false;
+
+//     for (NodeC *i = Head; i != NULL; i = i->pNext)
+//     {
+
+//         if (i->data.getID() == id)
+//         {
+//             exist = true;
+//             int choose;
+//             bool exit = false;
+//             do
+//             {
+//                 system("cls");
+//                 cout << "\n\t\tNOI DUNG CAN CHINH SUA" << endl;
+//                 cout << "1. Ho va ten" << endl;
+//                 cout << "2. So dien thoai" << endl;
+//                 cout << "0. Thoat" << endl;
+//                 cout << "\nNhap lua chon cua ban: ";
+//                 cin >> choose;
+//                 switch (choose)
+//                 {
+//                 case 1:
+//                 {
+//                     string Name;
+//                     cout << "\nNhap ho va ten moi: ";
+//                     fflush(stdin);
+//                     getline(cin, Name);
+//                     cout << Name << endl;
+//                     i->data.setFullName(Name);
+//                     cout << "\nCap nhat thanh cong!" << endl;
+//                     break;
+//                 }
+//                 case 2:
+//                 {
+//                     string phoneNumber;
+//                     cout << "\nNhap so dien thoai moi: ";
+//                     fflush(stdin);
+//                     cin >> phoneNumber;
+//                     i->data.setPhoneNumber(phoneNumber);
+//                     cout << "\nCap nhat thanh cong!" << endl;
+//                     break;
+//                 }
+//                 case 0:
+//                     exit = true;
+//                 default:
+//                     break;
+//                 }
+//                 cout << i->data;
+//                 system("pause");
+//             } while (!exit);
+//             break;
+//         }
+//     }
+//     if (exist == false)
+//     {
+//         cout << "\nKhong ton tai khach hang nay" << endl;
+//     }
+// }
+
+void CustomersSLL::display()
+{
+    int count = 1;
+    cout << "\n\t\t\t+=============================================================================================================================+" << endl;
+    cout << "\t\t\t|                                               DANH SACH THONG TIN KHACH HANG                                                |" << endl;
+    cout << "\t\t\t+==================+===========================================+=========================+====================================+" << endl;
+    cout << "\t\t\t|        ID        |                 HO VA TEN                 |           SDT           |                CCCD                |" << endl;
+    cout << "\t\t\t+==================+===========================================+=========================+====================================+";
+    cout << "\t\t\t";
+    for (NodeC *t = Head; t != NULL; t = t->pNext)
+    {
+        cout << "\n\t\t\t" << setiosflags(ios::left) << "|"
+             << "        " << setw(10) << t->data.getID() << "|"
+             << "           " << setw(32) << t->data.getFullName() << "|"
+             << "       " << setw(18) << t->data.getPhoneNumber() << "|"
+             << "            " << setw(24) << t->data.getCCCD() << "|";
+        cout << "\n\t\t\t+==================+===========================================+=========================+====================================+";
+    }
+}
+
+void CustomersSLL::importCustomersData(const string &_fileInPath)
+{
+    ifstream fileIn(_fileInPath);
+    if (fileIn.is_open())
+    {
+        string newline;
+        getline(fileIn, newline);
+        while (!fileIn.eof())
+        {
+            ItemC _customer;
+            _customer.readACustomer(fileIn);
+            addLast(_customer);
         }
     }
-    if (exist == false)
+    else
+        cout << "\n\t\t(!) Loi khi mo file \"khachHang.txt\"" << endl;
+    fileIn.close();
+}
+
+void CustomersSLL::exportCustomersData(const string &_fileOutPath)
+{
+    ofstream fileOut(_fileOutPath);
+    if (fileOut.is_open())
     {
-        cout << "\nKhong ton tai khach hang nay" << endl;
+        for (NodeC *t = Head; t != NULL; t = t->pNext)
+            t->data.writeACustomer(fileOut);
     }
+    else
+        cout << "\n\t\t(!) Loi khi mo file \"khachHang.txt\"" << endl;
+    fileOut.close();
 }
