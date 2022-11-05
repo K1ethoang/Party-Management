@@ -12,7 +12,7 @@ class Customer : public ID, public Person
 {
 public:
     Customer();
-    Customer(const string &_fullName, const string &_phoneNumber);
+    Customer(const string &_fullName, const string &_phoneNumber, const string &_CCCD);
     ~Customer();
     string getFullName();
     void setFullName(const string &_fullName);
@@ -82,12 +82,14 @@ Customer::Customer()
 {
     fullName = "UNKNOWN";
     phoneNumber = "1234567890";
+    CCCD = "1234567890";
 }
 
-Customer::Customer(const string &_fullName, const string &_phoneNumber)
+Customer::Customer(const string &_fullName, const string &_phoneNumber, const string &_CCCD)
 {
     fullName = _fullName;
     setPhoneNumber(_phoneNumber);
+    CCCD = _CCCD;
 }
 
 Customer::~Customer() {}
