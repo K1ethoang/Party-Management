@@ -263,6 +263,7 @@ void Party::printBill()
     cout << "\t\t\t|                                                                                            |" << endl;
     cout << "\t\t\t|    > Ten: " << setiosflags(ios::left) << setw(81) << customer.getFullName() << "|" << endl;
     cout << "\t\t\t|    > SDT: " << setiosflags(ios::left) << setw(81) << customer.getPhoneNumber() << "|" << endl;
+    cout << "\t\t\t|    > So CCCD: " << setiosflags(ios::left) << setw(77) << customer.getCCCD() << "|" << endl;
     cout << "\t\t\t|                                                                                            |" << endl;
     cout << "\t\t\t|    > ID: " << setiosflags(ios::left) << setw(82) << outputID() << "|" << endl;
     cout << "\t\t\t|    > Loai tiec: " << setiosflags(ios::left) << setw(75) << typeParty << "|" << endl;
@@ -297,13 +298,16 @@ istream &operator>>(istream &is, Party &p)
 
 ostream &operator<<(ostream &os, Party &p)
 {
-    os << "\n\t\t\t" << setiosflags(ios::left) << "|"
-       << "        " << setw(10) << p.outputID() << "|"
-       << "               " << setw(24) << p.typeParty << "|"
-       << "          " << setw(12) << p.tableNumber << "|"
-       << "         " << setw(2) << p.date.getDay() << "/" << setw(2) << p.date.getMonth() << "/" << setw(12) << p.date.getYear() << "|"
-       << "        " << setw(18) << p.returnPartyStatusPrivate() << "|";
-    os << "\n\t\t\t+==================+=======================================+======================+===========================+==========================+";
+    os << "\n\t\t" << setiosflags(ios::left) << "|"
+       << "     " << setw(7) << p.outputID() << "|"
+       << "       " << setw(2) << p.date.getDay() << "/" << setw(2) << p.date.getMonth() << "/" << setw(10) << p.date.getYear() << "|"
+       << "     " << setw(24) << p.customer.getFullName() << "|"
+       << "   " << setw(12) << p.customer.getPhoneNumber() << "|"
+       << "    " << setw(17) << p.typeParty << "|"
+       << "   " << setw(7) << p.tableNumber << "|"
+       << "   " << setw(18) << p.returnPartyStatusPrivate() << "|"
+       << "   " << setw(13) << p.sumMoney << "|";
+    os << "\n\t\t+============+=======================+=============================+===============+=====================+==========+=====================+================+";
     // os << "Name: " << p.c.getFullName() << endl;
     return os;
 }
