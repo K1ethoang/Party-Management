@@ -104,10 +104,11 @@ void program()
             }
             else
             {
+                parties.getRoot()->data.printBill();
                 // parties.remove(ID);
-                // cout << "\n\t\t\t\t\t\t\t\t\t>>> Xoa thanh cong! <<<\n";
+                cout << "\n\t\t\t\t\t\t\t\t\t>>> Da xem ! <<<\n";
             }
-            pressAnyKey();
+            // pressAnyKey();
         }
         default:
             cout << "\n\t\t\t\t\t\t\t\t\t(!) Lua chon khong hop le (!)";

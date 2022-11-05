@@ -257,9 +257,16 @@ void Party::ThanhToan()
 
 void Party::printBill()
 {
+    time_t now = time(0);
+    tm *tgian = localtime(&now);
+    // kh.tg.ngay = tgian->tm_mday;
+    // kh.tg.thang = tgian->tm_mon + 1;
+    // kh.tg.nam = tgian->tm_year + 1900 ;
+    // kh.tg.gio = tgian->tm_hour ;
+    // kh.tg.phut = tgian->tm_min;
     cout << "\t\t\t+==================================>>>HOA DON THANH TOAN<<<==================================+" << endl;
     cout << "\t\t\t|                                                                                            |" << endl;
-    cout << "\t\t\t|                                                          13/03/2003 14:03                  |" << endl;
+    cout << "\t\t\t|                                                          " << setiosflags(ios::left) << setw(2) << tgian->tm_mday << "/" << setw(2) << tgian->tm_mon + 1 << "/" << setw(4) << tgian->tm_year + 1900 << " " << setw(2) << tgian->tm_hour << ":" << setw(20) << tgian->tm_min << "|" << endl;
     cout << "\t\t\t|                                                                                            |" << endl;
     cout << "\t\t\t|    > Ten: " << setiosflags(ios::left) << setw(81) << customer.getFullName() << "|" << endl;
     cout << "\t\t\t|    > SDT: " << setiosflags(ios::left) << setw(81) << customer.getPhoneNumber() << "|" << endl;
@@ -273,6 +280,7 @@ void Party::printBill()
     cout << "\t\t\t|    +----------------------------------------------------------------------------------+    |" << endl;
     cout << "\t\t\t|    |   STT  |               Mon                 |   So luong   |        Gia ca        |    |" << endl;
     cout << "\t\t\t|    +----------------------------------------------------------------------------------+    |" << endl;
+    // for ()
     cout << "\t\t\t|    |   12   |   lau                             |              |                      |    |" << endl;
     cout << "\t\t\t|    |   " << setiosflags(ios::left) << setw(5) << "|"
          << "   " << setw(32) << " "
@@ -299,15 +307,15 @@ istream &operator>>(istream &is, Party &p)
 ostream &operator<<(ostream &os, Party &p)
 {
     os << "\n\t\t" << setiosflags(ios::left) << "|"
-       << "     " << setw(7) << p.outputID() << "|"
-       << "       " << setw(2) << p.date.getDay() << "/" << setw(2) << p.date.getMonth() << "/" << setw(10) << p.date.getYear() << "|"
+       << "   " << setw(5) << p.outputID() << "|"
+       << "   " << setw(2) << p.date.getDay() << "/" << setw(2) << p.date.getMonth() << "/" << setw(6) << p.date.getYear() << "|"
        << "     " << setw(24) << p.customer.getFullName() << "|"
-       << "   " << setw(12) << p.customer.getPhoneNumber() << "|"
-       << "    " << setw(17) << p.typeParty << "|"
-       << "   " << setw(7) << p.tableNumber << "|"
-       << "   " << setw(18) << p.returnPartyStatusPrivate() << "|"
+       << "  " << setw(12) << p.customer.getPhoneNumber() << "|"
+       << "   " << setw(16) << p.typeParty << "|"
+       << "  " << setw(6) << p.tableNumber << "|"
+       << "  " << setw(17) << p.returnPartyStatusPrivate() << "|"
        << "   " << setw(13) << p.sumMoney << "|";
-    os << "\n\t\t+============+=======================+=============================+===============+=====================+==========+=====================+================+";
+    os << "\n\t\t+========+===============+=============================+==============+===================+========+===================+================+";
     // os << "Name: " << p.c.getFullName() << endl;
     return os;
 }
