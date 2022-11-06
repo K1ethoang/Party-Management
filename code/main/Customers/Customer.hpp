@@ -3,7 +3,7 @@
 #include <string>
 #include <fstream>
 #include "../ID/ID.hpp"
-#include "../EditName/editName.hpp"
+#include "../editName/editName.hpp"
 #include "../Person/Person.hpp"
 using namespace std;
 

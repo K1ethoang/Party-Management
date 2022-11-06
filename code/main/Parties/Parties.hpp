@@ -32,6 +32,7 @@ private:
     // methods private
 private:
     bool isExistIDPrivate(NodeP *root, const long &_ID);
+    bool isPaidPrivate(NodeP *root, const long &_ID);
     void addPrivate(NodeP *&root, ItemP val);                    // thêm node
     void printPreOrderPrivate(NodeP *root, const bool &_isPaid); // in duyệt đầu
     void printInOrderPrivate(NodeP *root);                       // in duyệt giữa
@@ -51,6 +52,7 @@ public:
     NodeP *getRoot();
     long getSize();
     bool isExistID(const long &_ID);                  // kiểm tra trùng ID
+    bool isPaid(const long &_ID);                     // kiểm tra đã thanh toán chưa
     void add(const ItemP &value);                     // thêm tiệc
     ItemP search(const long &ID);                     // tìm tiệc
     void update(const ItemP &value);                  // chỉnh sửa tiệc
@@ -74,6 +76,22 @@ bool PartiesBST::isExistIDPrivate(NodeP *root, const long &_ID)
             return isExistIDPrivate(root->left, _ID);
         else if (_ID > root->data.getID())
             return isExistIDPrivate(root->right, _ID);
+    }
+    return false;
+}
+
+bool PartiesBST::isPaidPrivate(NodeP *root, const long &_ID)
+{
+    if (root == NULL)
+        return false;
+    if (root->data.getID() == _ID && root->data.getIsPaymentStatus())
+        return true;
+    else
+    {
+        if (_ID < root->data.getID())
+            return isPaidPrivate(root->left, _ID);
+        else if (_ID > root->data.getID())
+            return isPaidPrivate(root->right, _ID);
     }
     return false;
 }
@@ -261,9 +279,12 @@ long PartiesBST::getSize()
 
 bool PartiesBST::isExistID(const long &_ID)
 {
-    if (isExistIDPrivate(root, _ID))
-        return true;
-    return false;
+    return isExistIDPrivate(root, _ID);
+}
+
+bool PartiesBST::isPaid(const long &_ID)
+{
+    return isPaidPrivate(root, _ID);
 }
 
 void PartiesBST::add(const ItemP &value)

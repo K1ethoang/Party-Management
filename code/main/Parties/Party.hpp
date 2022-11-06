@@ -22,7 +22,7 @@ private:
     bool isPaymentStatus; // Trạng thái thanh toán
     bool isDeposited;     // Đã đặt cọc
     float sumMoney;       // Tiền của buổi tiệc
-    // Queue<Food> menu;   // Thực đơn của tiệc
+    Queue<ItemF> *menu;   // Thực đơn của tiệc
 
 private:
     string returnPartyStatusPrivate();               // Lấy trạng thái dạng tiệc
@@ -47,22 +47,23 @@ public:
     bool getIsDeposited();
     void setSumMoney(const float &_sumMoney);
     float getSumMoney();
+    void setMenu(Queue<ItemF> *_ptr);
+    Queue<ItemF> *getMenu();
 
     void outputParty();
-    void ThanhToan();
     void printBill();      // in hoá đơn
     void seeDetailParty(); // xem chi tiết party
     friend istream &operator>>(istream &is, Party &p);
     friend ostream &operator<<(ostream &os, Party &p);
     void readAParty(ifstream &fileIn);
     void writeAParty(ofstream &fileOut);
-    void readABill(ifstream &fileIn);
     void writeABill(ofstream &fileOut);
 } ItemP;
 
 // Hàm ngoài
 vector<string> readTypeParty();
 string chooseTypeParty();
+// Queue<ItemF> chooseMenu(const FoodsCDLL &foods);
 
 // Hàm ngoài
 vector<string> readTypeParty()
@@ -111,6 +112,16 @@ string chooseTypeParty()
     return "";
 }
 
+// Queue<ItemF> chooseMenu(const FoodsCDLL &foods)
+// {
+//     Queue<ItemF> menu;
+
+//     for (int i = 0; i < NUMBER_FOOD_PATH; i++)
+//     {
+//     }
+//     return menu;
+// }
+
 // Party
 // Private
 string Party::returnPartyStatusPrivate()
@@ -156,6 +167,7 @@ Party::Party()
     isPaymentStatus = 0;
     isDeposited = 0;
     sumMoney = 0;
+    menu = NULL;
 }
 
 Party::~Party()
@@ -242,6 +254,16 @@ bool Party::getIsDeposited()
     return isDeposited;
 }
 
+void Party::setMenu(Queue<ItemF> *_ptr)
+{
+    menu = _ptr;
+}
+
+Queue<ItemF> *Party::getMenu()
+{
+    return menu;
+}
+
 void Party::outputParty()
 {
     cout << "\n\t\t\t\t\t\tID cua tiec          : " << getID() << endl;
@@ -253,10 +275,6 @@ void Party::outputParty()
     cout << "\t\t\t\t\t\tTien                 : " << (sumMoney == -1 ? 0 : (size_t)sumMoney) << " VND" << endl;
     cout << "\t\t\t\t\t\tTrang thai cua tiec  : " << returnPartyStatusPrivate() << endl;
     cout << "\t\t\t\t\t\tThanh toan           : " << returnPaymentStatus(isPaymentStatus) << endl;
-}
-
-void Party::ThanhToan()
-{
 }
 
 void Party::printBill()
@@ -387,10 +405,6 @@ void Party::writeAParty(ofstream &fileOut)
     fileOut << (sumMoney == -1 ? 0 : (size_t)sumMoney);
 }
 
-void Party::readABill(ifstream &fileIn)
-{
-}
-
 void Party::writeABill(ofstream &fileOut)
 {
     time_t now = time(0);
@@ -414,13 +428,22 @@ void Party::writeABill(ofstream &fileOut)
     fileOut << "\t\t\t|    > Thoi gian to chuc: " << setiosflags(ios::left) << setw(2) << date.getDay() << "/" << setw(2) << date.getMonth() << "/" << setw(61) << date.getYear() << "|" << endl;
     fileOut << "\t\t\t|                                                                                            |" << endl;
     fileOut << "\t\t\t|    +----------------------------------------------------------------------------------+    |" << endl;
-    fileOut << "\t\t\t|    |   STT  |               Mon                 |   So luong   |        Gia ca        |    |" << endl;
+    fileOut << "\t\t\t|    |   STT  |                      Mon an                      |        Gia ca        |    |" << endl;
     fileOut << "\t\t\t|    +----------------------------------------------------------------------------------+    |" << endl;
     // for ()
-    fileOut << "\t\t\t|    |   12   |   lau                             |              |                      |    |" << endl;
-    fileOut << "\t\t\t|    |   " << setiosflags(ios::left) << setw(5) << "|"
-            << "   " << setw(32) << " "
-            << "|" << endl;
+    fileOut << "\t\t\t|    |   12   |   lau                                            |    123456789  VND    |    |" << endl;
 
+    fileOut << "\t\t\t|    +----------------------------------------------------------------------------------+    |" << endl;
+    fileOut << "\t\t\t|    |                                                  TONG TIEN:    " << setiosflags(ios::left) << setw(11) << sumMoney << "VND    |    |" << endl;
+
+    // fileOut << "\t\t\t|    |            TONG TIEN: " << setiosflags(ios::left) << setw(59) << sumMoney << "|    |" << endl;
+    fileOut << "\t\t\t|    +----------------------------------------------------------------------------------+    |" << endl;
+    // fileOut << "\t\t\t|    |   " << setiosflags(ios::left) << setw(5) << "|"
+    //  << "   " << setw(32) << " "
+    //  << "|" << endl;
+    fileOut << "\t\t\t|                                                                                            |" << endl;
     fileOut << "\t\t\t+==================================>>>HOA DON THANH TOAN<<<==================================+" << endl;
+    // fileOut << "name: " << c.getFullName();
+    // fileOut << "sdt: " << c.getPhoneNumber();
+    // fileOut << "ID: " << getID() << endl;
 }

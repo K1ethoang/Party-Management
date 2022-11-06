@@ -11,6 +11,8 @@ private:
 public:
     Queue();
     ~Queue();
+    Node<T> *getFront();
+    Node<T> *getBack();
     bool isEmpty();
     void push(const T &value);
     void pop();
@@ -39,6 +41,18 @@ Queue<T>::~Queue()
     }
     pFront = pBack = NULL;
     size = 0;
+}
+
+template <class T>
+Node<T> *Queue<T>::getFront()
+{
+    return pFront;
+}
+
+template <class T>
+Node<T> *Queue<T>::getBack()
+{
+    return pBack;
 }
 
 template <class T>

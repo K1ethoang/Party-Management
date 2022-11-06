@@ -1,3 +1,4 @@
+#pragma once
 #include "program.hpp"
 
 inline void viewDisplay(PartiesBST &parties);
