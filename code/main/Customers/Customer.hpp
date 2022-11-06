@@ -162,10 +162,12 @@ istream &operator>>(istream &is, Customer &c)
 
 ostream &operator<<(ostream &os, Customer c)
 {
-    cout << "\n\t\t\t\t\t\t\t\t\t[Thong tin khach hang da nhap]\n";
-    cout << "\n\t\t\t\t\t\t\t\t\tHo va ten      : " << c.fullName;
-    cout << "\n\t\t\t\t\t\t\t\t\tSo dien thoai  : " << c.phoneNumber;
-    cout << "\n\t\t\t\t\t\t\t\t\tSo CCCD        : " << c.CCCD << endl;
+    cout << "\n\t\t\t" << setiosflags(ios::left) << "|"
+         << "        " << setw(10) << c.getID() << "|"
+         << "           " << setw(32) << c.getFullName() << "|"
+         << "       " << setw(18) << c.getPhoneNumber() << "|"
+         << "            " << setw(24) << c.getCCCD() << "|";
+    cout << "\n\t\t\t+==================+===========================================+=========================+====================================+";
     c.outputID();
     return os;
 }

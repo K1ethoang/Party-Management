@@ -29,7 +29,7 @@ inline void addDisplay(PartiesBST &parties)
             cout << "\n\t\t\t\t\t\t\t\t\t[1.1. NHAP THONG TIN KHACH HANG]\n";
             cin >> c;
             system("cls");
-            cout << c;
+            c.outputCustomer();
             p.setCustomer(c);
             pressAnyKey();
             isSaved = false;

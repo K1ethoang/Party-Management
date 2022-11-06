@@ -266,7 +266,7 @@ void Party::printBill()
     // kh.tg.phut = tgian->tm_min;
     cout << "\t\t\t+==================================>>>HOA DON THANH TOAN<<<==================================+" << endl;
     cout << "\t\t\t|                                                                                            |" << endl;
-    cout << "\t\t\t|                                                          " << setiosflags(ios::left) << setw(2) << tgian->tm_mday << "/" << setw(2) << tgian->tm_mon + 1 << "/" << setw(4) << tgian->tm_year + 1900 << " " << setw(2) << tgian->tm_hour << ":" << setw(20) << tgian->tm_min << "|" << endl;
+    cout << "\t\t\t|                                                          " << setiosflags(ios::left) << setw(2) << tgian->tm_mday << "/" << setw(2) << tgian->tm_mon + 1 << "/" << setw(4) << tgian->tm_year + 1900 << "   " << setw(2) << tgian->tm_hour << ":" << setw(18) << tgian->tm_min << "|" << endl;
     cout << "\t\t\t|                                                                                            |" << endl;
     cout << "\t\t\t|    > Ten: " << setiosflags(ios::left) << setw(81) << customer.getFullName() << "|" << endl;
     cout << "\t\t\t|    > SDT: " << setiosflags(ios::left) << setw(81) << customer.getPhoneNumber() << "|" << endl;
@@ -285,6 +285,8 @@ void Party::printBill()
     cout << "\t\t\t|    |   " << setiosflags(ios::left) << setw(5) << "|"
          << "   " << setw(32) << " "
          << "|" << endl;
+
+    cout << "\t\t\t+==================================>>>HOA DON THANH TOAN<<<==================================+" << endl;
     // cout << "name: " << c.getFullName();
     // cout << "sdt: " << c.getPhoneNumber();
     // cout << "ID: " << outputID() << endl;
@@ -314,7 +316,7 @@ ostream &operator<<(ostream &os, Party &p)
        << "   " << setw(16) << p.typeParty << "|"
        << "  " << setw(6) << p.tableNumber << "|"
        << "  " << setw(17) << p.returnPartyStatusPrivate() << "|"
-       << "   " << setw(13) << p.sumMoney << "|";
+       << "   " << setw(13) << p.paymentStatus << "|";
     os << "\n\t\t+========+===============+=============================+==============+===================+========+===================+================+";
     // os << "Name: " << p.c.getFullName() << endl;
     return os;
