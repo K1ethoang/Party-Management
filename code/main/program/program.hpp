@@ -1,5 +1,4 @@
 #pragma once
-#include <iostream>
 #include "../Customers/Customers.hpp"
 #include "../Parties/Parties.hpp"
 #include "../Foods/Foods.hpp"
@@ -18,9 +17,10 @@ void program()
 {
     CustomersSLL customers;
     PartiesBST parties;
-    // parties.importPartiesData(PARTY_DATA_PATH);
-    // customers.importCustomersData(CUSTOMER_DATA_PATH);
-    // customers.display();
+    parties.importPartiesData(PARTY_DATA_PATH);
+    customers.importCustomersData(CUSTOMER_DATA_PATH);
+    customers.sortByID();
+    customers.exportCustomersData(CUSTOMER_DATA_PATH);
     int choose;
     bool isExit = false;
     do
@@ -46,9 +46,8 @@ void program()
             break;
         case 1:
         {
-            addDisplay(parties);
+            addDisplay(parties, customers);
             parties.exportPartiesData(PARTY_DATA_PATH);
-
             break;
         }
         case 2:
@@ -80,13 +79,25 @@ void program()
             cin >> ID;
             if (parties.isExistID(ID))
             {
-                parties.remove(ID);
-                cout << "\n\t\t\t\t\t\t\t\t\t>>> Xoa thanh cong! <<<\n";
+                char answer;
+                do
+                {
+                    cout << "\n\t\t\t\t\t\t\t\tBan co chac chan muon xoa? (y/n): ";
+                    fflush(stdin);
+                    cin >> answer;
+                    if (answer == 'y')
+                    {
+                        parties.remove(ID);
+                        parties.exportPartiesData(PARTY_DATA_PATH);
+                        cout << "\n\t\t\t\t\t\t\t\t\t>>> Xoa thanh cong! <<<\n";
+                        pressAnyKey();
+                    }
+                    else if (answer == 'n')
+                        break;
+                } while (answer != 'y' && answer != 'n');
             }
             else
                 cout << "\n\t\t\t\t\t\t\t\t\t>>> Khong co ton tai tiec nay <<<";
-            pressAnyKey();
-            parties.exportPartiesData(PARTY_DATA_PATH);
             break;
         }
         case 5:

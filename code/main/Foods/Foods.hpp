@@ -18,8 +18,8 @@ public:
     NodeF(const ItemF &_value);
 };
 
-// FoodsDLL
-class FoodsDLL
+// FoodsCDLL
+class FoodsCDLL
 {
 private:
     NodeF *head;
@@ -27,8 +27,8 @@ private:
     long size;
 
 public:
-    FoodsDLL();
-    ~FoodsDLL();
+    FoodsCDLL();
+    ~FoodsCDLL();
     void setHead(NodeF *_head);
     NodeF *getHead();
     void setTail(NodeF *_tail);
@@ -52,14 +52,14 @@ NodeF::NodeF(const ItemF &_value)
     prev = next = NULL;
 }
 
-// FoodsDLL
-FoodsDLL::FoodsDLL()
+// FoodsCDLL
+FoodsCDLL::FoodsCDLL()
 {
     head = tail = NULL;
     size = 0;
 }
 
-FoodsDLL::~FoodsDLL()
+FoodsCDLL::~FoodsCDLL()
 {
     NodeF *t = head;
     for (long i = 0; i < size; i++)
@@ -70,36 +70,36 @@ FoodsDLL::~FoodsDLL()
     }
 }
 
-void FoodsDLL::setHead(NodeF *_head)
+void FoodsCDLL::setHead(NodeF *_head)
 {
     head = _head;
 }
 
-NodeF *FoodsDLL::getHead()
+NodeF *FoodsCDLL::getHead()
 {
     return head;
 }
 
-void FoodsDLL::setTail(NodeF *_tail)
+void FoodsCDLL::setTail(NodeF *_tail)
 {
     tail = _tail;
 }
 
-NodeF *FoodsDLL::getTail()
+NodeF *FoodsCDLL::getTail()
 {
     return tail;
 }
-void FoodsDLL::setSize(const long &_size)
+void FoodsCDLL::setSize(const long &_size)
 {
     size = _size;
 }
 
-long FoodsDLL::getSize()
+long FoodsCDLL::getSize()
 {
     return size;
 }
 
-void FoodsDLL::addLast(const ItemF &value)
+void FoodsCDLL::addLast(const ItemF &value)
 {
     NodeF *n = new NodeF(value);
     if (size == 0)
@@ -115,7 +115,7 @@ void FoodsDLL::addLast(const ItemF &value)
     size++;
 }
 
-void FoodsDLL::importFood(const string &fileInPath)
+void FoodsCDLL::importFood(const string &fileInPath)
 {
     ifstream fileIn(fileInPath);
     string _typeName, _name, _newLine;
@@ -134,7 +134,7 @@ void FoodsDLL::importFood(const string &fileInPath)
     fileIn.close();
 }
 
-void FoodsDLL::display()
+void FoodsCDLL::display()
 {
     if (size == 0)
         return;

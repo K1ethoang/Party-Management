@@ -24,7 +24,8 @@ private:
     // Queue<Food> menu;   // Thực đơn của tiệc
 
 private:
-    string returnPartyStatusPrivate(); // Lấy trạng thái dạng chuỗi
+    string returnPartyStatusPrivate();               // Lấy trạng thái dạng tiệc
+    string returnPaymentStatus(const bool &_isPaid); // lấy trạng thái thanh toán
 
 public:
     Party();
@@ -117,6 +118,13 @@ string Party::returnPartyStatusPrivate()
     return GOING_ON;
 }
 
+string Party::returnPaymentStatus(const bool &_isPaid)
+{
+    string result;
+    result = _isPaid ? "Da thanh toan" : "Chua thanh toan";
+    return result;
+}
+
 // Public
 void Party::setSumMoney(const float &_sumMoney)
 {
@@ -204,7 +212,6 @@ void Party::setPartyStatus()
     {
         partyStatus = -1;
     }
-    cout << "\nStatus: " << partyStatus << endl;
 }
 
 int Party::getPartyStatus()
@@ -248,7 +255,7 @@ void Party::outputParty()
     cout << endl;
     cout << "\t\t\t\t\t\t\t\t\tTien                 : " << (size_t)sumMoney << " VND" << endl;
     cout << "\t\t\t\t\t\t\t\t\tTrang thai cua tiec  : " << returnPartyStatusPrivate() << endl;
-    cout << "\t\t\t\t\t\t\t\t\tThanh toan           : " << (paymentStatus ? "Da thanh toan" : "Chua thanh toan") << endl;
+    cout << "\t\t\t\t\t\t\t\t\tThanh toan           : " << returnPaymentStatus(paymentStatus) << endl;
 }
 
 void Party::ThanhToan()
@@ -316,7 +323,7 @@ ostream &operator<<(ostream &os, Party &p)
        << "   " << setw(16) << p.typeParty << "|"
        << "  " << setw(6) << p.tableNumber << "|"
        << "  " << setw(17) << p.returnPartyStatusPrivate() << "|"
-       << "   " << setw(13) << p.paymentStatus << "|";
+       << " " << setw(13) << p.returnPaymentStatus(p.paymentStatus) << "|";
     os << "\n\t\t+========+===============+=============================+==============+===================+========+===================+================+";
     // os << "Name: " << p.c.getFullName() << endl;
     return os;
