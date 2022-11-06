@@ -1,9 +1,9 @@
 #include "program.hpp"
 
-inline void addDisplay(PartiesBST &parties);
-void saveData(PartiesBST &parties, ItemP party);
+inline void addDisplay(PartiesBST &parties, CustomersSLL &customers);
+void saveParty(PartiesBST &parties, ItemP party);
 
-inline void addDisplay(PartiesBST &parties)
+inline void addDisplay(PartiesBST &parties, CustomersSLL &customers)
 {
     int choose;
     bool isExit = false, isSaved = true;
@@ -85,7 +85,7 @@ inline void addDisplay(PartiesBST &parties)
         {
             checkExit(isExit, isSaved);
             if (isSaved && p.getID() != -1)
-                saveData(parties, p);
+                saveParty(parties, p);
             break;
         }
         default:
@@ -96,7 +96,7 @@ inline void addDisplay(PartiesBST &parties)
     } while (!isExit);
 }
 
-void saveData(PartiesBST &parties, ItemP party)
+void saveParty(PartiesBST &parties, ItemP party)
 {
     parties.add(party);
 }

@@ -1,4 +1,5 @@
 #pragma once
+#include <iomanip>
 #include "Customer.hpp"
 
 struct NodeC
@@ -234,10 +235,20 @@ void CustomersSLL::sortByID() // thuật toán sắp xếp chọn
 void CustomersSLL::display()
 {
     int count = 1;
+    cout << "\n\t\t\t+=============================================================================================================================+" << endl;
+    cout << "\t\t\t|                                               DANH SACH THONG TIN KHACH HANG                                                |" << endl;
+    cout << "\t\t\t+==================+===========================================+=========================+====================================+" << endl;
+    cout << "\t\t\t|        ID        |                 HO VA TEN                 |           SDT           |                CCCD                |" << endl;
+    cout << "\t\t\t+==================+===========================================+=========================+====================================+";
+    cout << "\t\t\t";
     for (NodeC *t = Head; t != NULL; t = t->pNext)
     {
-        cout << t->data.getID() << endl;
-        t->data.outputCustomer();
+        cout << "\n\t\t\t" << setiosflags(ios::left) << "|"
+             << "        " << setw(10) << t->data.getID() << "|"
+             << "           " << setw(32) << t->data.getFullName() << "|"
+             << "       " << setw(18) << t->data.getPhoneNumber() << "|"
+             << "            " << setw(24) << t->data.getCCCD() << "|";
+        cout << "\n\t\t\t+==================+===========================================+=========================+====================================+";
     }
 }
 

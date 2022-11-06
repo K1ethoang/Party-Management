@@ -24,7 +24,8 @@ private:
     // Queue<Food> menu;   // Thực đơn của tiệc
 
 private:
-    string returnPartyStatusPrivate(); // Lấy trạng thái dạng chuỗi
+    string returnPartyStatusPrivate();               // Lấy trạng thái dạng tiệc
+    string returnPaymentStatus(const bool &_isPaid); // lấy trạng thái thanh toán
 
 public:
     Party();
@@ -117,6 +118,13 @@ string Party::returnPartyStatusPrivate()
     return GOING_ON;
 }
 
+string Party::returnPaymentStatus(const bool &_isPaid)
+{
+    string result;
+    result = _isPaid ? "Da thanh toan" : "Chua thanh toan";
+    return result;
+}
+
 // Public
 void Party::setSumMoney(const float &_sumMoney)
 {
@@ -204,7 +212,6 @@ void Party::setPartyStatus()
     {
         partyStatus = -1;
     }
-    cout << "\nStatus: " << partyStatus << endl;
 }
 
 int Party::getPartyStatus()
@@ -248,7 +255,7 @@ void Party::outputParty()
     cout << endl;
     cout << "\t\t\t\t\t\t\t\t\tTien                 : " << (size_t)sumMoney << " VND" << endl;
     cout << "\t\t\t\t\t\t\t\t\tTrang thai cua tiec  : " << returnPartyStatusPrivate() << endl;
-    cout << "\t\t\t\t\t\t\t\t\tThanh toan           : " << (paymentStatus ? "Da thanh toan" : "Chua thanh toan") << endl;
+    cout << "\t\t\t\t\t\t\t\t\tThanh toan           : " << returnPaymentStatus(paymentStatus) << endl;
 }
 
 void Party::ThanhToan()
@@ -263,6 +270,7 @@ void Party::printBill()
     cout << "\t\t\t|                                                                                            |" << endl;
     cout << "\t\t\t|    > Ten: " << setiosflags(ios::left) << setw(81) << customer.getFullName() << "|" << endl;
     cout << "\t\t\t|    > SDT: " << setiosflags(ios::left) << setw(81) << customer.getPhoneNumber() << "|" << endl;
+    cout << "\t\t\t|    > So CCCD: " << setiosflags(ios::left) << setw(77) << customer.getCCCD() << "|" << endl;
     cout << "\t\t\t|                                                                                            |" << endl;
     cout << "\t\t\t|    > ID: " << setiosflags(ios::left) << setw(82) << outputID() << "|" << endl;
     cout << "\t\t\t|    > Loai tiec: " << setiosflags(ios::left) << setw(75) << typeParty << "|" << endl;
@@ -297,13 +305,16 @@ istream &operator>>(istream &is, Party &p)
 
 ostream &operator<<(ostream &os, Party &p)
 {
-    os << "\n\t\t\t" << setiosflags(ios::left) << "|"
-       << "        " << setw(10) << p.outputID() << "|"
-       << "               " << setw(24) << p.typeParty << "|"
-       << "          " << setw(12) << p.tableNumber << "|"
-       << "         " << setw(2) << p.date.getDay() << "/" << setw(2) << p.date.getMonth() << "/" << setw(12) << p.date.getYear() << "|"
-       << "        " << setw(18) << p.returnPartyStatusPrivate() << "|";
-    os << "\n\t\t\t+==================+=======================================+======================+===========================+==========================+";
+    os << "\n\t\t" << setiosflags(ios::left) << "|"
+       << "     " << setw(7) << p.outputID() << "|"
+       << "       " << setw(2) << p.date.getDay() << "/" << setw(2) << p.date.getMonth() << "/" << setw(10) << p.date.getYear() << "|"
+       << "     " << setw(24) << p.customer.getFullName() << "|"
+       << "   " << setw(12) << p.customer.getPhoneNumber() << "|"
+       << "    " << setw(17) << p.typeParty << "|"
+       << "   " << setw(7) << p.tableNumber << "|"
+       << "   " << setw(18) << p.returnPartyStatusPrivate() << "|"
+       << "   " << setw(13) << p.returnPaymentStatus(p.paymentStatus) << "|";
+    os << "\n\t\t+============+=======================+=============================+===============+=====================+==========+=====================+================+";
     // os << "Name: " << p.c.getFullName() << endl;
     return os;
 }

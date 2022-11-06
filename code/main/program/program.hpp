@@ -1,5 +1,4 @@
 #pragma once
-#include <iostream>
 #include "../Customers/Customers.hpp"
 #include "../Parties/Parties.hpp"
 #include "../Foods/Foods.hpp"
@@ -20,7 +19,6 @@ void program()
     PartiesBST parties;
     parties.importPartiesData(PARTY_DATA_PATH);
     customers.importCustomersData(CUSTOMER_DATA_PATH);
-    // customers.display();
     customers.sortByID();
     customers.exportCustomersData(CUSTOMER_DATA_PATH);
     int choose;
@@ -48,9 +46,8 @@ void program()
             break;
         case 1:
         {
-            addDisplay(parties);
+            addDisplay(parties, customers);
             parties.exportPartiesData(PARTY_DATA_PATH);
-
             break;
         }
         case 2:
@@ -91,7 +88,9 @@ void program()
                     if (answer == 'y')
                     {
                         parties.remove(ID);
+                        parties.exportPartiesData(PARTY_DATA_PATH);
                         cout << "\n\t\t\t\t\t\t\t\t\t>>> Xoa thanh cong! <<<\n";
+                        pressAnyKey();
                     }
                     else if (answer == 'n')
                         break;
@@ -99,8 +98,6 @@ void program()
             }
             else
                 cout << "\n\t\t\t\t\t\t\t\t\t>>> Khong co ton tai tiec nay <<<";
-            pressAnyKey();
-            parties.exportPartiesData(PARTY_DATA_PATH);
             break;
         }
         case 5:
