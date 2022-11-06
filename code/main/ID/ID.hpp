@@ -30,7 +30,7 @@ void ID::setID(long &_id)
     {
         if (_id <= 0)
         {
-            cout << "\n\t\t\t\t\t\t\t\t\tId vua nhap khong hop le!!";
+            cout << "\n\t\t\t\t\t\tId vua nhap khong hop le!!";
             cout << "\n\t\t\t\t\t\t\t\tNhap lai: ";
             cin >> _id;
         }
@@ -42,7 +42,7 @@ void ID::setID(long &_id)
 void ID::inputID()
 {
     long _id;
-    cout << "\n\t\t\t\t\t\t\t\t\tNhap ID: ";
+    cout << "\n\t\t\t\t\t\tNhap ID: ";
     cin >> _id;
     setID(_id);
 }

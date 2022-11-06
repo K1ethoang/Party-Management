@@ -12,21 +12,21 @@ inline void addDisplay(PartiesBST &parties, CustomersSLL &customers)
     do
     {
         system("cls");
-        cout << "\n\t\t\t\t\t\t\t\t\t+ ============== THEM ============== +";
-        cout << "\n\t\t\t\t\t\t\t\t\t| 1.1. Nhap thong tin khach hang     |";
-        cout << "\n\t\t\t\t\t\t\t\t\t| 1.2. Nhap thong tin tiec           |";
-        cout << "\n\t\t\t\t\t\t\t\t\t| 1.3. Chon mon an                   |";
-        cout << "\n\t\t\t\t\t\t\t\t\t| 1.4. Luu thong tin                 |";
-        cout << "\n\t\t\t\t\t\t\t\t\t| 1.0. Tro ve                        |";
-        cout << "\n\t\t\t\t\t\t\t\t\t+ ================================== +";
-        cout << "\n\t\t\t\t\t\t\t\t\tNhap lua chon cua ban -> ";
+        cout << "\n\t\t\t\t\t\t+ ============== THEM ============== +";
+        cout << "\n\t\t\t\t\t\t| 1.1. Nhap thong tin khach hang     |";
+        cout << "\n\t\t\t\t\t\t| 1.2. Nhap thong tin tiec           |";
+        cout << "\n\t\t\t\t\t\t| 1.3. Chon mon an                   |";
+        cout << "\n\t\t\t\t\t\t| 1.4. Luu thong tin                 |";
+        cout << "\n\t\t\t\t\t\t| 1.0. Tro ve                        |";
+        cout << "\n\t\t\t\t\t\t+ ================================== +";
+        cout << "\n\t\t\t\t\t\tNhap lua chon cua ban -> ";
         cin >> choose;
         switch (choose)
         {
         case 1:
         {
             system("cls");
-            cout << "\n\t\t\t\t\t\t\t\t\t[1.1. NHAP THONG TIN KHACH HANG]\n";
+            cout << "\n\t\t\t\t\t\t[1.1. NHAP THONG TIN KHACH HANG]\n";
             cin >> c;
             system("cls");
             cout << c;
@@ -38,7 +38,7 @@ inline void addDisplay(PartiesBST &parties, CustomersSLL &customers)
         case 2:
         {
             system("cls");
-            cout << "\n\t\t\t\t\t\t\t\t\t[1.2. NHAP THONG TIN TIEC]";
+            cout << "\n\t\t\t\t\t\t[1.2. NHAP THONG TIN TIEC]";
             cin >> p;
             long _id = p.getID();
             do
@@ -52,7 +52,7 @@ inline void addDisplay(PartiesBST &parties, CustomersSLL &customers)
             } while (parties.isExistID(p.getID()));
             c.setID(_id);
             system("cls");
-            cout << "\n\t\t\t\t\t\t\t\t\t[Thong tin tiec vua nhap]\n\n";
+            cout << "\n\t\t\t\t\t\t[Thong tin tiec vua nhap]\n\n";
             p.outputParty();
             pressAnyKey();
             isSaved = false;
@@ -60,7 +60,7 @@ inline void addDisplay(PartiesBST &parties, CustomersSLL &customers)
         }
         case 3:
         {
-            cout << "\n\t\t\t\t\t\t\t\t\t[1.3. Chon mon an]\n";
+            cout << "\n\t\t\t\t\t\t[1.3. Chon mon an]\n";
             // Queue<string> resMenu = Menu(); // food của menu
             // p.setMenu(resMenu);
             // resMenu = p.getMenu();
@@ -73,11 +73,11 @@ inline void addDisplay(PartiesBST &parties, CustomersSLL &customers)
         {
             if (p.getID() != -1)
             {
-                cout << "\n\t\t\t\t\t\t\t\t\t<\\> Luu thanh cong <\\>\n";
+                cout << "\n\t\t\t\t\t\t<\\> Luu thanh cong <\\>\n";
                 isSaved = true;
             }
             else
-                cout << "\n\t\t\t\t\t\t\t\t\t(!) Khong the luu vi ban chua nhap tiec (!)\n";
+                cout << "\n\t\t\t\t\t\t(!) Khong the luu vi ban chua nhap tiec (!)\n";
             pressAnyKey();
             break;
         }
@@ -89,7 +89,7 @@ inline void addDisplay(PartiesBST &parties, CustomersSLL &customers)
             break;
         }
         default:
-            cout << "\n\t\t\t\t\t\t\t\t\tLua chon khong hop le !! Nhap lai";
+            cout << "\n\t\t\t\t\t\tLua chon khong hop le !! Nhap lai";
             pressAnyKey();
             break;
         }

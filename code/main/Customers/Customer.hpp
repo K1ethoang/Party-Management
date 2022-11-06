@@ -127,7 +127,6 @@ void Customer::setCCCD(const string &_CCCD)
 
 void Customer::outputCustomer()
 {
-    cout << "\n\t\t\t\t\t\t\t\t\t[THONG TIN KHACH HANG DA NHAP]";
     cout << "\n\t\t\t\t\t\t\t\t\t> Ho va ten     : " << fullName;
     cout << "\n\t\t\t\t\t\t\t\t\t> So dien thoai : " << phoneNumber;
     cout << "\n\t\t\t\t\t\t\t\t\t> So CCCD       : " << CCCD;

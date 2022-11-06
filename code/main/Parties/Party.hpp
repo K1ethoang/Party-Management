@@ -85,7 +85,7 @@ string chooseTypeParty()
     int select;
     do
     {
-        cout << "\n\n\t\t\t\t\t\t\t\t\t __________LOAI TIEC__________ " << endl;
+        cout << "\n\n\t\t\t\t\t\t __________LOAI TIEC__________ " << endl;
         cout << "\t\t\t\t\t\t\t\t\t|                             |" << endl;
         for (int i = 0; i < typeParties.size(); i++)
         {
@@ -99,7 +99,7 @@ string chooseTypeParty()
         {
             if (select == i + 1)
             {
-                cout << "\n\t\t\t\t\t\t\t\t\t--> Da chon thanh cong!" << endl;
+                cout << "\n\t\t\t\t\t\t--> Da chon thanh cong!" << endl;
                 return typeParties[i];
             }
         }
@@ -121,7 +121,7 @@ string Party::returnPartyStatusPrivate()
 string Party::returnPaymentStatus(const bool &_isPaid)
 {
     string result;
-    result = _isPaid ? "Da thanh toan" : "Chua thanh toan";
+    result = _isPaid ? PAID : UNPAID;
     return result;
 }
 
@@ -247,15 +247,15 @@ bool Party::getPaymentStatus()
 
 void Party::outputParty()
 {
-    cout << "\n\t\t\t\t\t\t\t\t\tID cua tiec          : " << outputID() << endl;
-    cout << "\t\t\t\t\t\t\t\t\tLoai tiec            : " << typeParty << endl;
-    cout << "\t\t\t\t\t\t\t\t\tSo ban cua tiec      : " << tableNumber << endl;
-    cout << "\t\t\t\t\t\t\t\t\tThoi gian dat tiec   : ";
+    cout << "\n\t\t\t\t\t\tID cua tiec          : " << outputID() << endl;
+    cout << "\t\t\t\t\t\t\tLoai tiec            : " << typeParty << endl;
+    cout << "\t\t\t\t\t\t\tSo ban cua tiec      : " << tableNumber << endl;
+    cout << "\t\t\t\t\t\t\tThoi gian dat tiec   : ";
     date.outputDate();
     cout << endl;
-    cout << "\t\t\t\t\t\t\t\t\tTien                 : " << (size_t)sumMoney << " VND" << endl;
-    cout << "\t\t\t\t\t\t\t\t\tTrang thai cua tiec  : " << returnPartyStatusPrivate() << endl;
-    cout << "\t\t\t\t\t\t\t\t\tThanh toan           : " << returnPaymentStatus(paymentStatus) << endl;
+    cout << "\t\t\t\t\t\t\tTien                 : " << (size_t)sumMoney << " VND" << endl;
+    cout << "\t\t\t\t\t\t\tTrang thai cua tiec  : " << returnPartyStatusPrivate() << endl;
+    cout << "\t\t\t\t\t\t\tThanh toan           : " << returnPaymentStatus(paymentStatus) << endl;
 }
 
 void Party::ThanhToan()
@@ -264,9 +264,16 @@ void Party::ThanhToan()
 
 void Party::printBill()
 {
+    time_t now = time(0);
+    tm *tgian = localtime(&now);
+    // kh.tg.ngay = tgian->tm_mday;
+    // kh.tg.thang = tgian->tm_mon + 1;
+    // kh.tg.nam = tgian->tm_year + 1900 ;
+    // kh.tg.gio = tgian->tm_hour ;
+    // kh.tg.phut = tgian->tm_min;
     cout << "\t\t\t+==================================>>>HOA DON THANH TOAN<<<==================================+" << endl;
     cout << "\t\t\t|                                                                                            |" << endl;
-    cout << "\t\t\t|                                                          13/03/2003 14:03                  |" << endl;
+    cout << "\t\t\t|                                                          " << setiosflags(ios::left) << setw(2) << tgian->tm_mday << "/" << setw(2) << tgian->tm_mon + 1 << "/" << setw(4) << tgian->tm_year + 1900 << " " << setw(2) << tgian->tm_hour << ":" << setw(20) << tgian->tm_min << "|" << endl;
     cout << "\t\t\t|                                                                                            |" << endl;
     cout << "\t\t\t|    > Ten: " << setiosflags(ios::left) << setw(81) << customer.getFullName() << "|" << endl;
     cout << "\t\t\t|    > SDT: " << setiosflags(ios::left) << setw(81) << customer.getPhoneNumber() << "|" << endl;
@@ -280,6 +287,7 @@ void Party::printBill()
     cout << "\t\t\t|    +----------------------------------------------------------------------------------+    |" << endl;
     cout << "\t\t\t|    |   STT  |               Mon                 |   So luong   |        Gia ca        |    |" << endl;
     cout << "\t\t\t|    +----------------------------------------------------------------------------------+    |" << endl;
+    // for ()
     cout << "\t\t\t|    |   12   |   lau                             |              |                      |    |" << endl;
     cout << "\t\t\t|    |   " << setiosflags(ios::left) << setw(5) << "|"
          << "   " << setw(32) << " "
@@ -294,10 +302,10 @@ istream &operator>>(istream &is, Party &p)
     p.inputID();
     string res = chooseTypeParty();
     p.setTypeParty(res);
-    cout << "\n\t\t\t\t\t\t\t\t\tNhap so ban cua buoi tiec: ";
+    cout << "\n\t\t\t\t\t\tNhap so ban cua buoi tiec: ";
     is >> p.tableNumber;
-    cout << "\n\t\t\t\t\t\t\t\t\tNhap thoi gian to chuc tiec:" << endl;
-    p.date.inputDate("\n\t\t\t\t\t\t\t\t\t(!) Ngay thang khong hop le (!)");
+    cout << "\n\t\t\t\t\t\tNhap thoi gian to chuc tiec:" << endl;
+    p.date.inputDate("\n\t\t\t\t\t\t(!) Ngay thang khong hop le (!)");
     p.setPartyStatus();
     system("pause");
     return is;
@@ -306,8 +314,8 @@ istream &operator>>(istream &is, Party &p)
 ostream &operator<<(ostream &os, Party &p)
 {
     os << "\n\t\t" << setiosflags(ios::left) << "|"
-       << "     " << setw(7) << p.outputID() << "|"
-       << "       " << setw(2) << p.date.getDay() << "/" << setw(2) << p.date.getMonth() << "/" << setw(10) << p.date.getYear() << "|"
+       << "   " << setw(5) << p.outputID() << "|"
+       << "   " << setw(2) << p.date.getDay() << "/" << setw(2) << p.date.getMonth() << "/" << setw(6) << p.date.getYear() << "|"
        << "     " << setw(24) << p.customer.getFullName() << "|"
        << "   " << setw(12) << p.customer.getPhoneNumber() << "|"
        << "    " << setw(17) << p.typeParty << "|"

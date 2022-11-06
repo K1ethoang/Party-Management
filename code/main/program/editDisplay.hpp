@@ -13,21 +13,21 @@ inline void editDisplay(PartiesBST &parties, const long &ID)
     do
     {
         system("cls");
-        cout << "\n\t\t\t\t\t\t\t\t\t+ ============== CHINH SUA ============== +";
-        cout << "\n\t\t\t\t\t\t\t\t\t| 2.1. Thong tin khach hang               |";
-        cout << "\n\t\t\t\t\t\t\t\t\t| 2.2. Thong tin tiec                     |";
-        cout << "\n\t\t\t\t\t\t\t\t\t| 2.3. Mon an                             |";
-        cout << "\n\t\t\t\t\t\t\t\t\t| 2.4. Luu thong tin                      |";
-        cout << "\n\t\t\t\t\t\t\t\t\t| 0. Tro ve                               |";
-        cout << "\n\t\t\t\t\t\t\t\t\t+ ======================================= +";
-        cout << "\n\t\t\t\t\t\t\t\t\tNhap lua chon cua ban -> ";
+        cout << "\n\t\t\t\t\t\t+ ============== CHINH SUA ============== +";
+        cout << "\n\t\t\t\t\t\t| 2.1. Thong tin khach hang               |";
+        cout << "\n\t\t\t\t\t\t| 2.2. Thong tin tiec                     |";
+        cout << "\n\t\t\t\t\t\t| 2.3. Mon an                             |";
+        cout << "\n\t\t\t\t\t\t| 2.4. Luu thong tin                      |";
+        cout << "\n\t\t\t\t\t\t| 0. Tro ve                               |";
+        cout << "\n\t\t\t\t\t\t+ ======================================= +";
+        cout << "\n\t\t\t\t\t\tNhap lua chon cua ban -> ";
         cin >> choose;
         switch (choose)
         {
         case 1:
         {
             system("cls");
-            cout << "\n\t\t\t\t\t\t\t\t\t2.1. Thong tin khach hang\n";
+            cout << "\n\t\t\t\t\t\t2.1. Thong tin khach hang\n";
             chooseFunctionCustomer(customerNeedToEdit);
             isSaved = false;
             break;
@@ -35,7 +35,7 @@ inline void editDisplay(PartiesBST &parties, const long &ID)
         case 2:
         {
             system("cls");
-            cout << "\n\t\t\t\t\t\t\t\t\t2.2. Thong tin tiec\n";
+            cout << "\n\t\t\t\t\t\t2.2. Thong tin tiec\n";
             chooseFunctionParty(partyNeedToEdit);
             partyNeedToEdit.outputParty();
             isSaved = false;
@@ -44,16 +44,16 @@ inline void editDisplay(PartiesBST &parties, const long &ID)
         case 3:
         {
             system("cls");
-            cout << "\n\t\t\t\t\t\t\t\t\t2.3. Mon an\n";
+            cout << "\n\t\t\t\t\t\t2.3. Mon an\n";
             pressAnyKey();
             isSaved = false;
             break;
         }
         case 4:
         {
-            cout << "\n\t\t\t\t\t\t\t\t\t2.4. Luu thong tin\n";
+            cout << "\n\t\t\t\t\t\t2.4. Luu thong tin\n";
             parties.update(partyNeedToEdit);
-            cout << "\n\t\t\t\t\t\t\t\t\t<\\> Luu thanh cong <\\>\n";
+            cout << "\n\t\t\t\t\t\t<\\> Luu thanh cong <\\>\n";
             partyNeedToEdit.outputParty();
             pressAnyKey();
             isSaved = true;
@@ -67,7 +67,7 @@ inline void editDisplay(PartiesBST &parties, const long &ID)
             break;
         }
         default:
-            cout << "\n\t\t\t\t\t\t\t\t\tLua chon khong hop le !! Nhap lai";
+            cout << "\n\t\t\t\t\t\tLua chon khong hop le !! Nhap lai";
             pressAnyKey();
             break;
         }
@@ -81,13 +81,13 @@ void chooseFunctionParty(ItemP &party)
     do
     {
         system("cls");
-        cout << "\n\t\t\t\t\t\t\t\t\t1. Loai tiec";
-        cout << "\n\t\t\t\t\t\t\t\t\t2. So ban";
-        cout << "\n\t\t\t\t\t\t\t\t\t3. Thoi gian to chuc";
-        cout << "\n\t\t\t\t\t\t\t\t\t4. Mon an";
-        cout << "\n\t\t\t\t\t\t\t\t\t5. Luu";
-        cout << "\n\t\t\t\t\t\t\t\t\t0. Thoat";
-        cout << "\n\t\t\t\t\t\t\t\t\tNhap lua chon cua ban -> ";
+        cout << "\n\t\t\t\t\t\t1. Loai tiec";
+        cout << "\n\t\t\t\t\t\t2. So ban";
+        cout << "\n\t\t\t\t\t\t3. Thoi gian to chuc";
+        cout << "\n\t\t\t\t\t\t4. Mon an";
+        cout << "\n\t\t\t\t\t\t5. Luu";
+        cout << "\n\t\t\t\t\t\t0. Thoat";
+        cout << "\n\t\t\t\t\t\tNhap lua chon cua ban -> ";
         cin >> choose;
         switch (choose)
         {
@@ -101,7 +101,7 @@ void chooseFunctionParty(ItemP &party)
         case 2:
         {
             int newTableNumber;
-            cout << "\n\t\t\t\t\t\t\t\t\tNhap so ban moi: ";
+            cout << "\n\t\t\t\t\t\tNhap so ban moi: ";
             cin >> newTableNumber;
             party.setTableNumber(newTableNumber);
             pressAnyKey();
@@ -110,7 +110,7 @@ void chooseFunctionParty(ItemP &party)
         case 3:
         {
             Date newDate;
-            cout << "\n\t\t\t\t\t\t\t\t\tNhap thoi gian to chuc moi: " << endl;
+            cout << "\n\t\t\t\t\t\tNhap thoi gian to chuc moi: " << endl;
             newDate.inputDate("\t\t\t\t\t\t\t\t\t(!) Ngay thang khong hop le (!)");
             party.setDate(newDate);
             party.setPartyStatus();
@@ -119,13 +119,13 @@ void chooseFunctionParty(ItemP &party)
         }
         case 4:
         {
-            cout << "\n\t\t\tNhap thoi gian to chuc moi\n";
+            cout << "\n\tNhap thoi gian to chuc moi\n";
             pressAnyKey();
             break;
         }
         case 5:
         {
-            cout << "\n\t\t\t\t\t\t\t\t\t<\\> Luu thanh cong <\\>\n";
+            cout << "\n\t\t\t\t\t\t<\\> Luu thanh cong <\\>\n";
             isSaved = true;
             party.outputParty();
             pressAnyKey();
@@ -137,7 +137,7 @@ void chooseFunctionParty(ItemP &party)
             break;
         }
         default:
-            cout << "\n\t\t\t\t\t\t\t\t\tLua chon khong hop le !! Nhap lai";
+            cout << "\n\t\t\t\t\t\tLua chon khong hop le !! Nhap lai";
             pressAnyKey();
             break;
         }
@@ -151,12 +151,12 @@ void chooseFunctionCustomer(ItemC &customer)
     do
     {
         system("cls");
-        cout << "\n\t\t\t\t\t\t\t\t\t1. Ho ten";
-        cout << "\n\t\t\t\t\t\t\t\t\t2. So dien thoai";
-        cout << "\n\t\t\t\t\t\t\t\t\t3. Dia chi";
-        cout << "\n\t\t\t\t\t\t\t\t\t4. Luu";
-        cout << "\n\t\t\t\t\t\t\t\t\t0. Thoat";
-        cout << "\n\t\t\t\t\t\t\t\t\tNhap lua chon cua ban -> ";
+        cout << "\n\t\t\t\t\t\t1. Ho ten";
+        cout << "\n\t\t\t\t\t\t2. So dien thoai";
+        cout << "\n\t\t\t\t\t\t3. Dia chi";
+        cout << "\n\t\t\t\t\t\t4. Luu";
+        cout << "\n\t\t\t\t\t\t0. Thoat";
+        cout << "\n\t\t\t\t\t\tNhap lua chon cua ban -> ";
         cin >> choose;
         switch (choose)
         {
@@ -176,11 +176,11 @@ void chooseFunctionCustomer(ItemC &customer)
             string newPhoneNumberCustomer;
             do
             {
-                cout << "\n\t\t\t\t\t\t\t\t\tNhap so dien thoai moi: ";
+                cout << "\n\t\t\t\t\t\tNhap so dien thoai moi: ";
                 fflush(stdin);
                 getline(cin, newPhoneNumberCustomer);
                 if (!isValidPhoneNumber(newPhoneNumberCustomer))
-                    cout << "\n\t\t\t\t\t\t\t\t\t(!) So dien thoai khong hop le (!)\n";
+                    cout << "\n\t\t\t\t\t\t(!) So dien thoai khong hop le (!)\n";
             } while (!isValidPhoneNumber(newPhoneNumberCustomer));
             pressAnyKey();
             break;
@@ -199,7 +199,7 @@ void chooseFunctionCustomer(ItemC &customer)
         case 4:
         {
             system("cls");
-            cout << "\n\t\t\t\t\t\t\t\t\t<\\> Luu thanh cong <\\>\n";
+            cout << "\n\t\t\t\t\t\t<\\> Luu thanh cong <\\>\n";
             isSaved = true;
             customer.outputCustomer();
             pressAnyKey();
