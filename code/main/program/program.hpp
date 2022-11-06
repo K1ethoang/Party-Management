@@ -105,6 +105,8 @@ void program()
             cout << "\n\t\t\t\t\t\tNhap ID tiec can thanh toan: ";
             cin >> _ID;
             ItemP _party = parties.search(_ID);
+            _party.seeDetailParty();
+            cout << endl;
             if (_party.getID() != -1)
             {
                 _party.setIsPaymentStatus(1);

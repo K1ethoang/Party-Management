@@ -285,10 +285,10 @@ void Party::printBill()
     cout << "\t\t\t|    |   STT  |                      Mon an                      |        Gia ca        |    |" << endl;
     cout << "\t\t\t|    +----------------------------------------------------------------------------------+    |" << endl;
     // for ()
-    cout << "\t\t\t|    |   12   |   lau                                            |                      |    |" << endl;
+    cout << "\t\t\t|    |   12   |   lau                                            |    123456789  VND    |    |" << endl;
 
     cout << "\t\t\t|    +----------------------------------------------------------------------------------+    |" << endl;
-    cout << "\t\t\t|    |                                                  TONG TIEN:" << setiosflags(ios::right) << setw(14) << sumMoney << " VND    |    |" << endl;
+    cout << "\t\t\t|    |                                                  TONG TIEN:    " << setiosflags(ios::left) << setw(11) << sumMoney << "VND    |    |" << endl;
 
     // cout << "\t\t\t|    |            TONG TIEN: " << setiosflags(ios::left) << setw(59) << sumMoney << "|    |" << endl;
     cout << "\t\t\t|    +----------------------------------------------------------------------------------+    |" << endl;
