@@ -135,7 +135,6 @@ void program()
                 fileOut.close();
             }
             else
-<<<<<<< HEAD
             {
                 parties.getRoot()->data.printBill();
                 // parties.remove(ID);
@@ -143,11 +142,10 @@ void program()
             }
             break;
             // pressAnyKey();
-=======
-                cout << "\n\t\t\t\t\t\t(!) Khong co ton tai tiec nay (!)";
+
+            cout << "\n\t\t\t\t\t\t(!) Khong co ton tai tiec nay (!)";
             pressAnyKey();
             break;
->>>>>>> e35a7edfad5f0d10e8b0aa1cf80f61a609836f97
         }
         default:
             cout << "\n\t\t\t\t\t\t(!) Lua chon khong hop le (!)";
