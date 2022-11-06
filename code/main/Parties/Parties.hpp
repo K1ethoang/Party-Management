@@ -32,13 +32,13 @@ private:
     // methods private
 private:
     bool isExistIDPrivate(NodeP *root, const long &_ID);
-    void addPrivate(NodeP *&root, ItemP val);              // thêm node
-    void printPreOrderPrivate(NodeP *root);                // in duyệt đầu
-    void printInOrderPrivate(NodeP *root);                 // in duyệt giữa
-    void printPostOrderPrivate(NodeP *root);               // in duyệt sau
-    void freeMemory(NodeP *root);                          // giải phóng bộ nhớ
-    ItemP returnNodePrivate(NodeP *root, const long &_ID); // tìm node
-    void updateNodePrivate(NodeP *root, ItemP value);      // cập nhật node
+    void addPrivate(NodeP *&root, ItemP val);                    // thêm node
+    void printPreOrderPrivate(NodeP *root, const bool &_isPaid); // in duyệt đầu
+    void printInOrderPrivate(NodeP *root);                       // in duyệt giữa
+    void printPostOrderPrivate(NodeP *root);                     // in duyệt sau
+    void freeMemory(NodeP *root);                                // giải phóng bộ nhớ
+    ItemP returnNodePrivate(NodeP *root, const long &_ID);       // tìm node
+    void updateNodePrivate(NodeP *root, ItemP value);            // cập nhật node
     void findNodeSmallestPrivate(NodeP *&x, NodeP *&y);
     void removeNodePrivate(NodeP *&root, const long &_ID); // xoá node
     void exportPartiesDataPrivate(NodeP *root, ofstream &fileOut);
@@ -49,12 +49,13 @@ public:
     ~PartiesBST(); // hàm huỷ
     NodeP *getRoot();
     long getSize();
-    bool isExistID(const long &_ID); // kiểm tra trùng ID
-    void add(const ItemP &value);    // thêm tiệc
-    ItemP search(const long &ID);    // tìm tiệc
-    void update(const ItemP &value); // chỉnh sửa tiệc
-    void remove(const long &ID);     // xoá tiệc
-    void display();                  // xuất các tiệc
+    bool isExistID(const long &_ID);                  // kiểm tra trùng ID
+    void add(const ItemP &value);                     // thêm tiệc
+    ItemP search(const long &ID);                     // tìm tiệc
+    void update(const ItemP &value);                  // chỉnh sửa tiệc
+    void remove(const long &ID);                      // xoá tiệc
+    void display();                                   // xuất tất cả tiệc
+    void displayByPaymentStatus(const bool &_isPaid); // xuất theo trạng thái thanh toán
     void importPartiesData(const string &_fileInPath);
     void exportPartiesData(const string &_fileOutPath);
 };
@@ -100,13 +101,14 @@ void PartiesBST::freeMemory(NodeP *root)
     }
 }
 
-void PartiesBST::printPreOrderPrivate(NodeP *root)
+void PartiesBST::printPreOrderPrivate(NodeP *root, const bool &_isPaid)
 {
     if (root != NULL)
     {
-        cout << root->data;
-        printPreOrderPrivate(root->left);
-        printPreOrderPrivate(root->right);
+        printPreOrderPrivate(root->left, _isPaid);
+        if (root->data.getIsPaymentStatus() == _isPaid)
+            cout << root->data;
+        printPreOrderPrivate(root->right, _isPaid);
     }
 }
 
@@ -149,7 +151,10 @@ void PartiesBST::updateNodePrivate(NodeP *root, ItemP value)
     if (root != NULL)
     {
         if (root->data.getID() == value.getID())
+        {
             root->data = value;
+            return;
+        }
         else
         {
             if (value.getID() < root->data.getID())
@@ -289,6 +294,18 @@ void PartiesBST::display()
     // cout << "\n\t\t"
 }
 
+void PartiesBST::displayByPaymentStatus(const bool &_isPaid)
+{
+    long _ID;
+    cout << "\n\t\t+=======================================================================================================================================+" << endl;
+    cout << "\t\t|                                                          DANH SACH CAC TIEC                                                           |" << endl;
+    cout << "\t\t+========+===============+=============================+==============+===================+========+===================+================+" << endl;
+    cout << "\t\t|   ID   |   Thoi gian   |          Nguoi dat          |     SDT      |     Loai tiec     | So ban |  Trang thai tiec  |   Thanh toan   |" << endl;
+    cout << "\t\t+========+===============+=============================+==============+===================+========+===================+================+";
+    cout << "\t\t";
+    printPreOrderPrivate(root, _isPaid);
+}
+
 void PartiesBST::importPartiesData(const string &_fileInPath)
 {
     ifstream fileIn(_fileInPath);
@@ -312,9 +329,7 @@ void PartiesBST::exportPartiesData(const string &_fileOutPath)
 {
     ofstream fileOut(_fileOutPath);
     if (fileOut.is_open())
-    {
         exportPartiesDataPrivate(root, fileOut);
-    }
     else
         cout << "\n\t\t(!) Loi khi mo file \"khachHang.txt\"" << endl;
     fileOut.close();

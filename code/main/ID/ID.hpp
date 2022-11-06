@@ -9,9 +9,8 @@ private:
 public:
     ID();
     long getID();
-    void setID(long &_id);
+    void setID(const long &_id);
     void inputID();
-    long outputID();
 };
 
 ID::ID()
@@ -24,30 +23,18 @@ long ID::getID()
     return id;
 }
 
-void ID::setID(long &_id)
+void ID::setID(const long &_id)
 {
-    do
-    {
-        if (_id <= 0)
-        {
-            cout << "\n\t\t\t\t\t\t\t\t\tId vua nhap khong hop le!!";
-            cout << "\n\t\t\t\t\t\t\t\tNhap lai: ";
-            cin >> _id;
-        }
-        else
-            id = _id;
-    } while (_id <= 0);
+    id = _id;
 }
 
 void ID::inputID()
 {
-    long _id;
-    cout << "\n\t\t\t\t\t\t\t\t\tNhap ID: ";
-    cin >> _id;
-    setID(_id);
-}
-
-long ID::outputID()
-{
-    return id;
+    do
+    {
+        cout << "\n\t\t\t\t\t\tNhap ID: ";
+        cin >> id;
+        if (id <= 0)
+            cout << "\n\t\t\t\t\t(!) Id vua nhap khong hop le (!)\n";
+    } while (id <= 0);
 }

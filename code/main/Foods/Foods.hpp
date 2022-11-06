@@ -29,12 +29,12 @@ private:
 public:
     FoodsCDLL();
     ~FoodsCDLL();
-    void setHead(NodeF *_head);
-    NodeF *getHead();
-    void setTail(NodeF *_tail);
-    NodeF *getTail();
-    void setSize(const long &_size);
-    long getSize();
+    void sethead(NodeF *_head);
+    NodeF *gethead();
+    void settail(NodeF *_tail);
+    NodeF *gettail();
+    void setsize(const long &_size);
+    long getsize();
     void addLast(const ItemF &value);
     void importFood(const string &fileInPath);
     void display();
@@ -70,31 +70,31 @@ FoodsCDLL::~FoodsCDLL()
     }
 }
 
-void FoodsCDLL::setHead(NodeF *_head)
+void FoodsCDLL::sethead(NodeF *_head)
 {
     head = _head;
 }
 
-NodeF *FoodsCDLL::getHead()
+NodeF *FoodsCDLL::gethead()
 {
     return head;
 }
 
-void FoodsCDLL::setTail(NodeF *_tail)
+void FoodsCDLL::settail(NodeF *_tail)
 {
     tail = _tail;
 }
 
-NodeF *FoodsCDLL::getTail()
+NodeF *FoodsCDLL::gettail()
 {
     return tail;
 }
-void FoodsCDLL::setSize(const long &_size)
+void FoodsCDLL::setsize(const long &_size)
 {
     size = _size;
 }
 
-long FoodsCDLL::getSize()
+long FoodsCDLL::getsize()
 {
     return size;
 }

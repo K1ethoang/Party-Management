@@ -2,11 +2,8 @@
 
 int main()
 {
-    // Party p;
-    // Customer c;
-    // cin >> c;
-    // p.setCustomer(c);
-    // p.printBill();
     program();
+    cout << "\nThoat chuong trinh thanh cong !";
+    pressAnyKey();
     return 0;
 }

@@ -74,14 +74,14 @@ void Date::inputDate(const string &msgWhenIsValidDate)
 {
     do
     {
-        cout << "\t\t\t\t\t\t\t\t\t   > Nhap ngay: ";
+        cout << "\t\t\t\t\t\t   > Nhap ngay: ";
         cin >> day;
-        cout << "\t\t\t\t\t\t\t\t\t   > Nhap thang: ";
+        cout << "\t\t\t\t\t\t   > Nhap thang: ";
         cin >> month;
-        cout << "\t\t\t\t\t\t\t\t\t   > Nhap nam: ";
+        cout << "\t\t\t\t\t\t   > Nhap nam: ";
         cin >> year;
         if (!isValidDate())
-            cout << msgWhenIsValidDate << "\n";
+            cout << "\n\t\t\t\t\t" << msgWhenIsValidDate << "\n";
     } while (!isValidDate());
 }
 
