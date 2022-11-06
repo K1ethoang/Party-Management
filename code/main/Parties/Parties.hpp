@@ -290,6 +290,8 @@ void PartiesBST::display()
     cout << "\t\t+========+===============+=============================+==============+===================+========+===================+================+";
     cout << "\t\t";
     printInOrderPrivate(root);
+
+    // cout << "\n\t\t"
 }
 
 void PartiesBST::displayByPaymentStatus(const bool &_isPaid)
