@@ -288,7 +288,9 @@ void Party::printBill()
     cout << "\t\t\t|    |   12   |   lau                                            |                      |    |" << endl;
 
     cout << "\t\t\t|    +----------------------------------------------------------------------------------+    |" << endl;
-    cout << "\t\t\t|    |            TONG TIEN: " << setiosflags(ios::left) << setw(59) << sumMoney << "|    |" << endl;
+    cout << "\t\t\t|    |                                                  TONG TIEN:" << setiosflags(ios::right) << setw(14) << sumMoney << " VND    |    |" << endl;
+
+    // cout << "\t\t\t|    |            TONG TIEN: " << setiosflags(ios::left) << setw(59) << sumMoney << "|    |" << endl;
     cout << "\t\t\t|    +----------------------------------------------------------------------------------+    |" << endl;
     // cout << "\t\t\t|    |   " << setiosflags(ios::left) << setw(5) << "|"
     //  << "   " << setw(32) << " "
@@ -320,7 +322,7 @@ void Party::seeDetailParty()
     cout << "\t\t\t|    |   12   |   lau                                            |                      |    |" << endl;
 
     cout << "\t\t\t|    +----------------------------------------------------------------------------------+    |" << endl;
-    cout << "\t\t\t|    |            TONG TIEN: " << setiosflags(ios::left) << setw(59) << sumMoney << "|    |" << endl;
+    cout << "\t\t\t|    |                                                  TONG TIEN:" << setiosflags(ios::right) << setw(14) << sumMoney << " VND    |    |" << endl;
     cout << "\t\t\t|    +----------------------------------------------------------------------------------+    |" << endl;
     // cout << "\t\t\t|    |   " << setiosflags(ios::left) << setw(5) << "|"
     //  << "   " << setw(32) << " "
@@ -361,12 +363,8 @@ ostream &operator<<(ostream &os, Party &p)
 
 void Party::readAParty(ifstream &fileIn)
 {
-    string newLine;
-    long _ID;
-    fileIn >> _ID;
-    setID(_ID);
-    getline(fileIn, newLine); // xoá ký tự xuống dòng
     customer.readACustomer(fileIn);
+    setID(customer.getID());
     getline(fileIn, typeParty);
     fileIn >> tableNumber;
     Date _date;
