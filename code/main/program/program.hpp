@@ -1,4 +1,6 @@
 #pragma once
+#include <iostream>
+#include <string>
 #include "../Customers/Customers.hpp"
 #include "../Parties/Parties.hpp"
 #include "../Foods/Foods.hpp"
@@ -6,6 +8,7 @@
 #include "checkReturn.hpp"
 #include "./addDisplay.hpp"
 #include "./editDisplay.hpp"
+#include "./viewDisplay.hpp"
 #include "../constance.hpp"
 
 using namespace std;
@@ -15,12 +18,8 @@ void pressAnyKey();
 
 void program()
 {
-    CustomersSLL customers;
     PartiesBST parties;
     parties.importPartiesData(PARTY_DATA_PATH);
-    customers.importCustomersData(CUSTOMER_DATA_PATH);
-    customers.sortByID();
-    customers.exportCustomersData(CUSTOMER_DATA_PATH);
     int choose;
     bool isExit = false;
     do
@@ -41,12 +40,10 @@ void program()
         {
         case 0:
             isExit = true;
-            cout << "\nThoat chuong trinh thanh cong !";
-            pressAnyKey();
             break;
         case 1:
         {
-            addDisplay(parties, customers);
+            addDisplay(parties);
             parties.exportPartiesData(PARTY_DATA_PATH);
             break;
         }
@@ -59,7 +56,7 @@ void program()
                 editDisplay(parties, _ID);
             else
             {
-                cout << "\n\t\t\t\t\t\t<!> Khong co ton tai tiec nay";
+                cout << "\n\t\t\t\t\t\t(!) Khong co ton tai tiec nay (!)";
                 pressAnyKey();
             }
             parties.exportPartiesData(PARTY_DATA_PATH);
@@ -67,8 +64,7 @@ void program()
         }
         case 3:
         {
-            parties.display();
-            pressAnyKey();
+            viewDisplay(parties);
             break;
         }
         case 4:
@@ -88,7 +84,7 @@ void program()
                     {
                         parties.remove(ID);
                         parties.exportPartiesData(PARTY_DATA_PATH);
-                        cout << "\n\t\t\t\t\t\t>>> Xoa thanh cong! <<<\n";
+                        cout << "\n\t\t\t\t\t\t</> Xoa thanh cong </>\n";
                         pressAnyKey();
                     }
                     else if (answer == 'n')
@@ -101,20 +97,45 @@ void program()
         }
         case 5:
         {
+            parties.displayByPaymentStatus(0);
+            long _ID;
+            cout << endl;
+            cout << "\n\t\t\t\t\t\tNhap ID tiec can thanh toan: ";
+            cin >> _ID;
+            ItemP _party = parties.search(_ID);
+            if (_party.getID() != -1)
+            {
+                _party.setIsPaymentStatus(1);
+                parties.update(_party);
+                parties.exportPartiesData(PARTY_DATA_PATH);
+                cout << "\n\t\t\t\t\t\t</> Thanh toan thanh cong </>\n";
+            }
+            else
+                cout << "\n\t\t\t\t\t\t(!) Khong co ton tai tiec nay (!)";
+            pressAnyKey();
             break;
         }
         case 6:
         {
             long _ID;
-            cout << "\n\t\t\t\t\t\tNhap ID tiec can sua: ";
+            cout << "\n\t\t\t\t\t\tNhap ID tiec can in bill: ";
             cin >> _ID;
-            if (parties.isExistID(_ID))
+            ItemP _party = parties.search(_ID);
+            if (_party.getID() != -1)
             {
-                ItemP _party = parties.search(_ID);
-                _party.printBill();
+                ItemC _customer = _party.getCustomer();
+                string save_path = BILL_SAVER_FOLDER_PATH + '/' + to_string(_customer.getID()) + '_' + _customer.getFullName() + ".txt";
+                ofstream fileOut(save_path);
+                if (fileOut.is_open())
+                {
+                    _party.writeABill(fileOut);
+                    cout << "\n\t\t\t\tHoa don cua ban duoc luu theo duong dan sau: " << endl;
+                    cout << "\t\t\tcode -> data -> Hoa-Don -> " << _customer.getID() << "_" << _customer.getFullName() << ".txt";
+                }
+                fileOut.close();
             }
             else
-                cout << "\n\t\t\t\t\t\t<!> Khong co ton tai tiec nay";
+                cout << "\n\t\t\t\t\t\t(!) Khong co ton tai tiec nay (!)";
             pressAnyKey();
             break;
         }

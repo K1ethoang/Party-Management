@@ -12,6 +12,6 @@ const string PAID = "Da thanh toan";
 const string UNPAID = "Chua thanh toan";
 
 // Tường dẫn dữ liệu
-const string TYPE_PARTY_DATA_PATH = "../data/loaiTiec.txt";
-const string CUSTOMER_DATA_PATH = "../data/Khach-Hang/khachHang.txt";
+const string TYPE_PARTY_DATA_PATH = "../data/Tiec/loaiTiec.txt";
 const string PARTY_DATA_PATH = "../data/Tiec/tiec.txt";
+const string BILL_SAVER_FOLDER_PATH = "../data/Hoa-Don";

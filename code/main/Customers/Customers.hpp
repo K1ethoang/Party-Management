@@ -11,59 +11,89 @@ struct NodeC
 class CustomersSLL
 {
 private:
-    NodeC *Head;
-    NodeC *Tail;
-    long Size;
+    NodeC *head;
+    NodeC *tail;
+    long size;
+
+private:
+    NodeC *returnMiddlePrivate(NodeC *start, NodeC *last); // tìm vị trí node ở giữa dslk
+    NodeC *binarySearchPrivate(NodeC *head, const long &_IDKey);
 
 public:
     CustomersSLL();
     ~CustomersSLL(); // hàm hủy
-    NodeC *getHead();
-    NodeC *getTail();
     long getSize();
     NodeC *createNode(const ItemC &val);
     void addLast(const ItemC &val);
     void removeFirst();
     void removeLast();
     void remove(const long &id);
-    void find(const long &id);
     void sortByID();
-    void edit(const long &id);
+    NodeC *findCustomerByID(const long &_IDKey); // binary search
+    void update(ItemC value);
     void display();
     void importCustomersData(const string &_fileInPath);
     void exportCustomersData(const string &_fileOutPath);
 };
 
+// private
+NodeC *CustomersSLL::returnMiddlePrivate(NodeC *start, NodeC *last)
+{
+    if (start == NULL)
+        return NULL;
+    NodeC *slow = start;
+    NodeC *fast = start->pNext;
+    while (fast != last)
+    {
+        fast = fast->pNext;
+        if (fast != last)
+        {
+            slow = slow->pNext;
+            fast = fast->pNext;
+        }
+    }
+    return slow;
+}
+
+NodeC *CustomersSLL::binarySearchPrivate(NodeC *head, const long &_IDKey)
+{
+    NodeC *start = head, *last = NULL;
+    do
+    {
+        NodeC *mid = returnMiddlePrivate(start, last);
+        if (mid == NULL)
+            return NULL;
+        if (mid->data.getID() == _IDKey)
+            return mid;
+        else if (mid->data.getID() > _IDKey)
+            start = mid->pNext;
+        else
+            last = mid;
+    } while (last == NULL || last != start);
+    return NULL;
+}
+
+// public
 CustomersSLL::CustomersSLL()
 {
-    Head = Tail = NULL;
-    Size = 0;
+    head = tail = NULL;
+    size = 0;
 }
 CustomersSLL::~CustomersSLL() // duyệt qua từng phần tử để giải phóng
 {
     NodeC *t = NULL;
-    while (Head != NULL)
+    while (head != NULL)
     {
-        t = Head;
-        Head = Head->pNext;
+        t = head;
+        head = head->pNext;
+        size--;
         delete t;
     }
-    Size = 0;
-}
-
-NodeC *CustomersSLL::getHead()
-{
-    return Head;
-}
-
-NodeC *CustomersSLL::getTail()
-{
-    return Tail;
 }
 
 long CustomersSLL::getSize()
 {
-    return Size;
+    return size;
 }
 
 NodeC *CustomersSLL::createNode(const ItemC &val)
@@ -77,42 +107,39 @@ NodeC *CustomersSLL::createNode(const ItemC &val)
 void CustomersSLL::addLast(const ItemC &val)
 {
     NodeC *p = createNode(val);
-    if (Head == NULL)
-    {
-        Head = p;
-        Tail = p;
-    }
+    if (size == 0)
+        head = tail = p;
     else
     {
-        Tail->pNext = p;
-        Tail = p;
+        tail->pNext = p;
+        tail = p;
     }
-    Size++;
+    size++;
 }
 
 void CustomersSLL::removeFirst()
 {
-    if (Head == NULL)
+    if (head == NULL)
         return;
-    NodeC *l = Head;    // node l là node sẽ xóa
-    Head = Head->pNext; // cập nhật lại head là phần tử tiếp theo
+    NodeC *l = head;    // node l là node sẽ xóa
+    head = head->pNext; // cập nhật lại head là phần tử tiếp theo
     delete l;
-    Size--;
+    size--;
 }
 
 void CustomersSLL::removeLast()
 {
-    if (Head == NULL)
+    if (head == NULL)
         return;
-    for (NodeC *i = Head; i != NULL; i = i->pNext)
+    for (NodeC *i = head; i != NULL; i = i->pNext)
     {
         // phát hiện kế cuối
-        if (i->pNext == Tail)
+        if (i->pNext == tail)
         {
-            delete Tail;     // xóa phần tử cuối
+            delete tail;     // xóa phần tử cuối
             i->pNext = NULL; // cho con trỏ kế cuối trỏ đến NULL
-            Tail = i;        // cập nhật lại kế cuối là tail
-            Size--;
+            tail = i;        // cập nhật lại kế cuối là tail
+            size--;
             return;
         }
     }
@@ -121,14 +148,14 @@ void CustomersSLL::removeLast()
 void CustomersSLL::remove(const long &id)
 {
 
-    if (Head->data.getID() == id)
+    if (head->data.getID() == id)
         removeFirst();
-    else if (Tail->data.getID() == id)
+    else if (tail->data.getID() == id)
         removeLast();
     else
     {
         NodeC *m = new NodeC;
-        for (NodeC *k = Head; k != NULL; k = k->pNext)
+        for (NodeC *k = head; k != NULL; k = k->pNext)
         {
             // phát hiện ra phần tử cần xóa
             if (k->data.getID() == id)
@@ -136,7 +163,7 @@ void CustomersSLL::remove(const long &id)
                 NodeC *g = k;
                 m->pNext = k->pNext;
                 delete g;
-                Size--;
+                size--;
                 return;
             }
             m = k;
@@ -144,21 +171,9 @@ void CustomersSLL::remove(const long &id)
     }
 }
 
-void CustomersSLL::find(const long &id)
-{
-    for (NodeC *i = Head; i != NULL; i = i->pNext)
-    {
-        if (i->data.getID() == id)
-        {
-            cout << i->data;
-            break;
-        }
-    }
-}
-
 void CustomersSLL::sortByID() // thuật toán sắp xếp chọn
 {
-    for (NodeC *i = Head; i != Tail; i = i->pNext)
+    for (NodeC *i = head; i != tail; i = i->pNext)
     {
         NodeC *minIndex = i;
         for (NodeC *j = i->pNext; j != NULL; j = j->pNext)
@@ -171,66 +186,25 @@ void CustomersSLL::sortByID() // thuật toán sắp xếp chọn
     }
 }
 
-// void CustomersSLL::edit(const long &id)
-// {
-//     bool exist = false;
+NodeC *CustomersSLL::findCustomerByID(const long &_IDKey)
+{
+    sortByID();
+    return binarySearchPrivate(head, _IDKey);
+}
 
-//     for (NodeC *i = Head; i != NULL; i = i->pNext)
-//     {
-
-//         if (i->data.getID() == id)
-//         {
-//             exist = true;
-//             int choose;
-//             bool exit = false;
-//             do
-//             {
-//                 system("cls");
-//                 cout << "\n\t\tNOI DUNG CAN CHINH SUA" << endl;
-//                 cout << "1. Ho va ten" << endl;
-//                 cout << "2. So dien thoai" << endl;
-//                 cout << "0. Thoat" << endl;
-//                 cout << "\nNhap lua chon cua ban: ";
-//                 cin >> choose;
-//                 switch (choose)
-//                 {
-//                 case 1:
-//                 {
-//                     string Name;
-//                     cout << "\nNhap ho va ten moi: ";
-//                     fflush(stdin);
-//                     getline(cin, Name);
-//                     cout << Name << endl;
-//                     i->data.setFullName(Name);
-//                     cout << "\nCap nhat thanh cong!" << endl;
-//                     break;
-//                 }
-//                 case 2:
-//                 {
-//                     string phoneNumber;
-//                     cout << "\nNhap so dien thoai moi: ";
-//                     fflush(stdin);
-//                     cin >> phoneNumber;
-//                     i->data.setPhoneNumber(phoneNumber);
-//                     cout << "\nCap nhat thanh cong!" << endl;
-//                     break;
-//                 }
-//                 case 0:
-//                     exit = true;
-//                 default:
-//                     break;
-//                 }
-//                 cout << i->data;
-//                 system("pause");
-//             } while (!exit);
-//             break;
-//         }
-//     }
-//     if (exist == false)
-//     {
-//         cout << "\nKhong ton tai khach hang nay" << endl;
-//     }
-// }
+void CustomersSLL::update(ItemC value)
+{
+    if (size == 0)
+        return;
+    for (NodeC *t = head; t != NULL; t = t->pNext)
+    {
+        if (t->data.getID() == value.getID())
+        {
+            t->data = value;
+            return;
+        }
+    }
+}
 
 void CustomersSLL::display()
 {
@@ -241,13 +215,13 @@ void CustomersSLL::display()
     cout << "\t\t\t|        ID        |                 HO VA TEN                 |           SDT           |                CCCD                |" << endl;
     cout << "\t\t\t+==================+===========================================+=========================+====================================+";
     cout << "\t\t\t";
-    for (NodeC *t = Head; t != NULL; t = t->pNext)
+    for (NodeC *t = head; t != NULL; t = t->pNext)
     {
         cout << "\n\t\t\t" << setiosflags(ios::left) << "|"
              << "        " << setw(10) << t->data.getID() << "|"
              << "           " << setw(32) << t->data.getFullName() << "|"
              << "       " << setw(18) << t->data.getPhoneNumber() << "|"
-             << "            " << setw(24) << t->data.getCCCD() << "|";
+             << "            " << setw(24) << t->data.getIdentityCard() << "|";
         cout << "\n\t\t\t+==================+===========================================+=========================+====================================+";
     }
 }
@@ -276,7 +250,7 @@ void CustomersSLL::exportCustomersData(const string &_fileOutPath)
     ofstream fileOut(_fileOutPath);
     if (fileOut.is_open())
     {
-        for (NodeC *t = Head; t != NULL; t = t->pNext)
+        for (NodeC *t = head; t != NULL; t = t->pNext)
             t->data.writeACustomer(fileOut);
     }
     else

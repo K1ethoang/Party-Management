@@ -1,20 +1,20 @@
 #include "program.hpp"
 
-inline void addDisplay(PartiesBST &parties, CustomersSLL &customers);
-void saveParty(PartiesBST &parties, ItemP party);
+inline void addDisplay(PartiesBST &parties);
+void saveParty(PartiesBST &parties, const ItemP &party);
 
-inline void addDisplay(PartiesBST &parties, CustomersSLL &customers)
+inline void addDisplay(PartiesBST &parties)
 {
     int choose;
     bool isExit = false, isSaved = true;
-    ItemC c;
-    ItemP p;
+    ItemC customer;
+    ItemP party;
     do
     {
         system("cls");
         cout << "\n\t\t\t\t\t\t+ ============== THEM ============== +";
-        cout << "\n\t\t\t\t\t\t| 1.1. Nhap thong tin khach hang     |";
-        cout << "\n\t\t\t\t\t\t| 1.2. Nhap thong tin tiec           |";
+        cout << "\n\t\t\t\t\t\t| 1.1. Thong tin khach hang          |";
+        cout << "\n\t\t\t\t\t\t| 1.2. Thong tin tiec                |";
         cout << "\n\t\t\t\t\t\t| 1.3. Chon mon an                   |";
         cout << "\n\t\t\t\t\t\t| 1.4. Luu thong tin                 |";
         cout << "\n\t\t\t\t\t\t| 1.0. Tro ve                        |";
@@ -26,11 +26,12 @@ inline void addDisplay(PartiesBST &parties, CustomersSLL &customers)
         case 1:
         {
             system("cls");
-            cout << "\n\t\t\t\t\t\t[1.1. NHAP THONG TIN KHACH HANG]\n";
-            cin >> c;
+            cout << "\n\t\t\t\t\t\t[NHAP THONG TIN KHACH HANG]\n";
+            cin >> customer;
             system("cls");
-            cout << c;
-            p.setCustomer(c);
+            cout << "\n\t\t\t\t\t\t[THONG TIN KHACH HANG VUA NHAP]\n";
+            customer.setID(party.getID());
+            customer.outputCustomer();
             pressAnyKey();
             isSaved = false;
             break;
@@ -38,29 +39,30 @@ inline void addDisplay(PartiesBST &parties, CustomersSLL &customers)
         case 2:
         {
             system("cls");
-            cout << "\n\t\t\t\t\t\t[1.2. NHAP THONG TIN TIEC]";
-            cin >> p;
-            long _id = p.getID();
+            cout << "\n\t\t\t\t\t\t[NHAP THONG TIN TIEC]\n";
+            cin >> party;
+            long _id = party.getID();
             do
             {
-                if (parties.isExistID(p.getID()))
+                if (parties.isExistID(party.getID()))
                 {
-                    cout << "\n\t\t\tDa ton tai ID nay, nhap lai: ";
+                    cout << "\n\t\t\t(!) Da ton tai ID nay, nhap lai: ";
                     cin >> _id;
-                    p.setID(_id);
+                    party.setID(_id);
                 }
-            } while (parties.isExistID(p.getID()));
-            c.setID(_id);
+            } while (parties.isExistID(party.getID()));
+            customer.setID(party.getID());
+            party.setCustomer(customer);
             system("cls");
-            cout << "\n\t\t\t\t\t\t[Thong tin tiec vua nhap]\n\n";
-            p.outputParty();
-            pressAnyKey();
+            cout << "\n\t\t\t\t\t\t[THONG TIN TIEC VUA NHAP]\n";
+            party.outputParty();
             isSaved = false;
+            pressAnyKey();
             break;
         }
         case 3:
         {
-            cout << "\n\t\t\t\t\t\t[1.3. Chon mon an]\n";
+            cout << "\n\t\t\t\t\t\t[CHON MON AN]\n";
             // Queue<string> resMenu = Menu(); // food của menu
             // p.setMenu(resMenu);
             // resMenu = p.getMenu();
@@ -71,21 +73,24 @@ inline void addDisplay(PartiesBST &parties, CustomersSLL &customers)
         }
         case 4:
         {
-            if (p.getID() != -1)
+            if (party.getID() != -1 && customer.getID() != -1)
             {
-                cout << "\n\t\t\t\t\t\t<\\> Luu thanh cong <\\>\n";
+                cout << "\n\t\t\t\t\t\t</> Luu thanh cong </>\n";
+                customer.outputCustomer();
+                cout << "\n\n";
+                party.outputParty();
                 isSaved = true;
             }
             else
-                cout << "\n\t\t\t\t\t\t(!) Khong the luu vi ban chua nhap tiec (!)\n";
+                cout << "\n\t\t\t\t\t\t(!) Khong the luu vi ban chua nhap du thong tin (!)\n";
             pressAnyKey();
             break;
         }
         case 0:
         {
             checkExit(isExit, isSaved);
-            if (isSaved && p.getID() != -1)
-                saveParty(parties, p);
+            if (isSaved && (party.getID() != -1 && customer.getID() != -1))
+                saveParty(parties, party);
             break;
         }
         default:
@@ -96,7 +101,7 @@ inline void addDisplay(PartiesBST &parties, CustomersSLL &customers)
     } while (!isExit);
 }
 
-void saveParty(PartiesBST &parties, ItemP party)
+void saveParty(PartiesBST &parties, const ItemP &party)
 {
     parties.add(party);
 }
