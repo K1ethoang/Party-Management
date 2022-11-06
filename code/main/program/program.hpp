@@ -138,7 +138,7 @@ void program()
             {
                 parties.getRoot()->data.printBill();
                 // parties.remove(ID);
-                cout << "\n\t\t\t\t\t\t\t\t\t>>> Da xem ! <<<\n";
+                // cout << "\n\t\t\t\t\t\t\t\t\t>>> Da xem ! <<<\n";
             }
 
             // pressAnyKey();
