@@ -155,7 +155,7 @@ Party::Party()
     partyStatus = -1;
     isPaymentStatus = 0;
     isDeposited = 0;
-    sumMoney = -1;
+    sumMoney = 0;
 }
 
 Party::~Party()

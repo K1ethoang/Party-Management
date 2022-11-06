@@ -1,6 +1,6 @@
 
 -1
-Nguyen Van A
+Hoang Gia Kiet
 1231231231
 123123123123
 Tiec cuoi
@@ -8,19 +8,10 @@ Tiec cuoi
 1 1 1
 1 1 0
 0
--1
-Tran Van Hau
-1212121212
-121212121212
-Tiec cuoi
-1
-1 1 1
-1 0 0
-0
 2
 Tran Van Hau
-1212121212
-121212121212
+1231231231
+123123123123
 Tiec cuoi
 1
 1 1 1
