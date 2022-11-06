@@ -12,14 +12,14 @@ class Customer : public ID, public Person
 {
 public:
     Customer();
-    Customer(const string &_fullName, const string &_phoneNumber, const string &_CCCD);
+    Customer(const string &_fullName, const string &_phoneNumber, const string &_identityCard);
     ~Customer();
     string getFullName();
     void setFullName(const string &_fullName);
     string getPhoneNumber();
     void setPhoneNumber(const string &_phoneNumber);
-    string getCCCD();
-    void setCCCD(const string &_CCCD);
+    string getIdentityCard();
+    void setIdentityCard(const string &_identityCard);
     void outputCustomer();
     friend istream &operator>>(istream &is, Customer &c);
     friend ostream &operator<<(ostream &os, Customer c);
@@ -30,10 +30,11 @@ public:
 typedef Customer ItemC;
 
 // hàm ngoài
-bool isValidPhoneNumber(string _phoneNumber);
+bool isValidPhoneNumber(const string &_phoneNumber);
+bool isValidIdentityCard(const string &_identityCard);
 
 // hàm ngoài
-bool isValidPhoneNumber(string _phoneNumber)
+bool isValidPhoneNumber(const string &_phoneNumber)
 {
     bool isValid = false;
     int lengthPhoneNumber = _phoneNumber.length();
@@ -54,18 +55,15 @@ bool isValidPhoneNumber(string _phoneNumber)
 }
 
 // hàm ngoài
-bool isValidCCDD(string _CCCD);
-
-// hàm ngoài
-bool isValidCCDD(string _CCCD)
+bool isValidIdentityCard(const string &_identityCard)
 {
     bool isValid = false;
-    int lengthCCCD = _CCCD.length();
-    if (lengthCCCD == 12)
+    int lengthIdentityCard = _identityCard.length();
+    if (lengthIdentityCard == 12)
     {
-        for (int i = 0; i < lengthCCCD; i++)
+        for (int i = 0; i < lengthIdentityCard; i++)
         {
-            if (_CCCD[i] - 48 >= 0 && _CCCD[i] - 48 <= 9)
+            if (_identityCard[i] - 48 >= 0 && _identityCard[i] - 48 <= 9)
                 isValid = true;
             else
                 isValid = false;
@@ -82,14 +80,14 @@ Customer::Customer()
 {
     fullName = "UNKNOWN";
     phoneNumber = "1234567890";
-    CCCD = "1234567890";
+    identityCard = "123456789012";
 }
 
-Customer::Customer(const string &_fullName, const string &_phoneNumber, const string &_CCCD)
+Customer::Customer(const string &_fullName, const string &_phoneNumber, const string &_identityCard)
 {
     fullName = _fullName;
     setPhoneNumber(_phoneNumber);
-    CCCD = _CCCD;
+    identityCard = _identityCard;
 }
 
 Customer::~Customer() {}
@@ -101,8 +99,8 @@ string Customer::getFullName()
 
 void Customer::setFullName(const string &_fullName)
 {
+    // formatName(fullName);
     fullName = _fullName;
-    formatName(fullName);
 }
 
 string Customer::getPhoneNumber()
@@ -115,71 +113,67 @@ void Customer::setPhoneNumber(const string &_phoneNumber)
     phoneNumber = _phoneNumber;
 }
 
-string Customer::getCCCD()
+string Customer::getIdentityCard()
 {
-    return CCCD;
+    return identityCard;
 }
 
-void Customer::setCCCD(const string &_CCCD)
+void Customer::setIdentityCard(const string &_identityCard)
 {
-    CCCD = _CCCD;
+    identityCard = _identityCard;
 }
 
 void Customer::outputCustomer()
 {
-    cout << "\n\t\t\t\t\t\t\t\t\t[THONG TIN KHACH HANG DA NHAP]";
-    cout << "\n\t\t\t\t\t\t\t\t\t> Ho va ten     : " << fullName;
-    cout << "\n\t\t\t\t\t\t\t\t\t> So dien thoai : " << phoneNumber;
-    cout << "\n\t\t\t\t\t\t\t\t\t> So CCCD       : " << CCCD;
-    outputID();
+    cout << "\n\t\t\t\t\t\t> Ho va ten     : " << fullName;
+    cout << "\n\t\t\t\t\t\t> So dien thoai : " << phoneNumber;
+    cout << "\n\t\t\t\t\t\t> So CCCD       : " << identityCard;
+    getID();
 }
 
 istream &operator>>(istream &is, Customer &c)
 {
-    cout << "\n\t\t\t\t\t\t\t\t\tNhap ho va ten: ";
+    cout << "\n\t\t\t\t\t\tNhap ho va ten: ";
     fflush(stdin);
     getline(is, c.fullName);
     formatName(c.fullName);
     // Nhập sđt và kiểm tra
     do
     {
-        cout << "\t\t\t\t\t\t\t\t\tNhap so dien thoai: ";
+        cout << "\t\t\t\t\t\tNhap so dien thoai: ";
         getline(is, c.phoneNumber);
         if (!isValidPhoneNumber(c.phoneNumber))
-            cout << "\n\t\t\t\t\t\t\t\t\t<!> So dien thoai khong hop le! Nhap lai\n";
+            cout << "\n\t\t\t\t\t\t(!) So dien thoai khong hop le! (!)\n";
     } while (!isValidPhoneNumber(c.phoneNumber));
-    // Nhập số CCCD và kiểm tra
+    // Nhập số identityCard và kiểm tra
     do
     {
-        cout << "\t\t\t\t\t\t\t\t\tNhap so CCCD: ";
-        getline(is, c.CCCD);
-        if (!isValidCCDD(c.CCCD))
-            cout << "\n\t\t\t\t\t\t\t\t\t<!> So dien thoai khong hop le! Nhap lai\n";
-    } while (!isValidCCDD(c.CCCD));
+        cout << "\t\t\t\t\t\tNhap so CCCD: ";
+        getline(is, c.identityCard);
+        if (!isValidIdentityCard(c.identityCard))
+            cout << "\n\t\t\t\t\t\t(!) So CCCD khong hop le! (!)\n";
+    } while (!isValidIdentityCard(c.identityCard));
 
     return is;
 }
 
 ostream &operator<<(ostream &os, Customer c)
 {
-    cout << "\n\t\t\t\t\t\t\t\t\t[Thong tin khach hang da nhap]\n";
-    cout << "\n\t\t\t\t\t\t\t\t\tHo va ten      : " << c.fullName;
-    cout << "\n\t\t\t\t\t\t\t\t\tSo dien thoai  : " << c.phoneNumber;
-    cout << "\n\t\t\t\t\t\t\t\t\tSo CCCD        : " << c.CCCD << endl;
-    c.outputID();
+    cout << "\n\t\t\t" << setiosflags(ios::left) << "|"
+         << "        " << setw(10) << c.getID() << "|"
+         << "           " << setw(32) << c.getFullName() << "|"
+         << "       " << setw(18) << c.getPhoneNumber() << "|"
+         << "            " << setw(24) << c.getIdentityCard() << "|";
+    cout << "\n\t\t\t+==================+===========================================+=========================+====================================+";
+    c.getID();
     return os;
 }
 
 void Customer::readACustomer(ifstream &fileIn)
 {
-    string newLine;
-    long ID;
-    fileIn >> ID;
-    setID(ID);
-    getline(fileIn, newLine);
     getline(fileIn, fullName);
     getline(fileIn, phoneNumber);
-    getline(fileIn, CCCD);
+    getline(fileIn, identityCard);
 }
 
 void Customer::writeACustomer(ofstream &fileOut)
@@ -188,5 +182,5 @@ void Customer::writeACustomer(ofstream &fileOut)
             << getID() << endl;
     fileOut << fullName << endl;
     fileOut << phoneNumber << endl;
-    fileOut << CCCD;
+    fileOut << identityCard;
 }
