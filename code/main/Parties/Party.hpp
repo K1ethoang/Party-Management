@@ -322,7 +322,8 @@ void Party::seeDetailParty()
     cout << "\t\t\t|    |   12   |   lau                                            |                      |    |" << endl;
 
     cout << "\t\t\t|    +----------------------------------------------------------------------------------+    |" << endl;
-    cout << "\t\t\t|    |                                                  TONG TIEN:" << setiosflags(ios::right) << setw(14) << sumMoney << " VND    |    |" << endl;
+    cout << "\t\t\t|    |                                                  TONG TIEN:    " << setiosflags(ios::left) << setw(11) << sumMoney << "VND    |    |" << endl;
+
     cout << "\t\t\t|    +----------------------------------------------------------------------------------+    |" << endl;
     // cout << "\t\t\t|    |   " << setiosflags(ios::left) << setw(5) << "|"
     //  << "   " << setw(32) << " "
