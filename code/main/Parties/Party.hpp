@@ -50,7 +50,8 @@ public:
 
     void outputParty();
     void ThanhToan();
-    void printBill(); // in hoá đơn
+    void printBill();      // in hoá đơn
+    void seeDetailParty(); // xem chi tiết party
     friend istream &operator>>(istream &is, Party &p);
     friend ostream &operator<<(ostream &os, Party &p);
     void readAParty(ifstream &fileIn);
@@ -281,18 +282,51 @@ void Party::printBill()
     cout << "\t\t\t|    > Thoi gian to chuc: " << setiosflags(ios::left) << setw(2) << date.getDay() << "/" << setw(2) << date.getMonth() << "/" << setw(61) << date.getYear() << "|" << endl;
     cout << "\t\t\t|                                                                                            |" << endl;
     cout << "\t\t\t|    +----------------------------------------------------------------------------------+    |" << endl;
-    cout << "\t\t\t|    |   STT  |               Mon                 |   So luong   |        Gia ca        |    |" << endl;
+    cout << "\t\t\t|    |   STT  |                      Mon an                      |        Gia ca        |    |" << endl;
     cout << "\t\t\t|    +----------------------------------------------------------------------------------+    |" << endl;
     // for ()
-    cout << "\t\t\t|    |   12   |   lau                             |              |                      |    |" << endl;
-    cout << "\t\t\t|    |   " << setiosflags(ios::left) << setw(5) << "|"
-         << "   " << setw(32) << " "
-         << "|" << endl;
+    cout << "\t\t\t|    |   12   |   lau                                            |                      |    |" << endl;
 
+    cout << "\t\t\t|    +----------------------------------------------------------------------------------+    |" << endl;
+    cout << "\t\t\t|    |            TONG TIEN: " << setiosflags(ios::left) << setw(59) << sumMoney << "|    |" << endl;
+    cout << "\t\t\t|    +----------------------------------------------------------------------------------+    |" << endl;
+    // cout << "\t\t\t|    |   " << setiosflags(ios::left) << setw(5) << "|"
+    //  << "   " << setw(32) << " "
+    //  << "|" << endl;
+    cout << "\t\t\t|                                                                                            |" << endl;
     cout << "\t\t\t+==================================>>>HOA DON THANH TOAN<<<==================================+" << endl;
     // cout << "name: " << c.getFullName();
     // cout << "sdt: " << c.getPhoneNumber();
     // cout << "ID: " << getID() << endl;
+}
+
+void Party::seeDetailParty()
+{
+    cout << "\t\t\t+==================================>>>HOA DON THANH TOAN<<<==================================+" << endl;
+    cout << "\t\t\t|                                                                                            |" << endl;
+    cout << "\t\t\t|    > Ten: " << setiosflags(ios::left) << setw(81) << customer.getFullName() << "|" << endl;
+    cout << "\t\t\t|    > SDT: " << setiosflags(ios::left) << setw(81) << customer.getPhoneNumber() << "|" << endl;
+    cout << "\t\t\t|    > So CCCD: " << setiosflags(ios::left) << setw(77) << customer.getIdentityCard() << "|" << endl;
+    cout << "\t\t\t|                                                                                            |" << endl;
+    cout << "\t\t\t|    > ID: " << setiosflags(ios::left) << setw(82) << getID() << "|" << endl;
+    cout << "\t\t\t|    > Loai tiec: " << setiosflags(ios::left) << setw(75) << typeParty << "|" << endl;
+    cout << "\t\t\t|    > So ban: " << setiosflags(ios::left) << setw(78) << tableNumber << "|" << endl;
+    cout << "\t\t\t|    > Thoi gian to chuc: " << setiosflags(ios::left) << setw(2) << date.getDay() << "/" << setw(2) << date.getMonth() << "/" << setw(61) << date.getYear() << "|" << endl;
+    cout << "\t\t\t|                                                                                            |" << endl;
+    cout << "\t\t\t|    +----------------------------------------------------------------------------------+    |" << endl;
+    cout << "\t\t\t|    |   STT  |                      Mon an                      |        Gia ca        |    |" << endl;
+    cout << "\t\t\t|    +----------------------------------------------------------------------------------+    |" << endl;
+    // for ()
+    cout << "\t\t\t|    |   12   |   lau                                            |                      |    |" << endl;
+
+    cout << "\t\t\t|    +----------------------------------------------------------------------------------+    |" << endl;
+    cout << "\t\t\t|    |            TONG TIEN: " << setiosflags(ios::left) << setw(59) << sumMoney << "|    |" << endl;
+    cout << "\t\t\t|    +----------------------------------------------------------------------------------+    |" << endl;
+    // cout << "\t\t\t|    |   " << setiosflags(ios::left) << setw(5) << "|"
+    //  << "   " << setw(32) << " "
+    //  << "|" << endl;
+    cout << "\t\t\t|                                                                                            |" << endl;
+    cout << "\t\t\t+==================================>>>HOA DON THANH TOAN<<<==================================+" << endl;
 }
 
 istream &operator>>(istream &is, Party &p)
@@ -319,7 +353,7 @@ ostream &operator<<(ostream &os, Party &p)
        << "   " << setw(16) << p.typeParty << "|"
        << "  " << setw(6) << p.tableNumber << "|"
        << "  " << setw(17) << p.returnPartyStatusPrivate() << "|"
-       << " " << setw(13) << p.returnPaymentStatus(p.isPaymentStatus) << "|";
+       << " " << setw(15) << p.returnPaymentStatus(p.isPaymentStatus) << "|";
     os << "\n\t\t+========+===============+=============================+==============+===================+========+===================+================+";
     // os << "Name: " << p.c.getFullName() << endl;
     return os;

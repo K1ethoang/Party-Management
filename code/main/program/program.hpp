@@ -140,7 +140,7 @@ void program()
                 // parties.remove(ID);
                 cout << "\n\t\t\t\t\t\t\t\t\t>>> Da xem ! <<<\n";
             }
-            break;
+
             // pressAnyKey();
 
             cout << "\n\t\t\t\t\t\t(!) Khong co ton tai tiec nay (!)";
