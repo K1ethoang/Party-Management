@@ -119,6 +119,7 @@ void program()
                 // parties.remove(ID);
                 cout << "\n\t\t\t\t\t\t\t\t\t>>> Da xem ! <<<\n";
             }
+            break;
             // pressAnyKey();
         }
         default:
