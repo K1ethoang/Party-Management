@@ -5,21 +5,31 @@
 #include "../Parties/Parties.hpp"
 #include "../Foods/Foods.hpp"
 #include "pressAnykey.hpp"
+#include "exportBillParty.hpp"
 #include "checkReturn.hpp"
 #include "./addDisplay.hpp"
 #include "./editDisplay.hpp"
 #include "./viewDisplay.hpp"
+#include "./paymentDisplay.hpp"
 #include "../constance.hpp"
 
 using namespace std;
 
 void program();
-void pressAnyKey();
 
 void program()
 {
     PartiesBST parties;
+    FoodsCDLL l;
     parties.importPartiesData(PARTY_DATA_PATH);
+    // for (int i = 0; i < NUMBER_FOOD_PATH; i++)
+    // {
+    //     string foodPath;
+    //     foodPath = FOOD_SAVER_FOLDER_PATH + "/" + to_string(i + 1) + ".txt";
+    //     l.importFood(foodPath);
+    // }
+    // l.display();
+    // pressAnyKey();
     int choose;
     bool isExit = false;
     do
@@ -53,13 +63,15 @@ void program()
             cout << "\n\t\t\t\t\t\tNhap ID tiec can sua: ";
             cin >> _ID;
             if (parties.isExistID(_ID))
+            {
                 editDisplay(parties, _ID);
+                parties.exportPartiesData(PARTY_DATA_PATH);
+            }
             else
             {
                 cout << "\n\t\t\t\t\t\t(!) Khong co ton tai tiec nay (!)";
                 pressAnyKey();
             }
-            parties.exportPartiesData(PARTY_DATA_PATH);
             break;
         }
         case 3:
@@ -69,6 +81,8 @@ void program()
         }
         case 4:
         {
+            parties.display();
+            cout << endl;
             long ID;
             cout << "\n\t\t\t\t\t\tNhap ID tiec can xoa: ";
             cin >> ID;
@@ -85,7 +99,6 @@ void program()
                         parties.remove(ID);
                         parties.exportPartiesData(PARTY_DATA_PATH);
                         cout << "\n\t\t\t\t\t\t</> Xoa thanh cong </>\n";
-                        pressAnyKey();
                     }
                     else if (answer == 'n')
                         break;
@@ -93,57 +106,42 @@ void program()
             }
             else
                 cout << "\n\t\t\t\t\t\t>>> Khong co ton tai tiec nay <<<";
+            pressAnyKey();
             break;
         }
         case 5:
         {
             parties.displayByPaymentStatus(0);
-            long _ID;
             cout << endl;
+            long _ID;
             cout << "\n\t\t\t\t\t\tNhap ID tiec can thanh toan: ";
             cin >> _ID;
+            cout << endl;
             ItemP _party = parties.search(_ID);
-            if (_party.getID() != -1)
-            {
-                _party.setIsPaymentStatus(1);
-                parties.update(_party);
-                parties.exportPartiesData(PARTY_DATA_PATH);
-                cout << "\n\t\t\t\t\t\t</> Thanh toan thanh cong </>\n";
-            }
+            if (parties.isPaid(_party.getID()) && _party.getID() != -1)
+                cout << "\n\t\t\t\t\t\t(!) Tiec nay da thanh toan (!)";
+            else if (_party.getID() != -1)
+                paymentDisplay(parties, _party);
             else
+            {
                 cout << "\n\t\t\t\t\t\t(!) Khong co ton tai tiec nay (!)";
-            pressAnyKey();
+                pressAnyKey();
+            }
             break;
         }
         case 6:
         {
+            parties.display();
+            cout << endl;
             long _ID;
             cout << "\n\t\t\t\t\t\tNhap ID tiec can in bill: ";
             cin >> _ID;
             ItemP _party = parties.search(_ID);
+            system("cls");
             if (_party.getID() != -1)
-            {
-                ItemC _customer = _party.getCustomer();
-                string save_path = BILL_SAVER_FOLDER_PATH + '/' + to_string(_customer.getID()) + '_' + _customer.getFullName() + ".txt";
-                ofstream fileOut(save_path);
-                if (fileOut.is_open())
-                {
-                    _party.writeABill(fileOut);
-                    cout << "\n\t\t\t\tHoa don cua ban duoc luu theo duong dan sau: " << endl;
-                    cout << "\t\t\tcode -> data -> Hoa-Don -> " << _customer.getID() << "_" << _customer.getFullName() << ".txt";
-                }
-                fileOut.close();
-            }
+                exportBillParty(_party);
             else
-            {
-                parties.getRoot()->data.printBill();
-                // parties.remove(ID);
-                // cout << "\n\t\t\t\t\t\t\t\t\t>>> Da xem ! <<<\n";
-            }
-
-            // pressAnyKey();
-
-            cout << "\n\t\t\t\t\t\t(!) Khong co ton tai tiec nay (!)";
+                cout << "\n\t\t\t\t\t\t(!) Khong co ton tai tiec nay (!)";
             pressAnyKey();
             break;
         }

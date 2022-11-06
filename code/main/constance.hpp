@@ -11,7 +11,12 @@ const string COMING_SOON = "Sap dien ra";    // < 0
 const string PAID = "Da thanh toan";
 const string UNPAID = "Chua thanh toan";
 
-// Tường dẫn dữ liệu
+// Đường dẫn dữ liệu
 const string TYPE_PARTY_DATA_PATH = "../data/Tiec/loaiTiec.txt";
 const string PARTY_DATA_PATH = "../data/Tiec/tiec.txt";
 const string BILL_SAVER_FOLDER_PATH = "../data/Hoa-Don";
+const string MENU_SAVER_FOLDER_OF_CUSTOMER_PATH = "../data/Thuc-Don-Cua-Khach";
+const string FOOD_SAVER_FOLDER_PATH = "../data/Thuc-Don";
+
+// Số file food
+const int NUMBER_FOOD_PATH = 5;

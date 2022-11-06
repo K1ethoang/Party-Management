@@ -2,21 +2,9 @@
 #include <iostream>
 #include <string>
 #include <fstream>
-#include "./Food.hpp"
+#include "NodeF.hpp"
+#include "Food.hpp"
 using namespace std;
-
-typedef Food ItemF;
-
-// NodeF
-class NodeF
-{
-public:
-    ItemF data;
-    NodeF *prev;
-    NodeF *next;
-    NodeF();
-    NodeF(const ItemF &_value);
-};
 
 // FoodsCDLL
 class FoodsCDLL
@@ -29,28 +17,16 @@ private:
 public:
     FoodsCDLL();
     ~FoodsCDLL();
-    void sethead(NodeF *_head);
-    NodeF *gethead();
-    void settail(NodeF *_tail);
-    NodeF *gettail();
-    void setsize(const long &_size);
-    long getsize();
-    void addLast(const ItemF &value);
+    void setHead(NodeF *_head);
+    NodeF *getHead();
+    void setTail(NodeF *_tail);
+    NodeF *getTail();
+    void setSize(const long &_size);
+    long getSize();
+    void addLast(const NodeF &_value);
     void importFood(const string &fileInPath);
     void display();
 };
-
-// NodeF
-NodeF::NodeF()
-{
-    prev = next = NULL;
-}
-
-NodeF::NodeF(const ItemF &_value)
-{
-    data = _value;
-    prev = next = NULL;
-}
 
 // FoodsCDLL
 FoodsCDLL::FoodsCDLL()
@@ -70,38 +46,38 @@ FoodsCDLL::~FoodsCDLL()
     }
 }
 
-void FoodsCDLL::sethead(NodeF *_head)
+void FoodsCDLL::setHead(NodeF *_head)
 {
     head = _head;
 }
 
-NodeF *FoodsCDLL::gethead()
+NodeF *FoodsCDLL::getHead()
 {
     return head;
 }
 
-void FoodsCDLL::settail(NodeF *_tail)
+void FoodsCDLL::setTail(NodeF *_tail)
 {
     tail = _tail;
 }
 
-NodeF *FoodsCDLL::gettail()
+NodeF *FoodsCDLL::getTail()
 {
     return tail;
 }
-void FoodsCDLL::setsize(const long &_size)
+void FoodsCDLL::setSize(const long &_size)
 {
     size = _size;
 }
 
-long FoodsCDLL::getsize()
+long FoodsCDLL::getSize()
 {
     return size;
 }
 
-void FoodsCDLL::addLast(const ItemF &value)
+void FoodsCDLL::addLast(const NodeF &_value)
 {
-    NodeF *n = new NodeF(value);
+    NodeF *n = new NodeF(_value.typeFood, _value.data);
     if (size == 0)
         head = tail = n;
     else
@@ -118,19 +94,24 @@ void FoodsCDLL::addLast(const ItemF &value)
 void FoodsCDLL::importFood(const string &fileInPath)
 {
     ifstream fileIn(fileInPath);
-    string _typeName, _name, _newLine;
+    string _typeFood, _name, _newLine;
     ItemF _food;
+    NodeF _data;
     long _price;
-    getline(fileIn, _typeName);   // đọc kiêu food
-    while (fileIn.eof() == false) // con trỏ chỉ vị chưa tới cuối
+    getline(fileIn, _typeFood); // đọc kiêu food
+    _data.typeFood = _typeFood;
+    Queue<ItemF> *_foods = new Queue<ItemF>;
+    while (!fileIn.eof()) // con trỏ chỉ vị chưa tới cuối
     {
         getline(fileIn, _name, '-'); // đọc tên của food
         fileIn >> _price;            // đọc giá của food
         getline(fileIn, _newLine);   // đọc kí tự enter
         _food.setName(_name);
         _food.setPrice(_price);
-        addLast(_food);
+        _foods->push(_food);
     }
+    _data.data = _foods;
+    addLast(_data);
     fileIn.close();
 }
 
@@ -141,7 +122,7 @@ void FoodsCDLL::display()
     NodeF *t = head;
     for (long i = 0; i < size; i++)
     {
-        cout << t->data.getName() << " " << t->data.getPrice() << endl;
+        t->displayANode();
         t = t->next;
     }
 }

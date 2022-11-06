@@ -22,6 +22,8 @@ public:
     friend ostream &operator<<(ostream &os, Food _food);
 };
 
+typedef Food ItemF;
+
 Food::Food()
 {
     name = "empty";

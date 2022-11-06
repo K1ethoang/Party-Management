@@ -3,7 +3,7 @@
 #include <string>
 #include <fstream>
 #include "../ID/ID.hpp"
-#include "../EditName/editName.hpp"
+#include "../editName/editName.hpp"
 #include "../Person/Person.hpp"
 using namespace std;
 
@@ -171,6 +171,11 @@ ostream &operator<<(ostream &os, Customer c)
 
 void Customer::readACustomer(ifstream &fileIn)
 {
+    string newLine;
+    long _ID;
+    fileIn >> _ID;
+    setID(_ID);
+    getline(fileIn, newLine); // xoá ký tự xuống dòng
     getline(fileIn, fullName);
     getline(fileIn, phoneNumber);
     getline(fileIn, identityCard);
