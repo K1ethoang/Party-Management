@@ -58,7 +58,7 @@ inline void viewDisplay(PartiesBST &parties)
             if (_party.getID() != -1)
             {
                 system("cls");
-                _party.printBill();
+                _party.seeDetailParty();
             }
             else
                 cout << "\n\t\t\t\t\t\t(!) Khong co ton tai tiec nay (!)";

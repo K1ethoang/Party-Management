@@ -53,13 +53,15 @@ void program()
             cout << "\n\t\t\t\t\t\tNhap ID tiec can sua: ";
             cin >> _ID;
             if (parties.isExistID(_ID))
+            {
                 editDisplay(parties, _ID);
+                parties.exportPartiesData(PARTY_DATA_PATH);
+            }
             else
             {
                 cout << "\n\t\t\t\t\t\t(!) Khong co ton tai tiec nay (!)";
                 pressAnyKey();
             }
-            parties.exportPartiesData(PARTY_DATA_PATH);
             break;
         }
         case 3:
@@ -135,15 +137,7 @@ void program()
                 fileOut.close();
             }
             else
-            {
-                parties.getRoot()->data.printBill();
-                // parties.remove(ID);
-                // cout << "\n\t\t\t\t\t\t\t\t\t>>> Da xem ! <<<\n";
-            }
-
-            // pressAnyKey();
-
-            cout << "\n\t\t\t\t\t\t(!) Khong co ton tai tiec nay (!)";
+                cout << "\n\t\t\t\t\t\t(!) Khong co ton tai tiec nay (!)";
             pressAnyKey();
             break;
         }

@@ -155,7 +155,7 @@ Party::Party()
     partyStatus = -1;
     isPaymentStatus = 0;
     isDeposited = 0;
-    sumMoney = -1;
+    sumMoney = 0;
 }
 
 Party::~Party()
@@ -364,12 +364,8 @@ ostream &operator<<(ostream &os, Party &p)
 
 void Party::readAParty(ifstream &fileIn)
 {
-    string newLine;
-    long _ID;
-    fileIn >> _ID;
-    setID(_ID);
-    getline(fileIn, newLine); // xoá ký tự xuống dòng
     customer.readACustomer(fileIn);
+    setID(customer.getID());
     getline(fileIn, typeParty);
     fileIn >> tableNumber;
     Date _date;
