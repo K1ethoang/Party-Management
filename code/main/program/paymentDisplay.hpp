@@ -10,6 +10,8 @@ inline void paymentDisplay(PartiesBST &parties, ItemP _party)
     do
     {
         system("cls");
+        _party.seeDetailParty();
+        cout << endl;
         cout << "\n\t\t\t\t\t\t+ =========== THANH TOAN =========== +";
         cout << "\n\t\t\t\t\t\t| 5.1. Thanh toan                    |";
         cout << "\n\t\t\t\t\t\t| 5.2. Huy thanh toan                |";

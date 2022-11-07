@@ -1,10 +1,10 @@
 #include "program.hpp"
 
-inline void editDisplay(PartiesBST &parties, const long &ID);
+inline void editDisplay(PartiesBST &parties, FoodsCDLL foods, const long &ID);
 void chooseFunctionParty(ItemP &party);
 void chooseFunctionCustomer(ItemC &customer);
 
-inline void editDisplay(PartiesBST &parties, const long &ID)
+inline void editDisplay(PartiesBST &parties, FoodsCDLL foods, const long &ID)
 {
     int choose;
     bool isExit = false, isSaved = true;
@@ -41,14 +41,15 @@ inline void editDisplay(PartiesBST &parties, const long &ID)
         case 3:
         {
             system("cls");
-            cout << "\n\t\t\t\t\t\t2.3. Mon an\n";
+            vector<ItemF> _menu = foods.chooseMenu();
+            if (_menu.size() != 0)
+                partyNeedToEdit.setMenu(_menu);
             isSaved = false;
-            pressAnyKey();
             break;
         }
         case 4:
         {
-            cout << "\n\t\t\t\t\t\t2.4. Luu thong tin\n";
+            cout << "\n\t\t\t\t\t\t\tLUU THONG TIN\n";
             parties.update(partyNeedToEdit);
             partyNeedToEdit.setCustomer(customerNeedToEdit);
             cout << "\n\t\t\t\t\t\t</> Luu thanh cong </>\n";

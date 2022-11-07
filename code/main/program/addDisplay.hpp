@@ -1,9 +1,9 @@
 #include "program.hpp"
 
-inline void addDisplay(PartiesBST &parties);
+inline void addDisplay(PartiesBST &parties, FoodsCDLL &foods);
 void saveParty(PartiesBST &parties, const ItemP &party);
 
-inline void addDisplay(PartiesBST &parties)
+inline void addDisplay(PartiesBST &parties, FoodsCDLL &foods)
 {
     int choose;
     bool isExit = false, isSaved = true;
@@ -62,13 +62,16 @@ inline void addDisplay(PartiesBST &parties)
         }
         case 3:
         {
-            cout << "\n\t\t\t\t\t\t[CHON MON AN]\n";
-            // Queue<string> resMenu = Menu(); // food của menu
-            // p.setMenu(resMenu);
-            // resMenu = p.getMenu();
-            // resMenu.display();
-            pressAnyKey();
+            if (party.getID() != -1)
+            {
+                vector<ItemF> _menu = foods.chooseMenu();
+                if (_menu.size() != 0)
+                    party.setMenu(_menu);
+            }
+            else
+                cout << "\n\t\t\t\t\t(!) Ban chua nhap thong tin tiec (!)\n";
             isSaved = false;
+            pressAnyKey();
             break;
         }
         case 4:

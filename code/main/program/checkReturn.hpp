@@ -9,7 +9,10 @@ void checkExit(bool &isExit, bool &isSaved)
     int option;
     bool back = false;
     if (isSaved)
+    {
         isExit = true;
+        return;
+    }
     else
     {
         do
