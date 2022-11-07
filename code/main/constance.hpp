@@ -20,3 +20,8 @@ const string FOOD_SAVER_FOLDER_PATH = "../data/Thuc-Don";
 
 // Số file food
 const int NUMBER_FOOD_PATH = 5;
+
+// ASCII các phím thông dụng
+const int ESC_ASCII = 27;
+const int LEFT_ARROW_ASCII = 75;
+const int RIGHT_ARROW_ASCII = 77;
