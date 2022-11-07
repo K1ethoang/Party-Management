@@ -34,11 +34,24 @@ NodeF::NodeF(const string &_typeFood, Queue<ItemF> *_ptr)
 
 void NodeF::displayANode()
 {
-    cout << "\n\t\t\t" << typeFood << endl;
+    cout << "\t\t+=================================================================================+" << endl;
+    cout << "\t\t|                                                                                 |" << endl;
+    // cout << "\t\t|                                   Do Uong                                       |" << endl;
+    cout << "\t\t|                                   " << setiosflags(ios::left) << setw(46) << typeFood << "|" << endl;
+    cout << "\t\t|                                                                                 |" << endl;
+    cout << "\t\t+=================================================================================+" << endl;
+    cout << "\t\t|                                                                                 |" << endl;
+    cout << "\t\t|     STT        MON AN                                            GIA            |" << endl;
+    cout << "\t\t|                                                                                 |" << endl;
+    // cout << "\t\t|       1.                                                      30000000  Vnd     |" << endl;
+
+    // cout << "\n\t\t\t" << typeFood << endl;
     Node<ItemF> *t = data->getFront();
     for (int i = 0; i < data->sizeOf(); i++)
     {
-        cout << i + 1 << ". " << t->data.getName() << "   " << t->data.getPrice() << endl;
+        cout << "\t\t|      " << setiosflags(ios::left) << setw(10) << i + 1 << setw(48) << t->data.getName() << "  " << setw(9) << t->data.getPrice() << "VND   |" << endl;
         t = t->pNext;
     }
+    cout << "\t\t|                                                                                 |" << endl;
+    cout << "\t\t+=================================================================================+" << endl;
 }

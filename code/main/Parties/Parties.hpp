@@ -43,7 +43,6 @@ private:
     void findNodeSmallestPrivate(NodeP *&x, NodeP *&y);
     void removeNodePrivate(NodeP *&root, const long &_ID); // xoá node
     void exportPartiesDataPrivate(NodeP *root, ofstream &fileOut);
-    Queue<long> getListID(NodeP *root); // lấy ds id
 
     // methods public
 public:
@@ -245,12 +244,6 @@ void PartiesBST::exportPartiesDataPrivate(NodeP *root, ofstream &fileOut)
         root->data.writeAParty(fileOut);
         exportPartiesDataPrivate(root->right, fileOut);
     }
-}
-
-Queue<long> PartiesBST::getListID(NodeP *root)
-{
-    Queue<long> listID;
-    return listID;
 }
 
 // Methods public

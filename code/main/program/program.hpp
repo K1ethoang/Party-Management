@@ -20,16 +20,15 @@ void program();
 void program()
 {
     PartiesBST parties;
-    FoodsCDLL l;
     parties.importPartiesData(PARTY_DATA_PATH);
-    // for (int i = 0; i < NUMBER_FOOD_PATH; i++)
-    // {
-    //     string foodPath;
-    //     foodPath = FOOD_SAVER_FOLDER_PATH + "/" + to_string(i + 1) + ".txt";
-    //     l.importFood(foodPath);
-    // }
-    // l.display();
-    // pressAnyKey();
+    FoodsCDLL foods;
+    // đọc file
+    for (int i = 0; i < NUMBER_FOOD_PATH; i++)
+    {
+        string foodPath;
+        foodPath = FOOD_SAVER_FOLDER_PATH + "/" + to_string(i + 1) + ".txt";
+        foods.importFood(foodPath);
+    }
     int choose;
     bool isExit = false;
     do
@@ -53,18 +52,20 @@ void program()
             break;
         case 1:
         {
-            addDisplay(parties);
+            addDisplay(parties, foods);
             parties.exportPartiesData(PARTY_DATA_PATH);
             break;
         }
         case 2:
         {
+            parties.display();
+            cout << endl;
             long _ID;
             cout << "\n\t\t\t\t\t\tNhap ID tiec can sua: ";
             cin >> _ID;
             if (parties.isExistID(_ID))
             {
-                editDisplay(parties, _ID);
+                editDisplay(parties, foods, _ID);
                 parties.exportPartiesData(PARTY_DATA_PATH);
             }
             else
@@ -123,10 +124,8 @@ void program()
             else if (_party.getID() != -1)
                 paymentDisplay(parties, _party);
             else
-            {
                 cout << "\n\t\t\t\t\t\t(!) Khong co ton tai tiec nay (!)";
-                pressAnyKey();
-            }
+            pressAnyKey();
             break;
         }
         case 6:

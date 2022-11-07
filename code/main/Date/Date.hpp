@@ -92,7 +92,13 @@ void Date::outputDate()
 
 bool Date::isValidDate()
 {
+    time_t now = time(0);
+    tm *tgian = localtime(&now);
     if (month < 1 || month > 12)
+    {
+        return 0;
+    }
+    if (year < tgian->tm_year + 1900)
     {
         return 0;
     }

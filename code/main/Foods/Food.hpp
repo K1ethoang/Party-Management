@@ -67,7 +67,7 @@ istream &operator>>(istream &is, Food &_food)
 
 ostream &operator<<(ostream &os, Food _food)
 {
-    os << "\n\t\tMon an: " << _food.name << endl;
-    os << "\n\t\tGia tien: " << _food.price << endl;
+    os << "\n\t\t\t\tMon an: " << _food.name;
+    os << "\n\t\t\t\tGia tien: " << _food.price << endl;
     return os;
 }

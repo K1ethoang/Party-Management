@@ -22,11 +22,12 @@ private:
     bool isPaymentStatus; // Trạng thái thanh toán
     bool isDeposited;     // Đã đặt cọc
     float sumMoney;       // Tiền của buổi tiệc
-    Queue<ItemF> *menu;   // Thực đơn của tiệc
+    vector<ItemF> menu;   // Thực đơn của tiệc
 
 private:
     string returnPartyStatusPrivate();               // Lấy trạng thái dạng tiệc
     string returnPaymentStatus(const bool &_isPaid); // lấy trạng thái thanh toán
+    float amountMoneyPartyPrivate();                 // tính tổng tiền
 
 public:
     Party();
@@ -47,8 +48,8 @@ public:
     bool getIsDeposited();
     void setSumMoney(const float &_sumMoney);
     float getSumMoney();
-    void setMenu(Queue<ItemF> *_ptr);
-    Queue<ItemF> *getMenu();
+    void setMenu(vector<ItemF> _menu);
+    vector<ItemF> getMenu();
 
     void outputParty();
     void printBill();      // in hoá đơn
@@ -57,6 +58,8 @@ public:
     friend ostream &operator<<(ostream &os, Party &p);
     void readAParty(ifstream &fileIn);
     void writeAParty(ofstream &fileOut);
+    void readAMenu(const string &_fileInPath);
+    void writeAMenu(const string &_fileOutPath);
     void writeABill(ofstream &fileOut);
 } ItemP;
 
@@ -138,6 +141,17 @@ string Party::returnPaymentStatus(const bool &_isPaid)
     return (_isPaid ? PAID : UNPAID);
 }
 
+float Party::amountMoneyPartyPrivate()
+{
+    float _sumMoney = 0;
+    if (menu.size() != 0)
+    {
+        for (int i = 0; i < menu.size(); i++)
+            _sumMoney += (menu[i].getPrice() * tableNumber);
+    }
+    return _sumMoney;
+}
+
 // Public
 void Party::setSumMoney(const float &_sumMoney)
 {
@@ -162,12 +176,11 @@ Customer Party::getCustomer()
 Party::Party()
 {
     typeParty = "";
-    tableNumber = -1;
+    tableNumber = 0;
     partyStatus = -1;
     isPaymentStatus = 0;
     isDeposited = 0;
     sumMoney = 0;
-    menu = NULL;
 }
 
 Party::~Party()
@@ -254,12 +267,13 @@ bool Party::getIsDeposited()
     return isDeposited;
 }
 
-void Party::setMenu(Queue<ItemF> *_ptr)
+void Party::setMenu(vector<ItemF> _menu)
 {
-    menu = _ptr;
+    menu = _menu;
+    setSumMoney(amountMoneyPartyPrivate());
 }
 
-Queue<ItemF> *Party::getMenu()
+vector<ItemF> Party::getMenu()
 {
     return menu;
 }
@@ -272,7 +286,7 @@ void Party::outputParty()
     cout << "\t\t\t\t\t\tThoi gian dat tiec   : ";
     date.outputDate();
     cout << endl;
-    cout << "\t\t\t\t\t\tTien                 : " << (sumMoney == -1 ? 0 : (size_t)sumMoney) << " VND" << endl;
+    cout << "\t\t\t\t\t\tTien                 : " << (sumMoney == 0 ? 0 : (size_t)sumMoney) << " VND" << endl;
     cout << "\t\t\t\t\t\tTrang thai cua tiec  : " << returnPartyStatusPrivate() << endl;
     cout << "\t\t\t\t\t\tThanh toan           : " << returnPaymentStatus(isPaymentStatus) << endl;
 }
@@ -303,10 +317,13 @@ void Party::printBill()
     cout << "\t\t\t|    |   STT  |                      Mon an                      |        Gia ca        |    |" << endl;
     cout << "\t\t\t|    +----------------------------------------------------------------------------------+    |" << endl;
     // for ()
-    cout << "\t\t\t|    |   12   |   lau                                            |    123456789  VND    |    |" << endl;
+    for (int i = 0; i < menu.size(); i++)
+    {
+        cout << "\t\t\t|    |   " << setiosflags(ios::left) << setw(5) << i + 1 << "|   " << setw(47) << menu[i].getName() << "|        " << setw(14) << menu[i].getPrice() << "|    |" << endl;
+    }
 
     cout << "\t\t\t|    +----------------------------------------------------------------------------------+    |" << endl;
-    cout << "\t\t\t|    |                                                  TONG TIEN:    " << setiosflags(ios::left) << setw(11) << sumMoney << "VND    |    |" << endl;
+    cout << "\t\t\t|    |                                                  TONG TIEN:    " << setiosflags(ios::left) << setw(11) << (sumMoney == 0 ? 0 : (size_t)sumMoney) << "VND    |    |" << endl;
 
     // cout << "\t\t\t|    |            TONG TIEN: " << setiosflags(ios::left) << setw(59) << sumMoney << "|    |" << endl;
     cout << "\t\t\t|    +----------------------------------------------------------------------------------+    |" << endl;
@@ -337,15 +354,15 @@ void Party::seeDetailParty()
     cout << "\t\t\t|    |   STT  |                      Mon an                      |        Gia ca        |    |" << endl;
     cout << "\t\t\t|    +----------------------------------------------------------------------------------+    |" << endl;
     // for ()
-    cout << "\t\t\t|    |   12   |   lau                                            |                      |    |" << endl;
+    for (int i = 0; i < menu.size(); i++)
+    {
+        cout << "\t\t\t|    |   " << setiosflags(ios::left) << setw(5) << i + 1 << "|   " << setw(47) << menu[i].getName() << "|        " << setw(14) << menu[i].getPrice() << "|    |" << endl;
+    }
 
     cout << "\t\t\t|    +----------------------------------------------------------------------------------+    |" << endl;
-    cout << "\t\t\t|    |                                                  TONG TIEN:    " << setiosflags(ios::left) << setw(11) << sumMoney << "VND    |    |" << endl;
+    cout << "\t\t\t|    |                                                  TONG TIEN:    " << setiosflags(ios::left) << setw(11) << (sumMoney == 0 ? 0 : (size_t)sumMoney) << "VND    |    |" << endl;
 
     cout << "\t\t\t|    +----------------------------------------------------------------------------------+    |" << endl;
-    // cout << "\t\t\t|    |   " << setiosflags(ios::left) << setw(5) << "|"
-    //  << "   " << setw(32) << " "
-    //  << "|" << endl;
     cout << "\t\t\t|                                                                                            |" << endl;
     cout << "\t\t\t+==================================>>>HOA DON THANH TOAN<<<==================================+" << endl;
 }
@@ -391,6 +408,7 @@ void Party::readAParty(ifstream &fileIn)
     setDate(_date);
     fileIn >> partyStatus >> isPaymentStatus >> isDeposited;
     fileIn >> sumMoney;
+    readAMenu(MENU_SAVER_FOLDER_OF_CUSTOMER_PATH + "/" + to_string(getID()) + ".txt");
 }
 
 void Party::writeAParty(ofstream &fileOut)
@@ -403,6 +421,44 @@ void Party::writeAParty(ofstream &fileOut)
     fileOut << "\n"
             << partyStatus << " " << isPaymentStatus << " " << isDeposited << endl;
     fileOut << (sumMoney == -1 ? 0 : (size_t)sumMoney);
+    writeAMenu(MENU_SAVER_FOLDER_OF_CUSTOMER_PATH + "/" + to_string(getID()) + ".txt");
+}
+
+void Party::readAMenu(const string &_fileInPath)
+{
+    ifstream fileIn(_fileInPath);
+    if (fileIn.is_open())
+    {
+        string nLine, _name;
+        float _price;
+        ItemF _food;
+        getline(fileIn, nLine); // đọc '\n'
+        while (!fileIn.eof())   // con trỏ chỉ vị chưa tới cuối
+        {
+            getline(fileIn, _name, '-'); // đọc tên của food
+            fileIn >> _price;            // đọc giá của food
+            getline(fileIn, nLine);      // đọc kí tự enter
+            _food.setName(_name);
+            _food.setPrice(_price);
+            menu.push_back(_food);
+        }
+    }
+    fileIn.close();
+}
+
+void Party::writeAMenu(const string &_fileOutPath)
+{
+
+    ofstream fileOut(_fileOutPath);
+    if (fileOut.is_open())
+    {
+        for (int i = 0; i < menu.size(); i++)
+        {
+            fileOut << endl;
+            fileOut << menu[i].getName() << "-" << menu[i].getPrice();
+        }
+    }
+    fileOut.close();
 }
 
 void Party::writeABill(ofstream &fileOut)
@@ -431,19 +487,13 @@ void Party::writeABill(ofstream &fileOut)
     fileOut << "\t\t\t|    |   STT  |                      Mon an                      |        Gia ca        |    |" << endl;
     fileOut << "\t\t\t|    +----------------------------------------------------------------------------------+    |" << endl;
     // for ()
-    fileOut << "\t\t\t|    |   12   |   lau                                            |    123456789  VND    |    |" << endl;
-
+    for (int i = 0; i < menu.size(); i++)
+    {
+        fileOut << "\t\t\t|    |   " << setiosflags(ios::left) << setw(5) << i + 1 << "|   " << setw(47) << menu[i].getName() << "|        " << setw(14) << menu[i].getPrice() << "|    |" << endl;
+    }
     fileOut << "\t\t\t|    +----------------------------------------------------------------------------------+    |" << endl;
-    fileOut << "\t\t\t|    |                                                  TONG TIEN:    " << setiosflags(ios::left) << setw(11) << sumMoney << "VND    |    |" << endl;
-
-    // fileOut << "\t\t\t|    |            TONG TIEN: " << setiosflags(ios::left) << setw(59) << sumMoney << "|    |" << endl;
+    fileOut << "\t\t\t|    |                                                  TONG TIEN:    " << setiosflags(ios::left) << setw(11) << (sumMoney == 0 ? 0 : (size_t)sumMoney) << "VND    |    |" << endl;
     fileOut << "\t\t\t|    +----------------------------------------------------------------------------------+    |" << endl;
-    // fileOut << "\t\t\t|    |   " << setiosflags(ios::left) << setw(5) << "|"
-    //  << "   " << setw(32) << " "
-    //  << "|" << endl;
     fileOut << "\t\t\t|                                                                                            |" << endl;
     fileOut << "\t\t\t+==================================>>>HOA DON THANH TOAN<<<==================================+" << endl;
-    // fileOut << "name: " << c.getFullName();
-    // fileOut << "sdt: " << c.getPhoneNumber();
-    // fileOut << "ID: " << getID() << endl;
 }
