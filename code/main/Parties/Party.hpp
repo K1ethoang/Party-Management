@@ -337,10 +337,12 @@ void Party::seeDetailParty()
     cout << "\t\t\t|    |   STT  |                      Mon an                      |        Gia ca        |    |" << endl;
     cout << "\t\t\t|    +----------------------------------------------------------------------------------+    |" << endl;
     // for ()
-    // for(int i=0; i < menu->sizeOf(); i++){
-    //     cout << "\t\t\t|    |   " << setiosflags(ios::left) << setw(5) << i+1 << "|   "
-    // }
-    cout << "\t\t\t|    |   12   |   lau                                            |                      |    |" << endl;
+    Node<ItemF> *t = menu->getFront();
+    for (int i = 0; i < menu->sizeOf(); i++)
+    {
+        cout << "\t\t\t|    |   " << setiosflags(ios::left) << setw(5) << i + 1 << "|   " << setw(47) << t->data.getName() << "|        " << setw(14) << t->data.getPrice() << "|    |" << endl;
+        t = t->pNext;
+    }
 
     cout << "\t\t\t|    +----------------------------------------------------------------------------------+    |" << endl;
     cout << "\t\t\t|    |                                                  TONG TIEN:    " << setiosflags(ios::left) << setw(11) << sumMoney << "VND    |    |" << endl;
