@@ -5,7 +5,7 @@
 #include "NodeF.hpp"
 #include "Food.hpp"
 #include "conio.h"
-#include "../program/pressAnykey.hpp"
+#include "../program/helper.hpp"
 using namespace std;
 
 // FoodsCDLL
@@ -192,8 +192,7 @@ vector<ItemF> FoodsCDLL::chooseMenu()
         {
             vector<ItemF> _foods;
             getFoods2Vector(_foods, head->data);
-            cout << "\n\t\t\t\t\t\tNhap STT de chon mon an: ";
-            cin >> _choose;
+            _choose = returnChoose("Nhap STT de chon mon an: ");
             if (_choose > 0 && _choose <= _foods.size())
             {
                 menu.push_back(_foods[_choose - 1]);
@@ -224,8 +223,7 @@ vector<ItemF> FoodsCDLL::chooseMenu()
         {
             system("cls");
             displayListMenu(menu);
-            cout << "\n\t\t\t\t\t\tNhap STT de xoa mon an: ";
-            cin >> _choose;
+            _choose = returnChoose("Nhap STT de xoa mon an: ");
             if (_choose > 0 && _choose <= menu.size())
             {
                 ItemF _food = menu[_choose - 1];

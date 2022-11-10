@@ -18,8 +18,8 @@ inline void paymentDisplay(PartiesBST &parties, ItemP _party)
         cout << "\n\t\t\t\t\t\t| 5.3. In hoa don                    |";
         cout << "\n\t\t\t\t\t\t| 5.0. Tro ve                        |";
         cout << "\n\t\t\t\t\t\t+ ================================== +";
-        cout << "\n\t\t\t\t\t\tNhap lua chon cua ban -> ";
-        cin >> choose;
+        cout << "\n\t\t\t\t\t\t";
+        choose = returnChoose("Nhap lua chon cua ban -> ");
         switch (choose)
         {
         case 1:

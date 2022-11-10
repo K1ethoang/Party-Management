@@ -6,7 +6,6 @@ void chooseFunctionCustomer(ItemC &customer);
 
 inline void editDisplay(PartiesBST &parties, FoodsCDLL foods, const long &ID)
 {
-    int choose;
     bool isExit = false, isSaved = true;
     ItemP partyNeedToEdit = parties.search(ID); // search ID có party cần chỉnh sửa
     ItemC customerNeedToEdit = partyNeedToEdit.getCustomer();
@@ -20,8 +19,7 @@ inline void editDisplay(PartiesBST &parties, FoodsCDLL foods, const long &ID)
         cout << "\n\t\t\t\t\t\t| 2.4. Luu thong tin                      |";
         cout << "\n\t\t\t\t\t\t| 2.0. Tro ve                             |";
         cout << "\n\t\t\t\t\t\t+ ======================================= +";
-        cout << "\n\t\t\t\t\t\tNhap lua chon cua ban -> ";
-        cin >> choose;
+        int choose = returnChoose("Nhap lua chon cua ban -> ");
         switch (choose)
         {
         case 1:
@@ -50,8 +48,8 @@ inline void editDisplay(PartiesBST &parties, FoodsCDLL foods, const long &ID)
         case 4:
         {
             cout << "\n\t\t\t\t\t\t\tLUU THONG TIN\n";
-            parties.update(partyNeedToEdit);
             partyNeedToEdit.setCustomer(customerNeedToEdit);
+            parties.update(partyNeedToEdit);
             cout << "\n\t\t\t\t\t\t</> Luu thanh cong </>\n";
             customerNeedToEdit.outputCustomer();
             cout << "\n\n";
@@ -77,7 +75,6 @@ inline void editDisplay(PartiesBST &parties, FoodsCDLL foods, const long &ID)
 
 void chooseFunctionParty(ItemP &party)
 {
-    int choose;
     bool isExit = false;
     do
     {
@@ -89,8 +86,7 @@ void chooseFunctionParty(ItemP &party)
         cout << "\n\t\t\t\t\t\t| 2.2.4. Xem thong tin                    |";
         cout << "\n\t\t\t\t\t\t| 2.2.0. Tro ve                           |";
         cout << "\n\t\t\t\t\t\t+ ======================================= +";
-        cout << "\n\t\t\t\t\t\tNhap lua chon cua ban -> ";
-        cin >> choose;
+        int choose = returnChoose("Nhap lua chon cua ban -> ");
         switch (choose)
         {
         case 1:
@@ -103,8 +99,7 @@ void chooseFunctionParty(ItemP &party)
         case 2:
         {
             int newTableNumber;
-            cout << "\n\t\t\t\t\t\tNhap so ban moi: ";
-            cin >> newTableNumber;
+            newTableNumber = returnChoose("Nhap so ban moi: ");
             party.setTableNumber(newTableNumber);
             pressAnyKey();
             break;
@@ -141,7 +136,6 @@ void chooseFunctionParty(ItemP &party)
 
 void chooseFunctionCustomer(ItemC &customer)
 {
-    int choose;
     bool isExit = false;
     do
     {
@@ -153,8 +147,7 @@ void chooseFunctionCustomer(ItemC &customer)
         cout << "\n\t\t\t\t\t\t| 2.1.4. Xem thong tin                          |";
         cout << "\n\t\t\t\t\t\t| 2.1.0. Tro ve                                 |";
         cout << "\n\t\t\t\t\t\t+ ============================================= +";
-        cout << "\n\t\t\t\t\t\tNhap lua chon cua ban -> ";
-        cin >> choose;
+        int choose = returnChoose("Nhap lua chon cua ban -> ");
         switch (choose)
         {
         case 1:
