@@ -4,9 +4,8 @@
 #include "../Customers/Customers.hpp"
 #include "../Parties/Parties.hpp"
 #include "../Foods/Foods.hpp"
-#include "pressAnykey.hpp"
+#include "helper.hpp"
 #include "exportBillParty.hpp"
-#include "checkReturn.hpp"
 #include "./addDisplay.hpp"
 #include "./editDisplay.hpp"
 #include "./viewDisplay.hpp"
@@ -29,7 +28,6 @@ void program()
         foodPath = FOOD_SAVER_FOLDER_PATH + "/" + to_string(i + 1) + ".txt";
         foods.importFood(foodPath);
     }
-    int choose;
     bool isExit = false;
     do
     {
@@ -43,8 +41,7 @@ void program()
         cout << "\n\t\t\t\t\t\t| 6. In hoa don                              |";
         cout << "\n\t\t\t\t\t\t| 0. Thoat chuong trinh                      |";
         cout << "\n\t\t\t\t\t\t+ ========================================== +";
-        cout << "\n\t\t\t\t\t\tNhap lua chon cua ban -> ";
-        cin >> choose;
+        int choose = returnChoose("Nhap lua chon cua ban -> ");
         switch (choose)
         {
         case 0:
@@ -61,8 +58,7 @@ void program()
             parties.display();
             cout << endl;
             long _ID;
-            cout << "\n\t\t\t\t\t\tNhap ID tiec can sua: ";
-            cin >> _ID;
+            _ID = returnChoose("Nhap ID tiec can sua: ");
             if (parties.isExistID(_ID))
             {
                 editDisplay(parties, foods, _ID);
@@ -85,8 +81,7 @@ void program()
             parties.display();
             cout << endl;
             long ID;
-            cout << "\n\t\t\t\t\t\tNhap ID tiec can xoa: ";
-            cin >> ID;
+            ID = returnChoose("Nhap ID tiec can xoa: ");
             if (parties.isExistID(ID))
             {
                 char answer;
@@ -115,8 +110,7 @@ void program()
             parties.displayByPaymentStatus(0);
             cout << endl;
             long _ID;
-            cout << "\n\t\t\t\t\t\tNhap ID tiec can thanh toan: ";
-            cin >> _ID;
+            _ID = returnChoose("Nhap ID tiec can thanh toan: ");
             cout << endl;
             ItemP _party = parties.search(_ID);
             if (parties.isPaid(_party.getID()) && _party.getID() != -1)
@@ -133,8 +127,7 @@ void program()
             parties.display();
             cout << endl;
             long _ID;
-            cout << "\n\t\t\t\t\t\tNhap ID tiec can in bill: ";
-            cin >> _ID;
+            _ID = returnChoose("Nhap ID tiec can in bill: ");
             ItemP _party = parties.search(_ID);
             system("cls");
             if (_party.getID() != -1)

@@ -5,7 +5,6 @@ void saveParty(PartiesBST &parties, const ItemP &party);
 
 inline void addDisplay(PartiesBST &parties, FoodsCDLL &foods)
 {
-    int choose;
     bool isExit = false, isSaved = true;
     ItemC customer;
     ItemP party;
@@ -19,8 +18,7 @@ inline void addDisplay(PartiesBST &parties, FoodsCDLL &foods)
         cout << "\n\t\t\t\t\t\t| 1.4. Luu thong tin                 |";
         cout << "\n\t\t\t\t\t\t| 1.0. Tro ve                        |";
         cout << "\n\t\t\t\t\t\t+ ================================== +";
-        cout << "\n\t\t\t\t\t\tNhap lua chon cua ban -> ";
-        cin >> choose;
+        int choose = returnChoose("Nhap lua chon cua ban -> ");
         switch (choose)
         {
         case 1:

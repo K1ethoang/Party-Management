@@ -190,6 +190,7 @@ Party::~Party()
 void Party::setTableNumber(const int &_tableNumber)
 {
     tableNumber = _tableNumber;
+    setSumMoney(amountMoneyPartyPrivate());
 }
 
 int Party::getTableNumber()
@@ -269,6 +270,7 @@ bool Party::getIsDeposited()
 
 void Party::setMenu(vector<ItemF> _menu)
 {
+    menu.clear();
     menu = _menu;
     setSumMoney(amountMoneyPartyPrivate());
 }
@@ -406,6 +408,7 @@ void Party::readAParty(ifstream &fileIn)
     Date _date;
     _date.readDate(fileIn);
     setDate(_date);
+    setPartyStatus();
     fileIn >> partyStatus >> isPaymentStatus >> isDeposited;
     fileIn >> sumMoney;
     readAMenu(MENU_SAVER_FOLDER_OF_CUSTOMER_PATH + "/" + to_string(getID()) + ".txt");
@@ -418,6 +421,7 @@ void Party::writeAParty(ofstream &fileOut)
     fileOut << typeParty << endl;
     fileOut << tableNumber << endl;
     date.writeDate(fileOut);
+    setPartyStatus();
     fileOut << "\n"
             << partyStatus << " " << isPaymentStatus << " " << isDeposited << endl;
     fileOut << (sumMoney == -1 ? 0 : (size_t)sumMoney);
