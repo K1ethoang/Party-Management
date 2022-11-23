@@ -16,7 +16,7 @@
 
 - Text editor: VSCode.
 - Language: C++.
-- Interface: console.
+- Interface: Console.
 - Buil [main.cpp](./code/main/main.cpp) -> **main.exe**
   <br>
   => _run **main.exe**._
