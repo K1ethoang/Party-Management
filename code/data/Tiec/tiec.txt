@@ -6,7 +6,7 @@ Tran Thi Dung
 Tiec tra
 20
 8 11 2022
-1 0 0
+1 1 0
 25400000
 10
 Thu Huong
@@ -35,12 +35,3 @@ Tiec sinh nhat
 23 11 2030
 -1 0 0
 6000000
-20
-Tran Quoc Khanh
-0784441234
-111122223333
-Tiec tra
-20
-20 11 2022
--1 0 0
-19000000
