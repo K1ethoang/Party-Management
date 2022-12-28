@@ -310,9 +310,7 @@ void PartiesBST::display()
     cout << "\t\t|   ID   |   Thoi gian   |          Nguoi dat          |     SDT      |     Loai tiec     | So ban |  Trang thai tiec  |   Thanh toan   |" << endl;
     cout << "\t\t+========+===============+=============================+==============+===================+========+===================+================+";
     cout << "\t\t";
-    printInOrderPrivate(root);
-
-    // cout << "\n\t\t"
+    printInOrderPrivate(root); // left-node-right
 }
 
 void PartiesBST::displayByPaymentStatus(const bool &_isPaid)
@@ -324,7 +322,7 @@ void PartiesBST::displayByPaymentStatus(const bool &_isPaid)
     cout << "\t\t|   ID   |   Thoi gian   |          Nguoi dat          |     SDT      |     Loai tiec     | So ban |  Trang thai tiec  |   Thanh toan   |" << endl;
     cout << "\t\t+========+===============+=============================+==============+===================+========+===================+================+";
     cout << "\t\t";
-    printPreOrderPrivate(root, _isPaid);
+    printPreOrderPrivate(root, _isPaid); // node-left-right
 }
 
 void PartiesBST::importPartiesData(const string &_fileInPath)
